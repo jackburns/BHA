@@ -8,8 +8,8 @@ sudo apt-get -y upgrade > /dev/null
 echo -e "\n--- Install git nginx nodejs npm ---\n"
 sudo apt-get -y install git nginx nodejs npm
 echo -e "\n--- Install global npm packages"
-sudo npm install -g gulp karma karma-cli webpack
 cd /vagrant/js
+sudo npm install -g gulp karma karma-cli webpack
 sudo npm install
 gulp webpack
 cd ..
