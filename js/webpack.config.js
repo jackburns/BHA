@@ -10,7 +10,7 @@ module.exports = {
        { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
        { test: /\.html$/, loader: 'raw' },
        { test: /\.styl$/, loader: 'style!css!stylus' },
-       { test: /\.scss$/, loader: 'style!css!sass' },
+       { test: /\.scss$/, loader: 'style!css?sourceMap!sass?sourceMap' },
 
        { test: /\.css$/, loader: 'style!css' }
     ]
