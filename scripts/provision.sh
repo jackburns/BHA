@@ -5,6 +5,11 @@ echo -e "\n--- Updating all the things ---\n"
 sudo apt-get -y update > /dev/null
 echo -e "\n--- Install git nginx nodejs npm ---\n"
 sudo apt-get -y install git nginx nodejs npm
+echo -e "\n--- Install global npm packages"
+npm install -g gulp karma karma-cli webpack
+cd client
+npm install
+cd ..
 
 # symlink nodejs to node to avoid conflicts
 sudo ln -s /usr/bin/nodejs /usr/bin/node
