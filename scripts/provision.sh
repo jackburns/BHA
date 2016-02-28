@@ -11,6 +11,7 @@ echo -e "\n--- Install global npm packages"
 sudo npm install -g gulp karma karma-cli webpack
 cd /vagrant/js
 sudo npm install
+gulp webpack
 cd ..
 
 echo "Configuring Nginx"
