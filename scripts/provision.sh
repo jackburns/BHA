@@ -7,10 +7,17 @@ echo -e "\n--- Install git nginx nodejs npm ---\n"
 sudo apt-get -y install git nginx nodejs npm
 echo -e "\n--- Install global npm packages"
 npm install -g gulp karma karma-cli webpack
-cd client
+cd js
 npm install
 cd ..
 
+echo "Configuring Nginx"
+    cp /vagrant/scripts/nginx_local_config /etc/nginx/sites-available/nginx_local_config > /dev/null
+    
+    ln -s /etc/nginx/sites-available/nginx_local_config /etc/nginx/sites-enabled/
+    
+    rm -rf /etc/nginx/sites-available/default
+    
 # symlink nodejs to node to avoid conflicts
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 
