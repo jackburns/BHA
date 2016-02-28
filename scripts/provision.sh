@@ -12,7 +12,7 @@ npm install
 cd ..
 
 echo "Configuring Nginx"
-    cp /vagrant/scripts/nginx_local_config /etc/nginx/sites-available/nginx_local_config > /dev/null
+    cp /vagrant/config/nginx_local_config /etc/nginx/sites-available/nginx_local_config > /dev/null
     
     ln -s /etc/nginx/sites-available/nginx_local_config /etc/nginx/sites-enabled/
     
