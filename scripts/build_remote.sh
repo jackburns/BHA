@@ -1,5 +1,5 @@
 #!bin/bash
 
 cd /data/www/BHA/js
-sudo npm install
+npm install
 gulp webpack
