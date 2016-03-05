@@ -18,11 +18,12 @@ var historyApiFallback = require('connect-history-api-fallback');
 let root = 'client';
 
 // helper method for resolving paths
-let resolveToApp = (glob = '') => {
+let glob = '';
+let resolveToApp = (glob) => {
   return path.join(root, 'app', glob); // app/{glob}
 };
 
-let resolveToComponents = (glob = '') => {
+let resolveToComponents = (glob) => {
   return path.join(root, 'app/components', glob); // app/components/{glob}
 };
 
