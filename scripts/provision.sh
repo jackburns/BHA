@@ -17,7 +17,7 @@ sudo npm install -g gulp --no-bin-links
 sudo npm install -g karma --no-bin-links
 sudo npm install -g karma-cli --no-bin-links
 sudo npm install -g webpack --no-bin-links
-sudo npm install
+sudo npm install > /dev/null
 gulp webpack
 cd ..
 
