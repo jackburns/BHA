@@ -7,12 +7,16 @@ sudo apt-get -y upgrade > /dev/null
 
 echo -e "\n--- Install git nginx nodejs npm ---\n"
 sudo apt-get -y install git nginx nodejs npm
+
+# symlink nodejs to node to avoid conflicts
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+
 echo -e "\n--- Install global npm packages"
 cd /vagrant/js
-sudo npm install -g gulp
-sudo npm install -g karma
-sudo npm install -g karma-cli
-sudo npm install -g webpack
+sudo npm install -g gulp --no-bin-links
+sudo npm install -g karma --no-bin-links
+sudo npm install -g karma-cli --no-bin-links
+sudo npm install -g webpack --no-bin-links
 sudo npm install
 gulp webpack
 cd ..
@@ -24,9 +28,6 @@ echo "Configuring Nginx"
     
     rm -rf /etc/nginx/sites-available/default
     
-# symlink nodejs to node to avoid conflicts
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-
 # installing python and django
 echo -e "\n--- Installing python and django ---\n"
 sudo apt-get -y install python3-pip
