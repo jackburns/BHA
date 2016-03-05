@@ -1,20 +1,19 @@
 'use strict';
 
-import gulp     from 'gulp';
-import webpack  from 'webpack';
-import path     from 'path';
-import sync     from 'run-sequence';
-import rename   from 'gulp-rename';
-import template from 'gulp-template';
-import fs       from 'fs';
-import yargs    from 'yargs';
-import lodash   from 'lodash';
-import gutil    from 'gulp-util';
-import serve    from 'browser-sync';
-import webpackDevMiddelware from 'webpack-dev-middleware';
-import webpachHotMiddelware from 'webpack-hot-middleware';
-import colorsSupported      from 'supports-color';
-import historyApiFallback   from 'connect-history-api-fallback';
+var gulp = require('gulp');
+var webpack = require('webpack');
+var path = require('path');
+var sync = require('run-sequence');
+var rename = require('gulp-rename');
+var template = require('gulp-template');
+var fs = require('fs');
+var yargs = require('yargs');
+var gutil = require('gulp-util');
+var serve = require('browser-sync');
+var webpackDevMiddelware = require('webpack-dev-middleware');
+var webpachHotMiddelware = require('webpack-hot-middleware');
+var colorsSupported = require('supports-color');
+var historyApiFallback = require('connect-history-api-fallback');
 
 let root = 'client';
 
