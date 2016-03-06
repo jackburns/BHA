@@ -7,6 +7,8 @@ sudo apt-get -y upgrade > /dev/null
 
 echo -e "\n--- Install git nginx nodejs npm ---\n"
 sudo apt-get -y install git nginx nodejs npm
+sudo npm install -g n
+sudo n stable
 
 # symlink nodejs to node to avoid conflicts
 sudo ln -s /usr/bin/nodejs /usr/bin/node
@@ -14,9 +16,11 @@ sudo ln -s /usr/bin/nodejs /usr/bin/node
 echo -e "\n--- Install global npm packages"
 cd /vagrant/js
 sudo npm install -g gulp --no-bin-links
+sudo npm install gulp --no-bin-links
 sudo npm install -g karma --no-bin-links
 sudo npm install -g karma-cli --no-bin-links
 sudo npm install -g webpack --no-bin-links
+sudo npm install webpack --no-bin-links
 sudo npm install > /dev/null
 gulp webpack
 cd ..
