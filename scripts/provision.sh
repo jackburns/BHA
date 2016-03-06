@@ -23,6 +23,8 @@ sudo npm install -g webpack --no-bin-links
 sudo npm install -g webpack --no-bin-links
 sudo npm install webpack --no-bin-links
 sudo npm install --no-bin-links > /dev/null
+sudo npm install -g gulp --no-bin-links
+sudo npm install -g gulp
 gulp webpack
 cd ..
 
