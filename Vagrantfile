@@ -14,7 +14,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "private_network", ip: "192.168.33.10"
   config.vm.network "forwarded_port", guest: 3000, host: 3000
 
-  config.vm.provision "shell", path: "scripts/provision.sh"
+  config.vm.provision "shell", path: "scripts/provision.sh", privileged: false
 
 
   # Create a private network, which allows host-only access to the machine

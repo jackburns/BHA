@@ -6,7 +6,7 @@ sudo apt-get -y update > /dev/null
 sudo apt-get -y upgrade > /dev/null
 
 echo -e "\n--- Install git nginx nodejs npm ---\n"
-sudo apt-get -y install git nginx nodejs npm
+sudo apt-get -y install git nginx nodejs npm python3-pip
 sudo npm install -g n
 sudo n stable
 
@@ -29,18 +29,19 @@ gulp webpack
 cd ..
 
 echo "Configuring Nginx"
-    cp /vagrant/config/nginx_local_config /etc/nginx/sites-available/nginx_local_config > /dev/null
-    
-    ln -s /etc/nginx/sites-available/nginx_local_config /etc/nginx/sites-enabled/
-    
-    rm -rf /etc/nginx/sites-available/default
-    
+sudo cp /vagrant/config/nginx_local_config /etc/nginx/sites-available/nginx_local_config
+sudo ln -s /etc/nginx/sites-available/nginx_local_config /etc/nginx/sites-enabled/
+sudo rm -rf /etc/nginx/sites-available/default
+
 # installing python and django
-echo -e "\n--- Installing python ---\n"
-sudo apt-get -y install python3-pip
+echo -e "\n--- Setting up uWSGI ---\n"
+
+sudo pip3 install uwsgi
+sudo mkdir -p /etc/uwsgi/vassals/
+sudo ln -s /vagrant/config/django.ini /etc/uwsgi/vassals/django.ini
 
 echo -e "\n--- Setting up virtualenv ---\n"
-pip3 install virtualenv virtualenvwrapper
+sudo pip3 install virtualenv virtualenvwrapper
 
 export WORKON_HOME=/home/vagrant/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
@@ -49,7 +50,6 @@ echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3" >> /home/vagrant/.bashrc
 echo "source /usr/local/bin/virtualenvwrapper.sh" >> /home/vagrant/.bashrc
 
 source /usr/local/bin/virtualenvwrapper.sh
-
 
 echo -e "\n--- Installing Python Packages ---\n"
 cd /vagrant
@@ -63,10 +63,12 @@ deactivate
 echo -e "\n--- Setup and install MYSQL ---\n"
 sudo apt-get -y install debconf-utils
 
-debconf-set-selections <<< "mysql-server mysql-server/root_password password password"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password password"
     
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password password"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password password"
 
-apt-get install mysql-server -y
+sudo apt-get install mysql-server -y
 
+# Start things
 sudo service nginx restart
+sudo uwsgi --emperor /etc/uwsgi/vassals --master --daemonize /var/log/uwsgi.log
