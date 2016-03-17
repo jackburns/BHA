@@ -10,11 +10,10 @@ angular.module('app', [
     Common.name,
     Components.name
   ])
-  .config(($locationProvider) => {
-    "ngInject";
+  .config(['$locationProvider',($locationProvider) => {
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
     $locationProvider.html5Mode(true).hashPrefix('!');
-  })
+  }])
 
   .component('app', AppComponent);
