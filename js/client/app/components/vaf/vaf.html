@@ -1,0 +1,20 @@
+<navbar></navbar>
+<h1>Volunteer Application Form</h1>
+<div class="form-container">
+  <form novalidate class="simple-form">
+    First Name: <input type="text" ng-model="vm.info.fname" /><br />
+    Last Name: <input type="text" ng-model="vm.info.lname" /><br />
+    Current School (if applicable): <input type="text" ng-model="vm.info.school" /><br />
+    Street: <input type="text" ng-model="vm.info.street" /><br />
+    City: <input type="text" ng-model="vm.info.city" /><br />
+    Street: <input type="text" ng-model="vm.info.street" /><br />
+    ZIP Code: <input type="text" ng-model="vm.info.zip" /><br />
+    Email: <input type="email" ng-model="vm.info.email" /><br />
+    Phone: <input type="tel" ng-model="vm.info.phone" /><br />
+    Preferred Method of Contact: <select ng-model="vm.info.contact" ng-options="contact for contact in vm.contacts"></select><br />
+    Languages: <input type="text" ng-model="vm.info.languages" /><br />
+    Are you currently a BHA housing applicant or a BHA resident? <input type="checkbox" ng-model="vm.info.bha" /><br />
+    Availability: <input type="text" ng-model="vm.info.availability" /><br />
+    <input type="submit" ng-click="vm.update()" value="Submit" />
+  </form>
+</div>
