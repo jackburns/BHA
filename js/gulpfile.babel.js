@@ -19,11 +19,11 @@ let root = 'client';
 
 // helper method for resolving paths
 let glob = '';
-let resolveToApp = (glob) => {
+let resolveToApp = () => {
   return path.join(root, 'app', glob); // app/{glob}
 };
 
-let resolveToComponents = (glob) => {
+let resolveToComponents = () => {
   return path.join(root, 'app/components', glob); // app/components/{glob}
 };
 
