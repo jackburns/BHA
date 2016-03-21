@@ -9,9 +9,7 @@ module.exports = {
     loaders: [
        { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
        { test: /\.html$/, loader: 'raw' },
-       { test: /\.styl$/, loader: 'style!css!stylus' },
        { test: /\.scss$/, loader: 'style!css?sourceMap!sass?sourceMap' },
-
        { test: /\.css$/, loader: 'style!css' }
     ]
   },

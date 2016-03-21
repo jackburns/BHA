@@ -43,7 +43,6 @@
     "run-sequence": "*",
     "sass-loader": "*",
     "style-loader": "*",
-    "stylus-loader": "*",
     "supports-color": "*",
     "webpack": "*",
     "webpack-dev-middleware": "*",
