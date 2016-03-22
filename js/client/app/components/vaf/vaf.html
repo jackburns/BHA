@@ -1,49 +1,105 @@
 <navbar></navbar>
 <div class="container">
-  <h2 class="c">Volunteer Application Form</h2>
-  <form validate class="form-horizontal" role="form">
-    <div class="form-group">
-      <div class="col-sm-3">
-        <input required type="text" class="form-control" ng-model="vm.info.fname" id="fname" placeholder="First Name">
-      </div>
-      <div class="col-sm-3">
-        <input required type="text" class="form-control" ng-model="vm.info.lname" id="lname" placeholder="Last Name">
-      </div>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" ng-model="vm.info.school" id="school" placeholder="Current School (if applicable)">
-      </div>
+  <div class="jumbotron holder">
+    <div class="c">
+      <img src="https://www.bostonhousing.org/getmedia/532d3dea-5dc1-418f-b74d-2c049eb9f252/BHAVIP-Logo_FIN_darker-(No-Back)_1.aspx?width=200&height=171">
+      <h2>Volunteer Interpreter Application Form</h2>
     </div>
-    <div class="form-group">
-      <div class="col-sm-1">
-        <label>Address:<label></div>
-      <div class="col-sm-3">
-        <input type="text" class="form-control" ng-model="vm.info.street" id="street" placeholder="Street">
+    <form validate role="form" class="form-horizontal vaf">
+      <div class="form-group">
+	<div class="col-sm-5">
+          <input required type="text" class="form-control" ng-model="vm.info.fname" id="fname" placeholder="First Name">
+	</div>
+	<div class="col-sm-5">
+          <input required type="text" class="form-control" ng-model="vm.info.lname" id="lname" placeholder="Last Name">
+	</div>
+	<div class="col-sm-2">
+	  <input type="text" class="form-control" ng-model="vm.info.mi" id="mi" placeholder="MI">
+	</div>
       </div>
-      <div class="col-sm-3">
-        <input type="text" class="form-control" ng-model="vm.info.city" id="city" placeholder="City">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <input type="text" class="form-control" ng-model="vm.info.school" id="school" placeholder="Current School (if applicable)">
+	</div>
       </div>
-      <div class="col-sm-1">
-        <input type="text" class="form-control" ng-model="vm.info.state" id="state" placeholder="State">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <input required type="text" class="form-control" ng-model="vm.info.street" id="street" placeholder="Street Address">
+	</div>
+        <div class="col-sm-7">
+          <input required type="text" class="form-control" ng-model="vm.info.city" id="city" placeholder="City">
+	</div>
+	<div class="col-sm-2">
+          <input required type="text" class="form-control" ng-model="vm.info.state" id="state" placeholder="State">
+	</div>
+	<div class="col-sm-3">
+          <input required type="text" class="form-control" ng-model="vm.info.zip" id="zip" placeholder="ZIP Code">
+	</div>
       </div>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="vm.info.zip" id="zip" placeholder="ZIP Code">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <input type="email" class="form-control" ng-model="vm.info.email" id="email" placeholder="E-mail Address">
+	</div>
+	<div class="col-sm-4">
+          <input type="tel" class="form-control" ng-model="vm.info.phone" id="phone" placeholder="Phone Number">
+	</div>
+	<label for="pref-contact" class="col-sm-5 control-label">Preferred contact method:</label>
+	<div class="col-sm-3">
+          <select id="pref-contact" class="form-control" ng-model="vm.info.contact" ng-options="contact for contact in vm.contacts"></select>
+	</div>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-3">
-        <input type="email" class="form-control" ng-model="vm.info.email" id="email" placeholder="E-mail">
+      <div class="form-group">
+        <label for="languages" class="col-sm-5">Languages Spoken</label>
+	<div class="col-sm-12">
+          <input required type="text" id="languages" class="form-control" ng-model="vm.info.languages" placeholder="Please enter languages separated by commas"/>
+	</div>
       </div>
-      <div class="col-sm-3">
-        <input type="tel" class="form-control" ng-model="vm.info.phone" id="phone" placeholder="Phone #">
+      <div class="form-group">
+        <label for="bha" class="col-sm-11">Are you currently a BHA housing applicant or a BHA resident?</label>
+	<div class="col-sm-1">
+	  <input id="bha" type="checkbox" ng-model="vm.info.bha" />
+	</div>
       </div>
-      <div class="col-sm-3">
-        <select class="form-control" ng-model="vm.info.contact" ng-options="contact for contact in vm.contacts"></select>
+      <div class="form-group">
+        <label class="col-sm-4">Availability</label>
+        <div class="col-sm-12">
+          <table class="table table-bordered avail-tab table-responsive">
+	    <thead>
+	      <tr>
+	        <th></th>
+	        <th>Sun</th>
+	        <th>Mon</th>
+	        <th>Tue</th>
+	        <th>Wed</th>
+	        <th>Thu</th>
+	        <th>Fri</th>
+	        <th>Sat</th>
+	      </tr>
+	    </thead>
+	    <tr>
+	      <th>AM</th>
+	      <th><input type="checkbox" ng-model="vm.info.avSunAM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avMonAM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avTueAM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avWedAM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avThuAM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avFriAM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avSatAM"></th>
+	    </tr>
+	    <tr>
+	      <th>PM</th>
+	      <th><input type="checkbox" ng-model="vm.info.avSunPM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avMonPM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avTuePM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avWedPM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avThuPM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avFriPM"></th>
+	      <th><input type="checkbox" ng-model="vm.info.avSatPM"></th>
+	    </tr>
+	  </table>
+	</div>
       </div>
-      <p>Phone: <input type="tel" ng-model="vm.info.phone" /></p>
-      <p>Preferred Method of Contact: <select ng-model="vm.info.contact" ng-options="contact for contact in vm.contacts"></select></p>
-      <p>Languages: <input type="text" ng-model="vm.info.languages" /></p>
-      <p>Are you currently a BHA housing applicant or a BHA resident? <input type="checkbox" ng-model="vm.info.bha" /></p>
-      <p>Availability: <input type="text" ng-model="vm.info.availability" /></p>
-      <p><input type="submit" ng-click="vm.update()" value="Submit" /></p>
-</form>
+      <input class="btn btn-primary" type="submit" ng-click="vm.update()" value="Submit" />
+    </form>
+  </div>
 </div>

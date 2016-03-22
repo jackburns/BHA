@@ -1,3 +1,23 @@
 .c {
     text-align: center;
 }
+
+.holder {
+    margin: 0 auto;
+    max-width: 740px;
+}
+
+.vaf {
+    max-width: 500px;
+    margin: inherit;
+}
+
+.avail-tab th {
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.vaf input {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
