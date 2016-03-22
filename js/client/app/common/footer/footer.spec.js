@@ -1,16 +1,16 @@
-import HeroModule from './hero'
-import HeroController from './hero.controller';
-import HeroComponent from './hero.component';
-import HeroTemplate from './hero.html';
+import FooterModule from './footer'
+import FooterController from './footer.controller';
+import FooterComponent from './footer.component';
+import FooterTemplate from './footer.html';
 
-describe('Hero', () => {
+describe('Footer', () => {
   let $rootScope, makeController;
 
-  beforeEach(window.module(HeroModule.name));
+  beforeEach(window.module(FooterModule.name));
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
     makeController = () => {
-      return new HeroController();
+      return new FooterController();
     };
   }));
 
@@ -30,16 +30,16 @@ describe('Hero', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has name in template [REMOVE]', () => {
-      expect(HeroTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+      expect(FooterTemplate).to.match(/{{\s?vm\.name\s?}}/g);
     });
   });
 
   describe('Component', () => {
       // component/directive specs
-      let component = HeroComponent;
+      let component = FooterComponent;
 
       it('includes the intended template',() => {
-        expect(component.template).to.equal(HeroTemplate);
+        expect(component.template).to.equal(FooterTemplate);
       });
 
       it('uses `controllerAs` syntax', () => {
@@ -47,7 +47,7 @@ describe('Hero', () => {
       });
 
       it('invokes the right controller', () => {
-        expect(component.controller).to.equal(HeroController);
+        expect(component.controller).to.equal(FooterController);
       });
   });
 });
