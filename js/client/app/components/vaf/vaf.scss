@@ -5,6 +5,7 @@
 .holder {
     margin: 0 auto;
     max-width: 740px;
+    padding-top: 0;
 }
 
 .vaf {
@@ -20,4 +21,9 @@
 .vaf input {
     margin-top: 4px;
     margin-bottom: 4px;
+    border-radius: 4px !important;
+}
+
+.sub {
+    text-align: right;
 }
