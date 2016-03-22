@@ -19,19 +19,42 @@ describe('Home', () => {
   });
 
   describe('Controller', () => {
-    // controller specs
-    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
+    it('initializes with three dummy volunteers', () => {
       let controller = makeController();
-      expect(controller).to.have.property('name');
+      expect(controller).to.have.property('volunteers');
+      expect(controller.volunteers).to.have.length(3);
     });
+
+    it('initializes with ordering and isReverseOrder', () => {
+      let controller = makeController();
+      expect(controller.ordering).to.equal('lastName');
+      expect(controller.isReverseOrder).to.equal(false);
+    });
+
+    it('updates order and order direction', () => {
+      let controller = makeController();
+      controller.updateOrder('firstName');
+      expect(controller.ordering).to.equal('firstName');
+
+      controller.updateOrder('languages');
+      expect(controller.ordering).to.equal('languages');
+    });
+
+    it('reverses sort order when selecting the current sort field', () => {
+      let controller = makeController();
+      controller.updateOrder('firstName');
+      expect(controller.isReverseOrder).to.equal(false);
+
+      controller.updateOrder('firstName');
+      expect(controller.isReverseOrder).to.equal(true);
+
+      controller.updateOrder('firstName');
+      expect(controller.isReverseOrder).to.equal(false);
+    })
+
   });
 
   describe('Template', () => {
-    // template specs
-    // tip: use regex to ensure correct bindings are used e.g., {{  }}
-    it('has name in template [REMOVE]', () => {
-      expect(HomeTemplate).to.match(/{{\s?vm\.name\s?}}/g);
-    });
   });
 
   describe('Component', () => {
