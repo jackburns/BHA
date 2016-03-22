@@ -4,10 +4,9 @@
   "main": "index.js",
   "dependencies": {
     "angular": "^1.5.0",
+    "angular-ui-bootstrap": "^1.2.5",
     "angular-ui-router": "^0.2.15",
     "babel-loader": "^6.2.4",
-    "bootstrap-sass": "^3.3.6",
-    "jquery": "^2.2.2",
     "lodash": "*",
     "normalize.css": "*"
   },
