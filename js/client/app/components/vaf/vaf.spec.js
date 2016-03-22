@@ -19,18 +19,16 @@ describe('Vaf', () => {
   });
 
   describe('Controller', () => {
-    // controller specs
-    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
+    it('contact select is initially set to Phone', () => {
       let controller = makeController();
-      expect(controller).to.have.property('name');
+      expect(controller.info.contact).to.equal("Phone");
     });
-  });
-
-  describe('Template', () => {
-    // template specs
-    // tip: use regex to ensure correct bindings are used e.g., {{  }}
-    it('has name in template [REMOVE]', () => {
-      expect(VafTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+    
+    it('click submit -> API call', () => {
+      let controller = makeController();
+      expect(controller.submitted).to.equal(false);
+      controller.update();
+      expect(controller.submitted).to.equal(true);
     });
   });
 

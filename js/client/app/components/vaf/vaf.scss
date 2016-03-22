@@ -18,10 +18,15 @@
     background-color: #f9f9f9;
 }
 
-.vaf input {
+.vaf input, .vaf select {
     margin-top: 4px;
     margin-bottom: 4px;
     border-radius: 4px !important;
+}
+
+.vaf label {
+    text-align: left;
+    font-weight: bold;
 }
 
 .sub {
