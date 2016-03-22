@@ -1,3 +1,33 @@
-.home {
-  color: red;
+.sortorder:after {
+  content: '\25b2';
+}
+
+.sortorder.isReverseOrder:after {
+  content: '\25bc';
+}
+
+label {
+  font-weight: normal;
+}
+
+.volunteers-table {
+  th {
+    cursor: pointer;
+  }
+
+  td, th {
+    width: 25%;
+  }
+}
+
+.form-group {
+  margin-right: 2em;
+}
+
+.search-filters {
+  margin-bottom: 2em;
+
+  label {
+    margin-right: .5em;
+  }
 }

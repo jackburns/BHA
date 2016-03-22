@@ -27,11 +27,6 @@ describe('Footer', () => {
   });
 
   describe('Template', () => {
-    // template specs
-    // tip: use regex to ensure correct bindings are used e.g., {{  }}
-    it('has name in template [REMOVE]', () => {
-      expect(FooterTemplate).to.match(/{{\s?vm\.name\s?}}/g);
-    });
   });
 
   describe('Component', () => {

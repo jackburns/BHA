@@ -1,5 +1,44 @@
 <main class="home">
   <div class="container">
-    <h1>Found in {{ vm.name }}.html</h1>
+    <h1>Find Volunteers</h1>
+    <form class="form-inline search-filters">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input class="form-control" id="firstName" type="text" ng-model="vm.search.firstName">
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input class="form-control" id="lastName" type="text" ng-model="vm.search.lastName">
+      </div>
+      <div class="form-group">
+        <label for="language">Language:</label>
+        <input class="form-control" id="language" type="text" ng-model="vm.search.languages">
+      </div>
+    </form>
+    <table class="table table-striped table-hover volunteers-table">
+      <thead>
+      <tr>
+        <th ng-click="vm.updateOrder('firstName')">
+          First Name
+          <span class="sortorder" ng-show="vm.ordering === 'firstName'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
+        </th>
+        <th ng-click="vm.updateOrder('lastName')">
+          Last Name
+          <span class="sortorder" ng-show="vm.ordering === 'lastName'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
+        </th>
+        <th ng-click="vm.updateOrder('languages')">
+          Languages
+          <span class="sortorder" ng-show="vm.ordering === 'languages'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="volunteer in vm.volunteers | filter:vm.search | orderBy:vm.ordering:vm.isReverseOrder">
+        <td ng-bind="volunteer.firstName"></td>
+        <td ng-bind="volunteer.lastName"></td>
+        <td ng-bind="volunteer.languages.join(', ')"></td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </main>
