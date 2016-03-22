@@ -1,6 +1,6 @@
 import template from './vaf.html';
 import controller from './vaf.controller';
-import './vaf.styl';
+import './vaf.scss';
 
 let vafComponent = {
   restrict: 'E',
