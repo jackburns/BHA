@@ -1,7 +1,7 @@
 #!bin/bash
 
 cd /data/www/BHA/js
-npm install
+sudo npm install
 gulp webpack
 
 service nginx restart
