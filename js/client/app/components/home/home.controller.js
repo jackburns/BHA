@@ -1,6 +1,5 @@
 class HomeController {
   constructor() {
-    const vm = this;
 
     let makeVolunteer = function(id, firstName, lastName, languages) {
       return {
@@ -11,14 +10,14 @@ class HomeController {
       };
     };
 
-    vm.ordering = 'lastName';
-    vm.isReverseOrder = false;
-    vm.updateOrder = function(ordering) {
-      vm.isReverseOrder = (vm.ordering === ordering) ? !vm.isReverseOrder : false;
-      vm.ordering = ordering;
+    this.ordering = 'lastName';
+    this.isReverseOrder = false;
+    this.updateOrder = function(ordering) {
+      this.isReverseOrder = (this.ordering === ordering) ? !this.isReverseOrder : false;
+      this.ordering = ordering;
     };
 
-    vm.volunteers = [
+    this.volunteers = [
       makeVolunteer(0, 'Bill', 'Brown', ['German']),
       makeVolunteer(1, 'Ellie', 'White', ['Portuguese, Spanish']),
       makeVolunteer(2, 'Tom', 'Jones', ['Spanish', 'French'])

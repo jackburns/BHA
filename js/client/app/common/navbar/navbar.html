@@ -12,7 +12,7 @@
     <div class="navbar-collapse collapse" id="bha-nav">
       <ul class="nav navbar-nav navbar-right">
         <li><a ui-sref="about">About</a></li>
-        <li ng-if="!user.isSignedIn()"><a href="#">Login/Signup</a></li>
+        <li ng-if="!user.isSignedIn()"><a ui-sref="login">Login/Signup</a></li>
         <li ng-if="user.isSignedIn()"><a href="#">Profile</a></li>
 
       </ul>
