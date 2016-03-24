@@ -70,9 +70,7 @@ workon bha
 echo -e "\n--- Working on virtualenv " $VIRTUAL_ENV
 pip3 install -r 'requirements.txt'
 
-cd /vagrant/bha
-
-mysql -u root -ppassword < /vagrant/bha/mysqlSetup.sql
+mysql -u root -ppassword < /vagrant/mysqlSetup.sql
 
 python manage.py makemigrations
 python manage.py migrate
