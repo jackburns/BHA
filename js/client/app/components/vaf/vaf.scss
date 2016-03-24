@@ -2,6 +2,14 @@
     text-align: center;
 }
 
+.err {
+    color: #c00;
+}
+
+input.ng-invalid.submitted, input.ng-invalid.submitted, , input.invalid.submitted, table.submitted.invalid td {
+    background-color: #ffeeee;
+}
+
 .holder {
     margin: 0 auto;
     max-width: 740px;
@@ -18,6 +26,10 @@
     background-color: #f9f9f9;
 }
 
+td {
+    background-color: #f2f2f2;
+}
+
 .vaf input, .vaf select {
     margin-top: 4px;
     margin-bottom: 4px;
@@ -30,5 +42,11 @@
 }
 
 .sub {
+    margin-top: 4px;
     text-align: right;
+}
+
+h6.invalid {
+    color: #c00;
+    font-size: 1.15em;
 }
