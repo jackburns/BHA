@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-	'volunteers',
+    'volunteers',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,7 +79,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bha_db',
-		'USER': 'root',             
+        'USER': 'root',             
         'PASSWORD': 'password',                  
         'HOST': '',                     
         'PORT': '', 
