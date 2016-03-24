@@ -1,0 +1,10 @@
+DROP DATABASE IF EXISTS `bha_db`;
+CREATE DATABASE `bha_db`
+    DEFAULT CHARACTER SET utf8
+    DEFAULT COLLATE utf8_general_ci;
+
+USE 'mysql';
+GRANT ALL PRIVILEGES ON mydb.* TO 'vagrant'@'localhost' IDENTIFIED BY 'password'
+
+WITH GRANT OPTION;
+FLUSH PRIVILEGES;

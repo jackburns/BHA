@@ -51,14 +51,6 @@ echo "source /usr/local/bin/virtualenvwrapper.sh" >> /home/vagrant/.bashrc
 
 source /usr/local/bin/virtualenvwrapper.sh
 
-echo -e "\n--- Installing Python Packages ---\n"
-cd /vagrant
-mkvirtualenv -p /usr/bin/python3 bha
-workon bha
-echo -e "\n--- Working on virtualenv " $VIRTUAL_ENV
-pip3 install -r 'requirements.txt'
-deactivate
-
 # setup mysql install
 echo -e "\n--- Setup and install MYSQL ---\n"
 sudo apt-get -y install debconf-utils
@@ -68,6 +60,23 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password passwor
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password password"
 
 sudo apt-get install mysql-server -y
+
+sudo apt-get install libmysqlclient-dev
+
+echo -e "\n--- Installing Python Packages ---\n"
+cd /vagrant
+mkvirtualenv -p /usr/bin/python3 bha
+workon bha
+echo -e "\n--- Working on virtualenv " $VIRTUAL_ENV
+pip3 install -r 'requirements.txt'
+
+cd /vagrant/bha
+
+mysql -u root -ppassword < /vagrant/bha/mysqlSetup.sql
+
+python manage.py makemigrations
+python manage.py migrate
+deactivate
 
 # Start things
 sudo service nginx restart
