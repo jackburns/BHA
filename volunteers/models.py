@@ -51,7 +51,7 @@ class Contact(models.Model):
     state = models.CharField(max_length=50)
     zip = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
+    email = models.EmailField()
     preferred_contact = models.CharField(max_length=1, choices=PREFERRED_CONTACT_ENUM)
 
 class Language(models.Model):
