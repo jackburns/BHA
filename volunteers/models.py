@@ -1,44 +1,44 @@
 from django.db import models
 
 SEX_ENUM = (
-    (0, 'Male'),
-    (1, 'Female'),
-    (2, 'Other'),
+    ('Male', 'Male'),
+    ('Female', 'Female'),
+    ('Other', 'Other'),
 )
 
 ROLE_ENUM = (
-    (0, 'User'),
-    (1, 'Admin'),
+    ('User', 'User'),
+    ('Admin', 'Admin'),
 )
 
 VOLUNTEER_LEVEL_ENUM = (
-    (0, 'Unverified'),
-    (1, 'Verified'),
-    (2, 'Trained'),
-    (3, 'hasObserved'),
-    (4, 'beenObserved'),
+    ('Unverified', 'Unverified'),
+    ('Verified', 'Verified'),
+    ('Trained', 'Trained'),
+    ('hasObserved', 'hasObserved'),
+    ('beenObserved', 'beenObserved'),
 )
 
 DAY_ENUM = (
-    (0, 'Monday'),
-    (1, 'Tuesday'),
-    (2, 'Wednesday'),
-    (3, 'Thursday'),
-    (4, 'Friday'),
-    (5, 'Saturday'),
-    (6, 'Sunday'),
+    ('Monday', 'Monday'),
+    ('Tuesday', 'Tuesday'),
+    ('Wednesday', 'Wednesday'),
+    ('Thursday', 'Thursday'),
+    ('Friday', 'Friday'),
+    ('Saturday', 'Saturday'),
+    ('Sunday', 'Sunday'),
 )
 
 PREFERRED_CONTACT_ENUM = (
-    (0, 'Email'),
-    (1, 'Text'),
-    (2, 'Both'),
+    ('Email', 'Email'),
+    ('Text', 'Text'),
+    ('Both', 'Both'),
 )
 
 LANGUAGE_ENUM = (
-    (0, 'English'),
-    (1, 'Spanish'),
-    (2, 'Other'),
+    ('English', 'English'),
+    ('Spanish', 'Spanish'),
+    ('Other', 'Other'),
 )
 
 class Availability(models.Model):
@@ -73,13 +73,5 @@ class Volunteer(models.Model):
     availability = models.ForeignKey(Availability, on_delete=models.CASCADE)
     contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
     hours = models.IntegerField()
-
-
-
-
-
-
-
-
 
 
