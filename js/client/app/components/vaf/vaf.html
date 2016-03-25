@@ -5,7 +5,7 @@
       <h2>Volunteer Interpreter Application Form</h2>
     </div>
     <form name="vaf" novalidate role="form" ng-submit="vm.update(vaf.$valid)" class="form-horizontal vaf">
-      <p class="err" ng-show="vm.submitted && vaf.$invalid">Please fix all errors and submit again!</p>
+      <p class="err" ng-show="vm.submitted && !vm.all_valid">Please fix all errors and submit again!</p>
       <div class="form-group">
 	<div class="col-sm-5">
           <input required type="text" ng-class="{submitted: vm.submitted}" class="form-control" ng-model="vm.info.fname" id="fname" placeholder="First Name*">
@@ -39,11 +39,12 @@
       </div>
       <div class="form-group">
         <div class="col-sm-12">
-	  <h6 ng-show="!vaf.email.$valid && vm.submitted" class="err">Please enter a valid Email address.</h6>
           <input name="email" required ng-class="{submitted: vm.submitted}" type="email" class="form-control" ng-model="vm.info.email" id="email" placeholder="E-mail Address*">
+	  <h6 ng-show="!vaf.email.$valid && vm.submitted" class="err">Please enter a valid Email address.</h6>
 	</div>
 	<div class="col-sm-4">
-          <input required ng-class="{submitted: vm.submitted}" type="tel" class="form-control" ng-model="vm.info.phone" id="phone" placeholder="Phone Number*">
+          <input name="phone" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required ng-class="{submitted: vm.submitted, invalid: !vm.phone_valid}" type="tel" maxlength="10" class="form-control" ng-model="vm.info.phone" id="phone" placeholder="Phone Number*">
+	  <h6 ng-show="!vm.phone_valid && vm.submitted" class="err">Please enter a valid 10-digit Phone number.</h6>
 	</div>
 	<label for="pref-contact" class="col-sm-5 control-label">Preferred contact method:</label>
 	<div class="col-sm-3">
@@ -51,10 +52,10 @@
 	</div>
       </div>
       <div class="form-group">
-        <h4>Languages</h4>
-	<h6 ng-class="{invalid: vm.no_lang}">Please enter at least one language.</h6>
+        <h4>Languages Spoken</h4>
+	<h6 ng-class="{invalid: vm.no_lang && vm.submitted}">Please enter at least one language.</h6>
         <div class="col-sm-12">
-          <table class="table table-bordered avail-tab table-responsive">
+          <table class="table table-bordered tab table-responsive">
 	    <thead>
 	      <tr>
 	        <th>Language</th>
@@ -65,23 +66,32 @@
 	      <td><input required ng-class="{submitted: vm.submitted}" type="text" id="language1" class="form-control" ng-model="vm.info.lang1.name" placeholder="Language 1*"/></td>
 	      <td><input id="wr-lang1" type="checkbox" ng-model="vm.info.lang1.wr" /></td>
 	    </tr>
-	    <tr>
+	    <tr ng-show="vm.num_langs > 1">
 	      <td><input ng-class="{submitted: vm.submitted}" type="text" id="language2" class="form-control" ng-model="vm.info.lang2.name" placeholder="Language 2"/></td>
 	      <td><input id="wr-lang2" type="checkbox" ng-model="vm.info.lang2.wr" /></td>
 	    </tr>	    
-	    <tr>
+	    <tr ng-show="vm.num_langs > 2">
 	      <td><input ng-class="{submitted: vm.submitted}" type="text" id="language3" class="form-control" ng-model="vm.info.lang3.name" placeholder="Language 3"/></td>
 	      <td><input id="wr-lang3" type="checkbox" ng-model="vm.info.lang3.wr" /></td>
 	    </tr>	    
-	    <tr>
+	    <tr ng-show="vm.num_langs > 3">
 	      <td><input ng-class="{submitted: vm.submitted}" type="text" id="language4" class="form-control" ng-model="vm.info.lang4.name" placeholder="Language 4"/></td>
 	      <td><input id="wr-lang4" type="checkbox" ng-model="vm.info.lang4.wr" /></td>
 	    </tr>
-	    <tr>
+	    <tr ng-show="vm.num_langs > 4">
 	      <td><input ng-class="{submitted: vm.submitted}" type="text" id="language5" class="form-control" ng-model="vm.info.lang5.name" placeholder="Language 5"/></td>
 	      <td><input id="wr-lang5" type="checkbox" ng-model="vm.info.lang5.wr" /></td>
 	    </tr>
 	  </table>
+	  <div class="but-tag">
+	    <button ng-show="vm.num_langs > 1" type="button" ng-click="vm.num_langs = vm.num_langs-1" class="btn add-btn" aria-label="Left Align">
+	      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+	    </button>
+	    <button ng-show="vm.num_langs < 5" type="button" ng-click="vm.num_langs = vm.num_langs+1" class="btn add-btn" aria-label="Left Align">
+	      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	    </button>
+	  </div>
+	  <h6 ng-show="vm.num_langs > 4">Additional languages can be specified in the Notes section.</h6>
 	</div>
       </div>
       <div class="form-group">
@@ -91,45 +101,54 @@
 	</div>
       </div>
       <div class="form-group">
-        <h4>Availability<h4>
-	<h6>AM: 9am-12pm, PM: 1pm-5pm</h6>
-	<h6 ng-class="{invalid: vm.no_avail && vm.submitted}">Please check at least one time slot for which you are generally available.</h6>
+        <h4>Availability</h4>
+	<h6>Please enter times for which you are generally available on a weekly basis.</h6>
+	<h6 ng-class="{invalid: !vm.avail_valid && vm.submitted}">Provide valid time slots (at least one).</h6>
         <div class="col-sm-12">
-          <table ng-class="{submitted: vm.submitted, invalid: vm.no_avail}" class="table table-bordered avail-tab table-responsive">
+          <table class="table table-bordered tab table-responsive">
 	    <thead>
 	      <tr>
-	        <th></th>
-	        <th>Sun</th>
-	        <th>Mon</th>
-	        <th>Tue</th>
-	        <th>Wed</th>
-	        <th>Thu</th>
-	        <th>Fri</th>
-	        <th>Sat</th>
+	        <th>Day of Week</th>
+	        <th>Start Time</th>
+	        <th>End Time</th>
 	      </tr>
 	    </thead>
 	    <tr>
-	      <th>AM</th>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_sun_am"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_mon_am"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_tue_am"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_wed_am"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_thu_am"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_fri_am"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_sat_am"></td>
+	      <td><select required id="av0d" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[0].val}" ng-model="vm.info.av[0].d" ng-options="day for day in vm.days"></select></td>
+	      <td><select required id="av0s" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[0].val}" ng-model="vm.info.av[0].s" ng-options="time for time in vm.times"></select></td>
+	      <td><select required id="av0e" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[0].val}" ng-model="vm.info.av[0].e" ng-options="time for time in vm.times"></select></td>
 	    </tr>
-	    <tr>
-	      <th>PM</th>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_sun_pm"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_mon_pm"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_tue_pm"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_wed_pm"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_thu_pm"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_fri_pm"></td>
-	      <td><input type="checkbox" ng-model="vm.info.avails.av_sat_pm"></td>
+	    <tr ng-show="vm.num_avails > 1">
+	      <td><select id="av1d" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[1].val}" ng-model="vm.info.av[1].d" ng-options="day for day in vm.days"></select></td>
+	      <td><select id="av1s" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[1].val}" ng-model="vm.info.av[1].s" ng-options="time for time in vm.times"></select></td>
+	      <td><select id="av1e" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[1].val}" ng-model="vm.info.av[1].e" ng-options="time for time in vm.times"></select></td>
+	    </tr>	    
+	    <tr ng-show="vm.num_avails > 2">
+	      <td><select id="av2d" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[2].val}" ng-model="vm.info.av[2].d" ng-options="day for day in vm.days"></select></td>
+	      <td><select id="av2s" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[2].val}" ng-model="vm.info.av[2].s" ng-options="time for time in vm.times"></select></td>
+	      <td><select id="av2e" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[2].val}" ng-model="vm.info.av[2].e" ng-options="time for time in vm.times"></select></td>
+	    </tr>	    
+	    <tr ng-show="vm.num_avails > 3">
+	      <td><select id="av3d" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[3].val}" ng-model="vm.info.av[3].d" ng-options="day for day in vm.days"></select></td>
+	      <td><select id="av3s" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[3].val}" ng-model="vm.info.av[3].s" ng-options="time for time in vm.times"></select></td>
+	      <td><select id="av3e" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[3].val}" ng-model="vm.info.av[3].e" ng-options="time for time in vm.times"></select></td>
+	    </tr>
+	    <tr ng-show="vm.num_avails > 4">
+	      <td><select id="av4d" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[4].val}" ng-model="vm.info.av[4].d" ng-options="day for day in vm.days"></select></td>
+	      <td><select id="av4s" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[4].val}" ng-model="vm.info.av[4].s" ng-options="time for time in vm.times"></select></td>
+	      <td><select id="av4e" class="form-control" ng-class="{submitted: vm.submitted, invalid: !vm.info.av[4].val}" ng-model="vm.info.av[4].e" ng-options="time for time in vm.times"></select></td>
 	    </tr>
 	  </table>
-	</div>
+	  <div class="but-tag">
+	    <button ng-show="vm.num_avails > 1" type="button" ng-click="vm.num_avails = vm.num_avails-1" class="btn add-btn" aria-label="Left Align">
+	      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+	    </button>
+	    <button ng-show="vm.num_avails < 5" type="button" ng-click="vm.num_avails = vm.num_avails+1" class="btn add-btn" aria-label="Left Align">
+	      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	    </button>
+	  </div>
+	  <h6 ng-show="vm.num_avails > 4">Additional availability can be specified in the Notes section.</h6>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-4">Additional Notes</label>
@@ -140,6 +159,8 @@
       <div class="sub">
         <input class="sub btn btn-primary" type="submit" value="Submit" />
       </div>
+      <div class="message">
+        <h6>If you have any questions, feel free to contact us at <a href="mailto:LanguageAccessTeam@bostonhousing.org">LanguageAccessTeam@bostonhousing.org</a></h6>
     </form>
   </div>
 </div>

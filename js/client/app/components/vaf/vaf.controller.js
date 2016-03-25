@@ -1,9 +1,18 @@
 class VafController {
   constructor($http) {
-    this.zip_valid = false;
-    this.no_avail = true;
-    this.submitted = false;
+    // initial validation settings
     this.name = 'Volunteer Application Form';
+    this.all_valid = false;
+    this.zip_valid = false;
+    this.phone_valid = false;
+    this.avail_valid = false;
+    this.no_lang = true;
+    this.num_langs = 1;
+    this.num_avails = 1;
+    this.submitted = false;
+    this.sent = false;
+    
+    // initial info object
     this.info = {
         fname: "",
 	lname: "",
@@ -42,53 +51,82 @@ class VafController {
 	    wr: false
 	},
 	bha_app_res: false,
-	avails: {
-	    av_sun_am: false,
-	    av_mon_am: false,
-	    av_tue_am: false,
-	    av_wed_am: false,
-	    av_thu_am: false,
-	    av_fri_am: false,
-	    av_sat_am: false,
-	    av_sun_pm: false,
-	    av_mon_pm: false,
-	    av_tue_pm: false,
-	    av_wed_pm: false,
-	    av_thu_pm: false,
-	    av_fri_pm: false,
-	    av_sat_pm: false,
-	},
+	av: [{
+	    d: "",
+	    s: "",
+	    e: "",
+	    val: false
+	}, {
+	    d: "",
+	    s: "",
+	    e: "",
+	    val: false
+	}, {
+	    d: "",
+	    s: "",
+	    e: "",
+	    val: false
+	}, {
+	    d: "",
+	    s: "",
+	    e: "",
+	    val: false
+	}, {
+	    d: "",
+	    s: "",
+	    e: "",
+	    val: false
+	}],
 	notes: ""
     };
     
+    // defaults/dropdown values
     this.contacts = ["Phone", "Email", "Text"];
-    this.profs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     this.info.contact = "Phone";
-    
-    this.form_valid = function() {
-      return false;
-    }
-    
-    this.no_availf = function() {
-      for (var property in this.info.avails) {
-        if (this.info.avails.hasOwnProperty(property) && this.info.avails[property]) {
-	  return false;
+    this.days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    this.times = ["9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", 
+                  "1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "4:00PM", "4:30PM", "5:00PM"];
+		  
+    // check if availability is valid, set availabilities validity
+    this.availf = function() {
+      var ret = true;
+      for (var i = 0; i < 5; i++) {
+        var cur = this.info.av[i];
+        if ((cur.d == "" || cur.s == "" || cur.e == "" ||
+	    this.times.indexOf(cur.s) >= this.times.indexOf(cur.e)) &&
+	    i < this.num_avails) {
+	  cur.val = false;
+          ret = false;	  
+	} else {
+	  cur.val = true;
 	}
       }
       
-      return true;
+      return ret;
     }
- 
+    
+    // given that angular validated the form,
+    // is the custom validation in order?
+    this.form_valid = function(ang_valid) {
+      this.all_valid = ang_valid && this.zip_valid && this.phone_valid && this.avail_valid && !this.no_lang;
+      return this.all_valid;
+    }
+
+    // on submit
     this.update = function(ang_valid) {
+      // check custom validations
       this.zip_valid = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.info.zip);
+      this.phone_valid = this.info.phone.length == 10;
       this.no_lang = this.info.lang1.name == "";
-      this.no_avail = this.no_availf();
-      console.log(this.no_avail);
-      console.log(ang_valid);
+      this.avail_valid = this.availf();
+      
       this.submitted = true;
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
-      console.log(this.info.lang1.name);
-      if (ang_valid && this.form_valid()) {
+      
+      // if good to go, send it off
+      if (this.form_valid(ang_valid)) {
+        this.sent = true;
+	console.log(this.info);
+        /*
         $http.post('/volunteerApp', this.info).then(
 	  //success
 	  function (response) {
@@ -98,7 +136,9 @@ class VafController {
 	  //failure
 	  function (response) {
 	    console.log("bad");
-	  });
+	  });*/
+      } else {
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
       }
     };
   }
