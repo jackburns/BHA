@@ -1,5 +1,5 @@
 class HomeController {
-  constructor() {
+  constructor($location) {
     const vm = this;
 
     let makeVolunteer = function(id, firstName, lastName, languages) {
@@ -23,7 +23,14 @@ class HomeController {
       makeVolunteer(1, 'Ellie', 'White', ['Portuguese, Spanish']),
       makeVolunteer(2, 'Tom', 'Jones', ['Spanish', 'French'])
     ];
+
+    vm.viewVolunteer = function(volunteerId) {
+      console.log(volunteerId);
+      $location.path('/volunteer/' + volunteerId.toString());
+    }
   }
 }
+
+HomeController.$inject = ["$location"];
 
 export default HomeController;
