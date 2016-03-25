@@ -2,6 +2,7 @@
     text-align: center;
 }
 
+<<<<<<< HEAD
 .err {
     color: #c00;
 }
@@ -18,17 +19,6 @@ table.submitted.invalid td,
 select.submitted.ng-invalid,
 select.submitted.invalid {
     background-color: #ffeeee;
-}
-
-.holder {
-    margin: 0 auto;
-    max-width: 740px;
-    padding-top: 0;
-}
-
-.vaf {
-    max-width: 500px;
-    margin: inherit;
 }
 
 .tab th {
@@ -81,4 +71,5 @@ h6.invalid {
 
 .add-btn:hover, .add-btn:focus {
     color: #fff;
+    text-align: right;
 }
