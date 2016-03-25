@@ -1,9 +1,11 @@
 # Local stuff
 .DS_STORE
 .vagrant
+.idea*
 
 # Installer logs
 pip-log.txt
+install.log
 pip-delete-this-directory.txt
 npm-debug.log*
 
@@ -25,3 +27,5 @@ eggs
 parts
 src/*.egg-info
 *.tmp*
+common.cab
+VirtualBox-5.0.10-r104061-MultiArch*

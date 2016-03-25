@@ -15,11 +15,16 @@ server {
         sendfile off;
 
         location / {
-                try_files $uri $uri/ =404;
+          try_files $uri $uri/ =404;
         }
 
         location /api {
-                uwsgi_pass django;
-                include /etc/nginx/uwsgi_params;
+          uwsgi_pass django;
+          include /etc/nginx/uwsgi_params;
+        }
+
+        location /admin {
+          uwsgi_pass django;
+          include /etc/nginx/uwsgi_params;
         }
 }
