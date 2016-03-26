@@ -1,9 +1,11 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import homeComponent from './home.component';
+import uiSelect from 'ui-select';
 
 let homeModule = angular.module('home', [
-  uiRouter
+  uiRouter,
+  uiSelect
 ]).config(['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) => {
 
   $urlRouterProvider.otherwise('/');
