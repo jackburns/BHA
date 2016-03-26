@@ -10,9 +10,16 @@
         <label for="lastName">Last Name:</label>
         <input class="form-control" id="lastName" type="text" ng-model="vm.search.lastName">
       </div>
-      <div class="form-group">
-        <label for="language">Language:</label>
-        <input class="form-control" id="language" type="text" ng-model="vm.search.languages">
+      <div>
+        <label>Language:</label>
+        <ui-select multiple ng-model="vm.selectedLanguages" class="language-select">
+          <ui-select-match>
+            {{$item}}
+          </ui-select-match>
+          <ui-select-choices repeat="languageItem in vm.allLanguages | filter: $select.search">
+            {{languageItem}}
+          </ui-select-choices>
+        </ui-select>
       </div>
     </form>
     <table class="table table-striped table-hover volunteers-table">
