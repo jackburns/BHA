@@ -43,7 +43,7 @@ class VolunteerController {
         case 2:
           return vm.makeVolunteer(2, 'Tom', 'Jerry', 'Jones', ['Spanish', 'French']);
         default:
-          return vm.makeVolunteer(3, faker.name.firstName(), '', faker.name.lastName(), ['Ukranian', 'Swedish', 'Afrikaans']);
+          return vm.makeVolunteer(vm.volunteerId, faker.name.firstName(), '', faker.name.lastName(), ['Ukranian', 'Swedish', 'Afrikaans']);
       };
     };
 
