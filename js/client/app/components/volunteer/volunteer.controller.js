@@ -1,4 +1,5 @@
 import faker from 'faker'
+import _ from 'lodash'
 
 class VolunteerController {
   constructor($state, $http) {
@@ -48,6 +49,31 @@ class VolunteerController {
     };
 
     vm.volunteer = vm.getVolunteer(vm.volunteerId);
+
+    vm.generateSchedule = function() {
+
+      let randomTrueFalse = () => {
+        return (Math.floor(Math.random() * 2)) == 0 ? false : true;
+      }
+
+      let schedule = _.map(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], (day) => {
+        var am = randomTrueFalse();
+        var pm = randomTrueFalse();
+        var ret = {day: day, am: am, pm: pm};
+        return ret;
+      });
+
+      console.log(schedule);
+      return schedule;
+
+    }
+
+    vm.schedule = vm.generateSchedule();
+    vm.days = _.map(vm.schedule, (day) => { return day.day; });
+    vm.ams = _.map(vm.schedule, (day) => { return day.am; });
+    vm.pms = _.map(vm.schedule, (day) => { return day.pm; });
+
+
   };
 };
 

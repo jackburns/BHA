@@ -1,5 +1,5 @@
 class HomeController {
-  constructor($location) {
+  constructor($state) {
 
     //TODO: Delete function once GET /volunteers/ API is set up
     let makeVolunteer = function(id, firstName, lastName, languages) {
@@ -26,8 +26,8 @@ class HomeController {
     };
 
     let viewVolunteer = function(volunteerId) {
-      $location.path('/volunteer/' + volunteerId.toString());
-    }
+      $state.go('volunteer', {volunteerId: volunteerId.toString()});
+    };
 
     this.updateOrder = function(ordering) {
       this.isReverseOrder = (this.ordering === ordering) ? !this.isReverseOrder : false;
@@ -43,6 +43,6 @@ class HomeController {
   }
 }
 
-HomeController.$inject = ["$location"];
+HomeController.$inject = ["$state"];
 
 export default HomeController;
