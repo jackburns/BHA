@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <h1>{{ vm.volunteer.firstName }} 
+    {{ vm.volunteer.middleName }}
+    {{ vm.volunteer.lastName }}</h1>
+
+  <div class="row">
+    <div class="col-md-4">
+      <strong>Gender:</strong><br>
+      {{ vm.volunteer.gender }}<br><br>
+
+      <strong>Birthday:</strong><br>
+      {{ vm.volunteer.birthday }}<br><br>
+
+      <strong>Languages:</strong><br>
+      <span ng-bind="vm.volunteer.languages.join(', ')"></span>
+
+      <br><br>
+
+      <strong>Volunteer Level</strong><br>
+      {{ vm.volunteer.volunteerLevel }}<br><br>
+      <strong>Hours Completed:</strong><br>
+      {{ vm.volunteer.hours }}<br><br>
+
+      <strong>Contact:</strong><address>
+        {{ vm.volunteer.contact.street }}<br>
+        {{ vm.volunteer.contact.city }},
+        {{ vm.volunteer.contact.state }}
+        {{ vm.volunteer.contact.zip }}<br>
+
+        {{ vm.volunteer.contact.phoneNumber }}<br>
+        <a href="mailto:#">{{ vm.volunteer.contact.email }}</a><br>
+      </address>
+    </div>
+
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Availability</h3>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th ng-repeat="day in vm.schedule"><center>{{day.day}}<center></th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td ng-repeat="day in vm.schedule">
+              <a href="#" ng-class="day.am ? 'btn btn-primary btn-block' : 'btn btn-block disabled'" role="button">AM</a>
+            </td>
+          </tr>
+          <tr>
+            <td ng-repeat="day in vm.schedule">
+              <a href="#" ng-class="day.pm ? 'btn btn-primary btn-block' : 'btn btn-block disabled'" role="button">PM</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <strong>Notes:</strong><br>
+      {{ vm.volunteer.notes }}
+    </div>
+  </div>
+</div>
+
+  <button type="button" class="btn btn-primary">Contact</button>
+  <button type="button" class="btn btn-info">Edit</button>
+
+
+</div>

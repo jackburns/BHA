@@ -10,9 +10,9 @@
         <label for="lastName">Last Name:</label>
         <input class="form-control" id="lastName" type="text" ng-model="vm.search.lastName">
       </div>
-      <div>
-        <label>Language:</label>
-        <ui-select multiple ng-model="vm.selectedLanguages" class="language-select">
+      <div class="form-group">
+        <label>Spoken Language(s):</label>
+        <ui-select multiple ng-model="vm.selectedSpokenLanguages" class="language-select form-control">
           <ui-select-match>
             {{$item}}
           </ui-select-match>
@@ -20,6 +20,22 @@
             {{languageItem}}
           </ui-select-choices>
         </ui-select>
+      </div>
+      <div class="form-group">
+        <label>Written Language(s):</label>
+        <ui-select multiple ng-model="vm.selectedWrittenLanguages" class="language-select form-control">
+          <ui-select-match>
+            {{$item}}
+          </ui-select-match>
+          <ui-select-choices repeat="languageItem in vm.allLanguages | filter: $select.search">
+            {{languageItem}}
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value=""> Willing to translate
+        </label>
       </div>
     </form>
     <table class="table table-striped table-hover volunteers-table">
@@ -37,13 +53,20 @@
           Languages
           <span class="sortorder" ng-show="vm.ordering === 'languages'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
         </th>
+        <th>
+          Actions
+        </th>
       </tr>
       </thead>
       <tbody>
       <tr ng-repeat="volunteer in vm.volunteers | filter:vm.search | orderBy:vm.ordering:vm.isReverseOrder">
-        <td ng-bind="volunteer.firstName"></td>
-        <td ng-bind="volunteer.lastName"></td>
-        <td ng-bind="volunteer.languages.join(', ')"></td>
+          <td ng-bind="volunteer.firstName"></td>
+          <td ng-bind="volunteer.lastName"></td>
+          <td ng-bind="volunteer.languages.join(', ')"></td>
+          <td>
+            <button type="button" class="btn" ng-click="vm.viewVolunteer(volunteer.id)">View</button>
+          </td>
+        </a>
       </tr>
       </tbody>
     </table>
