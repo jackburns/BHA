@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-class VafController {
+class VolunteerFormController {
   constructor($http) {
 
     this.selectOptions = {
@@ -111,5 +111,5 @@ class VafController {
   }
 }
 
-VafController.$inject = ['$http'];
-export default VafController;
+VolunteerFormController.$inject = ['$http'];
+export default VolunteerFormController;
