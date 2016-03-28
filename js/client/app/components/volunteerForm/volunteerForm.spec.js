@@ -1,16 +1,16 @@
-import VafModule from './vaf'
-import VafController from './vaf.controller';
-import VafComponent from './vaf.component';
-import VafTemplate from './vaf.html';
+import VolunteerFormModule from './volunteerForm'
+import VolunteerFormController from './volunteerForm.controller';
+import VolunteerFormComponent from './volunteerForm.component';
+import VolunteerFormTemplate from './volunteerForm.html';
 
-describe('Vaf', () => {
+describe('VolunteerForm', () => {
   let $rootScope, makeController;
 
-  beforeEach(window.module(VafModule.name));
+  beforeEach(window.module(VolunteerFormModule.name));
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
     makeController = () => {
-      return new VafController();
+      return new VolunteerFormController();
     };
   }));
 
@@ -109,10 +109,10 @@ describe('Vaf', () => {
 
   describe('Component', () => {
       // component/directive specs
-      let component = VafComponent;
+      let component = VolunteerFormComponent;
 
       it('includes the intended template',() => {
-        expect(component.template).to.equal(VafTemplate);
+        expect(component.template).to.equal(VolunteerFormTemplate);
       });
 
       it('uses `controllerAs` syntax', () => {
@@ -120,7 +120,7 @@ describe('Vaf', () => {
       });
 
       it('invokes the right controller', () => {
-        expect(component.controller).to.equal(VafController);
+        expect(component.controller).to.equal(VolunteerFormController);
       });
   });
 });
