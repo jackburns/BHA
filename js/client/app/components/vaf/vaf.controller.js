@@ -2,25 +2,37 @@ import _ from 'lodash';
 
 class VafController {
   constructor($http) {
-    // initial validation settings
-    this.name = 'Volunteer Application Form';
-    this.all_valid = false;
-    this.zip_valid = false;
-    this.phone_valid = false;
-    this.avail_valid = false;
-    this.no_lang = true;
-    this.num_langs = 1;
-    this.submitted = false;
 
-    let create_blank_availability = function() {
-      return {
-        dayOfWeek: "",
-          startTime: "",
-        endTime: "",
-        val: false
-      };
+    this.selectOptions = {
+      contactMethods: ["Phone", "Email", "Text"],
+      daysOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      availabilityTimes: ["9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM",
+        "1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM"]
     };
 
+    this.name = 'Volunteer Application Form';
+    this.allValid = false;
+    this.zip_valid = false;
+    this.phone_valid = false;
+    this.validLanguages = false;
+    this.validAvailabilities = false;
+    this.submitted = false;
+
+    let createBlankAvailability = function() {
+      return {
+        dayOfWeek: "",
+        startTime: "",
+        endTime: "",
+        isValid: false
+      };
+    };
+    
+    let createBlankLanguage = function() {
+      return {
+        name: "",
+        willTranslate: false
+      }
+    };
 
     // initial info object
     this.info = {
@@ -34,80 +46,52 @@ class VafController {
       zip: "",
       email: "",
       phone: "",
-      contact: "Phone",
-      lang1: {
-        name: "",
-        sp_prof: 1,
-        wr: false
-      },
-      lang2: {
-        name: "",
-        sp_prof: 1,
-        wr: false
-      },
-      lang3: {
-        name: "",
-        sp_prof: 1,
-        wr: false
-      },
-      lang4: {
-        name: "",
-        sp_prof: 1,
-        wr: false
-      },
-      lang5: {
-        name: "",
-        sp_prof: 1,
-        wr: false
-      },
+      contactMethod: "Phone",
+      languages: [createBlankLanguage()],
       bha_app_res: false,
-      availabilities: [create_blank_availability()],
+      availabilities: [createBlankAvailability()],
       notes: ""
     };
 
-    // defaults/dropdown values
-    this.contacts = ["Phone", "Email", "Text"];
-    this.info.contact = "Phone";
-    this.days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    this.times = ["9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM",
-      "1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM"];
-
-    this.setValidities = function() {
+    this.validateAvailabilities = function() {
       _.each(this.info.availabilities, function(av) {
-        av.val = (av.dayOfWeek !== "" && av.startTime !== "" && av.endTime !== "" &&
-          this.times.indexOf(av.startTime) < this.times.indexOf(av.endTime));
+        av.isValid = (av.dayOfWeek !== "" && av.startTime !== "" && av.endTime !== "" &&
+          this.selectOptions.availabilityTimes.indexOf(av.startTime) < this.selectOptions.availabilityTimes.indexOf(av.endTime));
       }, this);
     };
 
-    // given that angular validated the form,
-    // is the custom validation in order?
-    this.setFormValidity = function(ang_valid) {
-      this.all_valid = ang_valid && this.zip_valid && this.phone_valid && this.avail_valid && !this.no_lang;
+    this.validateForm = function(ang_valid) {
+      this.allValid = ang_valid && this.zip_valid && this.phone_valid && this.validAvailabilities;
     };
 
-    this.removeLastAvailability = function() {
-      if (this.info.availabilities.length > 0) {
-        this.info.availabilities.pop();
-      }
+    this.addNewLanguage = function () {
+      this.info.languages.push(createBlankLanguage());
+    };
+
+    this.removeLastLanguage = function() {
+      this.info.languages.pop();
     };
 
     this.addNewAvailability = function() {
-      this.info.availabilities.push(create_blank_availability());
+      this.info.availabilities.push(createBlankAvailability());
+    };
+
+    this.removeLastAvailability = function() {
+      this.info.availabilities.pop();
     };
 
     // on submit
-    this.update = function(ang_valid) {
+    this.submit = function(ang_valid) {
       // check custom validations
+      this.submitted = true;
       this.zip_valid = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.info.zip);
       this.phone_valid = this.info.phone.length == 10;
-      this.no_lang = this.info.lang1.name == "";
+      this.validLanguages = _.every(this.info.languages, 'name');
+      this.validateAvailabilities();
+      this.validAvailabilities = _.every(this.info.availabilities, 'isValid');
+      this.validateForm(ang_valid);
 
-      this.submitted = true;
-      this.setValidities();
-      this.avail_valid = _.every(this.info.availabilities, 'val');
-      this.setFormValidity(ang_valid);
-
-      if (this.all_valid) {
+      if (this.allValid) {
         console.log(this.info);
         /*
          $http.post('/volunteerApp', this.info).then(

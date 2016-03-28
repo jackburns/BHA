@@ -4,8 +4,8 @@
       <img src="static/viplogo.png">
       <h2>Volunteer Interpreter Application Form</h2>
     </div>
-    <form name="vaf" novalidate role="form" ng-submit="vm.update(vaf.$valid)" class="form-horizontal vaf">
-      <p class="err" ng-show="vm.submitted && !vm.all_valid">Please fix all errors and submit again!</p>
+    <form name="vaf" novalidate role="form" ng-submit="vm.submit(vaf.$valid)" class="form-horizontal vaf">
+      <p class="err" ng-show="vm.submitted && !vm.allValid">Please fix all errors and submit again!</p>
       <div class="form-group">
         <div class="col-sm-5">
           <input required type="text" ng-class="{submitted: vm.submitted}" class="form-control" ng-model="vm.info.firstName" id="firstName" placeholder="First Name*">
@@ -48,12 +48,12 @@
         </div>
         <label for="pref-contact" class="col-sm-5 control-label">Preferred contact method:</label>
         <div class="col-sm-3">
-          <select id="pref-contact" class="form-control" ng-model="vm.info.contact" ng-options="contact for contact in vm.contacts"></select>
+          <select id="pref-contact" class="form-control" ng-model="vm.info.contactMethod" ng-options="contact for contact in vm.selectOptions.contactMethods"></select>
         </div>
       </div>
       <div class="form-group">
         <h4>Languages Spoken</h4>
-        <h6 ng-class="{invalid: vm.no_lang && vm.submitted}">Please enter at least one language.</h6>
+        <h6 ng-class="{invalid: !vm.validLanguages && vm.submitted}">Please enter at least one language.</h6>
         <div class="col-sm-12 table-responsive">
           <table class="table table-bordered tab">
             <thead>
@@ -62,36 +62,19 @@
               <th>Willing to do written translations?</th>
             </tr>
             </thead>
-            <tr>
-              <td><input required ng-class="{submitted: vm.submitted}" type="text" id="language1" class="form-control" ng-model="vm.info.lang1.name" placeholder="Language 1*"/></td>
-              <td><input id="wr-lang1" type="checkbox" ng-model="vm.info.lang1.wr" /></td>
-            </tr>
-            <tr ng-show="vm.num_langs > 1">
-              <td><input ng-class="{submitted: vm.submitted}" type="text" id="language2" class="form-control" ng-model="vm.info.lang2.name" placeholder="Language 2"/></td>
-              <td><input id="wr-lang2" type="checkbox" ng-model="vm.info.lang2.wr" /></td>
-            </tr>
-            <tr ng-show="vm.num_langs > 2">
-              <td><input ng-class="{submitted: vm.submitted}" type="text" id="language3" class="form-control" ng-model="vm.info.lang3.name" placeholder="Language 3"/></td>
-              <td><input id="wr-lang3" type="checkbox" ng-model="vm.info.lang3.wr" /></td>
-            </tr>
-            <tr ng-show="vm.num_langs > 3">
-              <td><input ng-class="{submitted: vm.submitted}" type="text" id="language4" class="form-control" ng-model="vm.info.lang4.name" placeholder="Language 4"/></td>
-              <td><input id="wr-lang4" type="checkbox" ng-model="vm.info.lang4.wr" /></td>
-            </tr>
-            <tr ng-show="vm.num_langs > 4">
-              <td><input ng-class="{submitted: vm.submitted}" type="text" id="language5" class="form-control" ng-model="vm.info.lang5.name" placeholder="Language 5"/></td>
-              <td><input id="wr-lang5" type="checkbox" ng-model="vm.info.lang5.wr" /></td>
+            <tr ng-repeat="language in vm.info.languages track by $index">
+              <td><input type="text" class="form-control" required ng-class="{submitted: vm.submitted, invalid: !language.name}" ng-model="language.name" placeholder="Language Name"></td>
+              <td><input type="checkbox" ng-model="language.willingToTranslate"></td>
             </tr>
           </table>
           <div class="but-tag">
-            <button ng-show="vm.num_langs > 1" type="button" ng-click="vm.num_langs = vm.num_langs-1" class="btn add-btn" aria-label="Left Align">
+            <button ng-show="vm.info.languages.length > 1" type="button" ng-click="vm.removeLastLanguage()" class="btn add-btn" aria-label="Remove last language">
               <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
             </button>
-            <button ng-show="vm.num_langs < 5" type="button" ng-click="vm.num_langs = vm.num_langs+1" class="btn add-btn" aria-label="Left Align">
+            <button type="button" ng-click="vm.addNewLanguage()" class="btn add-btn" aria-label="Add new language">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
           </div>
-          <h6 ng-show="vm.num_langs > 4">Additional languages can be specified in the Notes section.</h6>
         </div>
       </div>
       <div class="form-group">
@@ -103,7 +86,7 @@
       <div class="form-group">
         <h4>Availability</h4>
         <h6>Please enter times for which you are generally available on a weekly basis.</h6>
-        <h6 ng-class="{invalid: !vm.avail_valid && vm.submitted}">Provide valid time slots (at least one).</h6>
+        <h6 ng-class="{invalid: !vm.validAvailabilities && vm.submitted}">Provide valid time slots (at least one).</h6>
         <div class="col-sm-12 table-responsive">
           <table class="table table-bordered tab">
             <thead>
@@ -114,13 +97,13 @@
             </tr>
             </thead>
             <tr ng-repeat="availability in vm.info.availabilities track by $index">
-              <td><select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.val}" ng-model="availability.dayOfWeek" ng-options="day for day in vm.days"></select></td>
-              <td><select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.val}" ng-model="availability.startTime" ng-options="time for time in vm.times"></select></td>
-              <td><select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.val}" ng-model="availability.endTime" ng-options="time for time in vm.times"></select></td>
+              <td><select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.dayOfWeek" ng-options="day for day in vm.selectOptions.daysOfWeek"></select></td>
+              <td><select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.startTime" ng-options="time for time in vm.selectOptions.availabilityTimes"></select></td>
+              <td><select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.endTime" ng-options="time for time in vm.selectOptions.availabilityTimes"></select></td>
             </tr>
           </table>
           <div class="but-tag">
-            <button type="button" ng-click="vm.removeLastAvailability()" class="btn add-btn" aria-label="Remove last availability">
+            <button type="button" ng-show="vm.info.availabilities.length > 1" ng-click="vm.removeLastAvailability()" class="btn add-btn" aria-label="Remove last availability">
               <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
             </button>
             <button type="button" ng-click="vm.addNewAvailability()" class="btn add-btn" aria-label="Add availability">
