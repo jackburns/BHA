@@ -2,7 +2,11 @@ class NavbarController {
   constructor(User) {
     "ngInject";
     this.name = 'navbar';
+<<<<<<< HEAD
     this.user = User;
+=======
+    this.navCollapsed = true;
+>>>>>>> master
   }
 }
 
