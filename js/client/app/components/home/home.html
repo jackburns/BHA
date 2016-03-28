@@ -53,13 +53,20 @@
           Languages
           <span class="sortorder" ng-show="vm.ordering === 'languages'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
         </th>
+        <th>
+          Actions
+        </th>
       </tr>
       </thead>
       <tbody>
       <tr ng-repeat="volunteer in vm.volunteers | filter:vm.search | orderBy:vm.ordering:vm.isReverseOrder">
-        <td ng-bind="volunteer.firstName"></td>
-        <td ng-bind="volunteer.lastName"></td>
-        <td ng-bind="volunteer.languages.join(', ')"></td>
+          <td ng-bind="volunteer.firstName"></td>
+          <td ng-bind="volunteer.lastName"></td>
+          <td ng-bind="volunteer.languages.join(', ')"></td>
+          <td>
+            <button type="button" class="btn" ng-click="vm.viewVolunteer(volunteer.id)">View</button>
+          </td>
+        </a>
       </tr>
       </tbody>
     </table>
