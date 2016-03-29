@@ -21,7 +21,7 @@ def get_volunteers(request):
     List all code snippets, or create a new snippet.
     """
     #if request.method == 'GET':
-    volunteers = Volunteer.objects.all()
+    volunteers = Volunteer.volunteers.all()
     serializer = VolunteerSerializer(volunteers, many=True)
     return JSONResponse(serializer.data)
 """
