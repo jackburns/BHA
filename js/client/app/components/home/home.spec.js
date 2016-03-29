@@ -95,6 +95,64 @@ describe('Home', () => {
       expect(ctrl.numberSelected).to.equal(ctrl.volunteers.length - 1);
       expect(ctrl.willSelectAll).to.be.false;
     });
+
+
+    // notifications modal tests
+    it('disables notify button when no selections', () => {
+      let controller = makeController();
+      expect(controller).to.have.property('notifyModalOpen');
+      expect(controller.notifyModalOpen).to.equal(false);
+      
+      expect(controller).to.have.property('selectedVolunteers');
+      expect(controller.selectedVolunteers).to.have.length(0);
+
+      expect(controller).to.have.property('notifyButtonEnabled');
+      expect(controller.notifyButtonEnabled).to.equal(false);
+    });
+
+    it('enables notify button when one selection', () => {
+      let controller = makeController();
+      controller.selectVolunteer(1);
+      expect(controller.selectedVolunteers).to.have.length(1);
+      expect(controller.notifyButtonEnabled).to.equal(true);
+    });
+
+    it('adds volunteer to selected list when volunteer is selected', () => {
+      let controller = makeController();
+      controller.selectVolunteer(1);
+      expect(controller.selectedVolunteers.indexOf(1)).to.be.above(-1);
+    });
+
+    it('removes volunteer from selected list when volunteer is deselected', () { 
+      let controller = makeController();
+      controller.selectVolunteer(1);
+      controller.selectVolunteer(2);
+      controller.selectVolunteer(3);
+      controller.deselectVolunteer(2);
+      expect(controller.selectedVolunteers.indexOf(2)).to.equal(-1);
+    });
+
+    it('retrieves correct information about a volunteer', () => {
+      let controller = makeController();
+      let volunteer1 = {
+        id: 1,
+        firstName: 'John',
+        lastName: 'Smith',
+        languages; ['Spanish'],
+        email: 'john@smith.com',
+      };
+
+      controller.selectVolunteer(1);
+      let volunteerInfo = controller.getVolunteerInfo(1);
+      expect(volunteerInfo).to.have.property('email');
+      expect(volunteerInfo.email).to.equal('john@smith.com');
+
+      expect(volunteerInfo).to.have.property('firstName');
+      expect(volunteerInfo.email).to.equal('John');
+      
+      expect(volunteerInfo).to.have.property('lastName');
+      expect(volunteerInfo.email).to.equal('Smith');
+    });
   });
 
   describe('Template', () => {
