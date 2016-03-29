@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-class VafController {
+class VolunteerFormController {
   constructor($http) {
 
     this.selectOptions = {
@@ -26,7 +26,7 @@ class VafController {
         isValid: false
       };
     };
-    
+
     let createBlankLanguage = function() {
       return {
         name: "",
@@ -57,7 +57,7 @@ class VafController {
       _.each(this.info.availabilities, function(av) {
         av.isValid = (av.dayOfWeek !== "" && av.startTime !== "" && av.endTime !== "" &&
           this.selectOptions.availabilityTimes.indexOf(av.startTime) < this.selectOptions.availabilityTimes.indexOf(av.endTime));
-      }, this);
+      }.bind(this));
     };
 
     this.validateForm = function(ang_valid) {
@@ -92,7 +92,7 @@ class VafController {
       this.validateForm(ang_valid);
 
       if (this.allValid) {
-        console.log(this.info);
+        return true;
         /*
          $http.post('/volunteerApp', this.info).then(
          //success
@@ -111,5 +111,5 @@ class VafController {
   }
 }
 
-VafController.$inject = ['$http'];
-export default VafController;
+VolunteerFormController.$inject = ['$http'];
+export default VolunteerFormController;
