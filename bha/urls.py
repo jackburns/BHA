@@ -19,7 +19,8 @@ from api import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'api', views.UserViewSet)
+router.register(r'api/volunteers', views.VolunteerViewSet)
+router.register(r'api/users', views.UserViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
