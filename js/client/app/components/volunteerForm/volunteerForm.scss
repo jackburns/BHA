@@ -3,7 +3,7 @@
 }
 
 .m750 {
-    max-width: 740px;
+    max-width: 750px;
 }
 
 .err {
@@ -74,4 +74,9 @@ h6.invalid {
 
 .add-btn:hover, .add-btn:focus {
     color: #fff;
+}
+
+.vaf select {
+    padding-left: 5px;
+    padding-right: 0px;
 }
