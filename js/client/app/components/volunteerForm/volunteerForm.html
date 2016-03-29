@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-12">
+        <div class="col-sm-8">
           <input name="email" required ng-class="{submitted: vm.submitted}" type="email" class="form-control" ng-model="vm.info.email" id="email" placeholder="E-mail Address*">
           <h6 ng-show="!vaf.email.$valid && vm.submitted" class="err">Please enter a valid Email address.</h6>
         </div>
@@ -46,10 +46,14 @@
           <input name="phone" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required ng-class="{submitted: vm.submitted, invalid: !vm.phone_valid}" type="tel" maxlength="10" class="form-control" ng-model="vm.info.phone" id="phone" placeholder="Phone Number*">
           <h6 ng-show="!vm.phone_valid && vm.submitted" class="err">Please enter a valid 10-digit Phone number.</h6>
         </div>
-        <label for="pref-contact" class="col-sm-5 control-label">Preferred contact method:</label>
-        <div class="col-sm-3">
+        <label for="pref-contact" class="col-sm-4 control-label">Preferred contact method:</label>
+        <div class="col-sm-2">
           <select id="pref-contact" class="form-control" ng-model="vm.info.contactMethod" ng-options="contact for contact in vm.selectOptions.contactMethods"></select>
         </div>
+	<label for="carrier" class="col-sm-2 control-label">Carrier:</label>
+	<div class="col-sm-4">
+	  <select id="carrier" class="form-control" ng-model="vm.info.carrier" ng-options="carrier for carrier in vm.selectOptions.carriers"></select>
+	</div>
       </div>
       <div class="form-group">
         <h4>Languages Spoken</h4>
