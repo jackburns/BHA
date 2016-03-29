@@ -60,6 +60,7 @@ class Language(models.Model):
     language_name = models.CharField(max_length=50, choices=LANGUAGE_ENUM)
 
 class Volunteer(models.Model):
+    volunteers = models.Manager()
     user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
