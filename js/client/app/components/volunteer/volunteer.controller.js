@@ -63,9 +63,7 @@ class VolunteerController {
         return ret;
       });
 
-      console.log(schedule);
       return schedule;
-
     }
 
     vm.schedule = vm.generateSchedule();
