@@ -70,7 +70,9 @@ workon bha
 echo -e "\n--- Working on virtualenv " $VIRTUAL_ENV
 pip3 install -r 'requirements.txt'
 
+# Set up database
 mysql -u root -ppassword < /vagrant/mysqlSetup.sql
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'backend@bha.com', 'mikeymike')" | python manage.py shell
 
 python manage.py makemigrations
 python manage.py migrate

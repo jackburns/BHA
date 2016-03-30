@@ -10,6 +10,9 @@ config.output = {
 
 config.plugins = config.plugins.concat([
 
+  new webpack.DefinePlugin({
+      'api': '"/api"'
+  }),
   // Reduces bundles total size
   new webpack.optimize.UglifyJsPlugin({
     mangle: {
