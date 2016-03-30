@@ -4,35 +4,104 @@
     {{ vm.volunteer.lastName }}</h1>
 
   <div class="row">
-    <div class="col-md-4">
-      <strong>Gender:</strong><br>
-      {{ vm.volunteer.gender }}<br><br>
+    <div class="col-md-5">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Gender</span>
+        <select ng-model="vm.volunteer.gender" class="form-control" ng-disabled="!vm.editMode">
+          <option>Other</option>
+          <option>Female</option>
+          <option>Male</option>
+        </select>
+      </div>
 
-      <strong>Birthday:</strong><br>
-      {{ vm.volunteer.birthday }}<br><br>
+      <p class="input-group">
+      <span class="input-group-addon" id="basic-addon1">Birthday</span>
+      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats"  ng-disabled="!vm.editMode"/>
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+      </p>
 
-      <strong>Languages:</strong><br>
-      <span ng-bind="vm.volunteer.languages.join(', ')"></span>
+      <p class="input-group">
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="language in vm.volunteer.languages">
+        {{ language.name }}
+        <i class="glyphicon glyphicon-user" ng-if="language.vocal"></i>
+        <i class="glyphicon glyphicon-pencil" ng-if="language.written"></i>
+        </li>
+      </ul>
+      </p>
 
-      <br><br>
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Volunteer Level</span>
+        <select ng-model="vm.volunteer.volunteerLevel" class="form-control" ng-disabled="!vm.editMode">
+          <option>Unverified</option>
+          <option>Verified</option>
+          <option>Trained</option>
+          <option>hasObserved</option>
+          <option>beenObserved</option>
+        </select>
+      </div>
 
-      <strong>Volunteer Level</strong><br>
-      {{ vm.volunteer.volunteerLevel }}<br><br>
-      <strong>Hours Completed:</strong><br>
-      {{ vm.volunteer.hours }}<br><br>
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Hours Completed</span>
+        <input type="text" ng-model="vm.volunteer.hours" class="form-control" ng-disabled="!vm.editMode">
+      </div>
 
-      <strong>Contact:</strong><address>
-        {{ vm.volunteer.contact.street }}<br>
-        {{ vm.volunteer.contact.city }},
-        {{ vm.volunteer.contact.state }}
-        {{ vm.volunteer.contact.zip }}<br>
+      <br>
 
-        {{ vm.volunteer.contact.phoneNumber }}<br>
-        <a href="mailto:#">{{ vm.volunteer.contact.email }}</a><br>
-      </address>
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Street</span>
+        <input type="text" ng-model="vm.volunteer.contact.street" class="form-control" ng-disabled="!vm.editMode">
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">City</span>
+        <input type="text" ng-model="vm.volunteer.contact.city" class="form-control" ng-disabled="!vm.editMode">
+
+        <span class="input-group-addon" id="basic-addon1">State</span>
+        <select ng-model="vm.volunteer.contact.state" class="form-control" ng-disabled="!vm.editMode">
+          <option>AL</option>
+          <option>AK</option>
+          <option>MA</option>
+          <option>VT</option>
+          <option>NH</option>
+        </select>
+
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Zip</span>
+        <input type="text" ng-model="vm.volunteer.contact.zip" class="form-control" ng-disabled="!vm.editMode">
+      </div>
+
+      <br>
+
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">
+          <i class="glyphicon glyphicon-phone"></i>
+        </span>
+        <input type="text" ng-model="vm.volunteer.contact.phoneNumber" class="form-control" ng-disabled="!vm.editMode"/>
+        <span class="input-group-addon" ng-if="vm.volunteer.contact.preferredContact.phone" id="basic-addon1">
+          Pref.
+        </span>
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">
+          <i class="glyphicon glyphicon-envelope"></i>
+        </span>
+        <input type="text" ng-model="vm.volunteer.contact.email" class="form-control" ng-disabled="!vm.editMode"/>
+        <span class="input-group-addon" ng-if="vm.volunteer.contact.preferredContact.email" id="basic-addon1">
+          Pref.
+        </span>
+      </div>
+
+      <br>
+
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-7">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Availability</h3>
@@ -41,30 +110,38 @@
           <thead>
             <tr>
               <th ng-repeat="day in vm.schedule"><center>{{day.day}}<center></th>
-            </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td ng-repeat="day in vm.schedule">
-              <a href="#" ng-class="day.am ? 'btn btn-primary btn-block' : 'btn btn-block disabled'" role="button">AM</a>
-            </td>
-          </tr>
-          <tr>
-            <td ng-repeat="day in vm.schedule">
-              <a href="#" ng-class="day.pm ? 'btn btn-primary btn-block' : 'btn btn-block disabled'" role="button">PM</a>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td ng-repeat="day in vm.schedule">
+                  <a href="#" ng-class="day.am ? 'btn btn-primary btn-block' : 'btn btn-block disabled'" role="button">AM</a>
+                </td>
+              </tr>
+              <tr>
+                <td ng-repeat="day in vm.schedule">
+                  <a href="#" ng-class="day.pm ? 'btn btn-primary btn-block' : 'btn btn-block disabled'" role="button">PM</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Notes</h3>
+            </div>
+            <textarea ng-bind="vm.volunteer.notes" class="form-control" rows="12" ng-disabled="!vm.editMode"></textarea>
+          </div>
+        </div>
       </div>
-      <strong>Notes:</strong><br>
-      {{ vm.volunteer.notes }}
+      <div ng-if="!vm.editMode">
+        <button type="button" class="btn btn-primary">Contact</button>
+        <button type="button" ng-click="vm.toggleEditMode()" class="btn btn-info">Edit</button>
+      </div>
+      <div ng-if="vm.editMode">
+        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" ng-click="vm.toggleEditMode()" class="btn btn-warning">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
-
-  <button type="button" class="btn btn-primary">Contact</button>
-  <button type="button" class="btn btn-info">Edit</button>
-
-
 </div>

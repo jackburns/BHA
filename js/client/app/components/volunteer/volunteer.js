@@ -1,9 +1,12 @@
 import angular from 'angular';
+import datepicker from 'angular-ui-bootstrap/src/datepicker';
 import uiRouter from 'angular-ui-router';
 import volunteerComponent from './volunteer.component';
 
+
 let volunteerModule = angular.module('volunteer', [
-  uiRouter
+    datepicker,
+    uiRouter
 ])
 
 .config(['$stateProvider', ($stateProvider) => {
