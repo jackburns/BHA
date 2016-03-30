@@ -80,10 +80,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bha.wsgi.application'
 
 CORS_ORIGIN_WHITELIST = (
-    'http://local.bha.com',
+    'local.bha.com',
 )
-
-CORS_ORIGIN_ALLOW_ALL = True
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
