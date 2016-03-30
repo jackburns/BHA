@@ -140,6 +140,8 @@ describe('Home', () => {
         lastName: 'Smith',
         languages; ['Spanish'],
         email: 'john@smith.com',
+	phoneNumber: '6178762348',
+	preferredContact: 'Email'
       };
 
       controller.selectVolunteer(1);
@@ -152,7 +154,48 @@ describe('Home', () => {
       
       expect(volunteerInfo).to.have.property('lastName');
       expect(volunteerInfo.email).to.equal('Smith');
+
+      expect(volunteerInfo).to.have.property('phoneNumber');
+      expect(volunteerInfo.phoneNumber).to.equal('6178762348');
+
+      expect(volunteerInfo).to.have.property('preferredContact');
+      expect(volunteerInfo.preferredContact).to.equal('Email');
     });
+
+
+    it('places volunteers in correct table', () => {
+      let controller = makeController();
+      let volunteer1 = {
+        id: 1,
+        firstName: 'John',
+        lastName: 'Smith',
+        languages; ['Spanish'],
+        email: 'john@smith.com',
+	phoneNumber: '6178762348',
+	preferredContact: 'Email'
+      };
+
+      let volunteer2 = {
+        id: 2,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        languages; ['Spanish'],
+        email: 'jane@smith.com',
+	phoneNumber: '6178562348',
+	preferredContact: 'Text'
+      };
+
+      controller.selectVolunteer(1);
+      controller.selectVolunteer(2);
+
+      let emailVolunteers = controller.getEmailVolunteers();
+      let textVolunteers = controller.getTextVolunteers();
+
+      expect(emailVolunteers.indexOf(2)).to.equal(-1);
+      expect(emailVolunteers.indexOf(1)).to.be.above(-1);
+      expect(emailVolunteers.indexOf(1)).to.equal(-1);
+      expect(emailVolunteers.indexOf(2)).to.be.above(-1);
+    });  
   });
 
   describe('Template', () => {
