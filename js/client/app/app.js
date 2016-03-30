@@ -4,16 +4,20 @@ import Common from './common/common';
 import Components from './components/components';
 import AppComponent from './app.component';
 import bootstrap from 'angular-ui-bootstrap';
+import Restangular from 'restangular';
 
 angular.module('app', [
     uiRouter,
     Common.name,
-    Components.name
+    Components.name,
+    'restangular'
   ])
-  .config(['$locationProvider',($locationProvider) => {
+  .config(['$locationProvider', 'RestangularProvider', ($locationProvider, RestangularProvider) => {
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
     $locationProvider.html5Mode(true).hashPrefix('!');
+    // injected global variable from webpack
+    RestangularProvider.setBaseUrl(api);
   }])
 
   .component('app', AppComponent);

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -47,6 +48,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE_CLASSES = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,6 +79,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bha.wsgi.application'
 
+CORS_ORIGIN_WHITELIST = (
+    'local.bha.com',
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
@@ -85,10 +90,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bha_db',
-        'USER': 'root',             
-        'PASSWORD': 'password',                  
-        'HOST': '',                     
-        'PORT': '', 
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
