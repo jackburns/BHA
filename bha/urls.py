@@ -23,7 +23,8 @@ router.register(r'api/volunteers', views.VolunteerViewSet)
 router.register(r'api/users', views.UserViewSet)
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+	url(r'^admin/', admin.site.urls),
+	#url(r'^api/volunteers', views.volunteer_list),
+	url(r'^', include(router.urls)),
+	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
