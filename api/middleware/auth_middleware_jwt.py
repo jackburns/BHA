@@ -4,16 +4,12 @@ from django.contrib.auth.middleware import get_user
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 def get_user_jwt(request):
-    user = get_user(request)
-    if user.is_authenticated():
-        return user
-    try:
-        user_jwt = JSONWebTokenAuthentication().authenticate(Request(request))
-        if user_jwt is not None:
-            return user_jwt[0]
-    except:
-        pass
-    return user
+
+    user_jwt = JSONWebTokenAuthentication().authenticate(Request(request))
+    if user_jwt is not None:
+        return user_jwt[0]
+    else:
+        return None
 
 
 class AuthenticationMiddlewareJWT(object):

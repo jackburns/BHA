@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'api',
+    'api.utils',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -68,6 +69,11 @@ MIDDLEWARE_CLASSES = [
     'api.middleware.auth_middleware_jwt.AuthenticationMiddlewareJWT',
 
 ]
+
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+    'api.utils.jwt_rph_override',
+}
 
 ROOT_URLCONF = 'bha.urls'
 

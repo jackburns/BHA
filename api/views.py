@@ -4,6 +4,7 @@ from rest_framework import viewsets #, status
 from .models import Volunteer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import VolunteerSerializer, UserSerializer
+
 # from rest_framework.decorators import api_view
 # from rest_framework.response import Response
 
@@ -28,7 +29,8 @@ class VolunteerViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
         if request.user and pk == 'me':
-            volunteer = Volunteer.objects.get(user=request.user)
+            print(vars(request.user))
+            volunteer = Volunteer.objects.get(request.user.id)
             Response(VolunteerSerializer(volunteer).data)
         return super(VolunteerViewSet, self).retrieve(request, pk)
 
