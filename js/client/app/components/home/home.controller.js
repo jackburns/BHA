@@ -1,13 +1,16 @@
+import _ from 'lodash';
+
 class HomeController {
   constructor($state) {
-
+    
     //TODO: Delete function once GET /volunteers/ API is set up
     let makeVolunteer = function(id, firstName, lastName, languages) {
       return {
         id: id,
         firstName: firstName,
         lastName: lastName,
-        languages: languages
+        languages: languages,
+        selectedToNotify: false
       };
     };
 
@@ -29,9 +32,25 @@ class HomeController {
       $state.go('volunteer', {volunteerId: volunteerId.toString()});
     };
 
+    let getNumberSelected = () => {
+      return _.filter(this.volunteers, {selectedToNotify: true}).length;
+    };
+
     this.updateOrder = function(ordering) {
       this.isReverseOrder = (this.ordering === ordering) ? !this.isReverseOrder : false;
       this.ordering = ordering;
+    };
+
+    this.selectAll = function() {
+      _.forEach(this.volunteers, function(volunteer) {
+        volunteer.selectedToNotify = this.willSelectAll;
+      }, this);
+      this.numberSelected = getNumberSelected();
+    };
+
+    this.updateNumberSelected = function() {
+      this.numberSelected = getNumberSelected();
+      this.willSelectAll = this.numberSelected === this.volunteers.length;
     };
 
     this.allLanguages = getAllLanguages();
@@ -40,6 +59,7 @@ class HomeController {
     this.isReverseOrder = false;
     this.volunteers = getVolunteers();
     this.viewVolunteer = viewVolunteer;
+    this.updateNumberSelected();
   }
 }
 
