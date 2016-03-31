@@ -126,9 +126,10 @@ LANGUAGE_ENUM = (
 )
 
 class Availability(models.Model):
+    day = models.IntegerField(choices=DAY_ENUM, default=None)
     start_time = models.TimeField()
     end_time = models.TimeField()
-	
+
 class Contact(models.Model):
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
@@ -136,7 +137,7 @@ class Contact(models.Model):
     zip = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=50)
     email = models.EmailField()
-    preferred_contact = models.CharField(max_length=1, choices=PREFERRED_CONTACT_ENUM)
+    preferred_contact = models.IntegerField(choices=PREFERRED_CONTACT_ENUM)
 
 class Language(models.Model):
     can_written_translate = models.BooleanField()
@@ -148,16 +149,14 @@ class Volunteer(models.Model):
     last_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50)
     birthday = models.DateField()
-    sex = models.CharField(max_length=1, choices=SEX_ENUM)
-    role = models.CharField(max_length=1, choices=ROLE_ENUM)
-    volunteer_level = models.CharField(max_length=1, choices=VOLUNTEER_LEVEL_ENUM)
+    sex = models.IntegerField(choices=SEX_ENUM)
+    role = models.IntegerField(choices=ROLE_ENUM)
+    volunteer_level = models.IntegerField(choices=VOLUNTEER_LEVEL_ENUM)
     created_at = models.DateTimeField()
-    deleted_at = models.DateTimeField()
+    deleted_at = models.DateTimeField(blank=True)
     notes = models.TextField()
     inactive = models.BooleanField()
-    availability = models.ForeignKey(Availability, on_delete=models.CASCADE)
-    contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
-    languages = models.ManyToManyField(Language)
-    hours = models.IntegerField()
-
-
+    availability = models.ForeignKey(Availability, on_delete=models.CASCADE, blank=True)
+    contact = models.OneToOneField(Contact, on_delete=models.CASCADE, blank=True)
+    languages = models.ForeignKey(Language, on_delete=models.CASCADE, blank=True)
+    hours = models.IntegerField(default=0)
