@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import viewsets #, status
 from .models import Volunteer
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import VolunteerSerializer, UserSerializer
 
@@ -14,26 +15,10 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
-
 class VolunteerViewSet(viewsets.ModelViewSet):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     queryset = Volunteer.objects.all()
-
-    model = Volunteer
     serializer_class = VolunteerSerializer
-
-    def list(self, request):
-        queryset = Volunteer.objects.all()
-        serializer = VolunteerSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request, pk=None):
-        if request.user and pk == 'me':
-            print(vars(request.user))
-            volunteer = Volunteer.objects.get(request.user.id)
-            Response(VolunteerSerializer(volunteer).data)
-        return super(VolunteerViewSet, self).retrieve(request, pk)
-
 
 # @api_view(['GET', 'POST'])
 # def volunteer_list(request, format=None):

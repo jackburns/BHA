@@ -24,7 +24,6 @@ router.register(r'api/users', views.UserViewSet)
 
 urlpatterns = [
 	url(r'^admin/', admin.site.urls),
-	#url(r'^api/volunteers', views.volunteer_list),
 	url(r'^', include(router.urls)),
-	url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
+	url(r'^api/auth/', include('rest_auth.urls')),
 ]
