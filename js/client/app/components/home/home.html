@@ -3,72 +3,64 @@
     <h1>Find Volunteers</h1>
     <form class="form-inline search-filters">
       <div class="form-group">
-        <label for="firstName">First Name:</label>
+        <label for="firstName" class="input-label">First Name:</label>
         <input class="form-control" id="firstName" type="text" ng-model="vm.search.firstName">
       </div>
       <div class="form-group">
-        <label for="lastName">Last Name:</label>
+        <label for="lastName" class="input-label">Last Name:</label>
         <input class="form-control" id="lastName" type="text" ng-model="vm.search.lastName">
       </div>
-      <div class="form-group">
-        <label>Spoken Language(s):</label>
-        <ui-select multiple ng-model="vm.selectedSpokenLanguages" class="language-select form-control">
+    </form>
+    <div class="language-filters">
+      <div class="language-select-group">
+        <label class="input-label">Language:</label>
+        <ui-select ng-model="vm.selectedSpokenLanguages" class="language-select">
           <ui-select-match>
-            {{$item}}
+            {{$select.selected}}
           </ui-select-match>
           <ui-select-choices repeat="languageItem in vm.allLanguages | filter: $select.search">
             {{languageItem}}
           </ui-select-choices>
         </ui-select>
       </div>
-      <div class="form-group">
-        <label>Written Language(s):</label>
-        <ui-select multiple ng-model="vm.selectedWrittenLanguages" class="language-select form-control">
-          <ui-select-match>
-            {{$item}}
-          </ui-select-match>
-          <ui-select-choices repeat="languageItem in vm.allLanguages | filter: $select.search">
-            {{languageItem}}
-          </ui-select-choices>
-        </ui-select>
-      </div>
-      <div class="checkbox">
+      <div class="checkbox inline-checkbox">
         <label>
           <input type="checkbox" value=""> Willing to translate
         </label>
       </div>
-    </form>
+    </div>
+    <div class="checkbox inline-checkbox">
+      <label>
+        <input type="checkbox" ng-model="vm.willSelectAll" ng-change="vm.selectAll()"> Select All
+      </label>
+    </div>
     <table class="table table-striped table-hover volunteers-table">
       <thead>
       <tr>
-        <th ng-click="vm.updateOrder('firstName')">
+        <th class="notify-column">Notify</th>
+        <th class="first-name-column" ng-click="vm.updateOrder('firstName')">
           First Name
           <span class="sortorder" ng-show="vm.ordering === 'firstName'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
         </th>
-        <th ng-click="vm.updateOrder('lastName')">
+        <th class="last-name-column" ng-click="vm.updateOrder('lastName')">
           Last Name
           <span class="sortorder" ng-show="vm.ordering === 'lastName'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
         </th>
-        <th ng-click="vm.updateOrder('languages')">
+        <th class="languages-column" ng-click="vm.updateOrder('languages')">
           Languages
           <span class="sortorder" ng-show="vm.ordering === 'languages'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
-        </th>
-        <th>
-          Actions
         </th>
       </tr>
       </thead>
       <tbody>
       <tr ng-repeat="volunteer in vm.volunteers | filter:vm.search | orderBy:vm.ordering:vm.isReverseOrder">
-          <td ng-bind="volunteer.firstName"></td>
-          <td ng-bind="volunteer.lastName"></td>
-          <td ng-bind="volunteer.languages.join(', ')"></td>
-          <td>
-            <button type="button" class="btn" ng-click="vm.viewVolunteer(volunteer.id)">View</button>
-          </td>
-        </a>
+        <td class="notify-column"><input type="checkbox" ng-model="volunteer.selectedToNotify" ng-change="vm.updateNumberSelected()"></td>
+        <td class="clickable first-name-column" ng-bind="volunteer.firstName" ng-click="vm.viewVolunteer(volunteer.id)"></td>
+        <td class="clickable last-name-column" ng-bind="volunteer.lastName" ng-click="vm.viewVolunteer(volunteer.id)"></td>
+        <td class="clickable languages-column" ng-bind="volunteer.languages.join(', ')" ng-click="vm.viewVolunteer(volunteer.id)"></td>
       </tr>
       </tbody>
     </table>
+    <button class="btn">Notify (<span ng-bind="vm.numberSelected"></span>) selected volunteers</button>
   </div>
 </main>

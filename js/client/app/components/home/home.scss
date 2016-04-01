@@ -15,23 +15,46 @@ label {
     cursor: pointer;
   }
 
-  td, th {
-    width: 25%;
+  .notify-column {
+    text-align: center;
+    width: 10%;
   }
+
+  .first-name-column, .last-name-column, .languages-column {
+    width: 30%;
+  }
+}
+
+.input-label {
+  margin-right: .5em;
+}
+
+.language-select-group {
+  display: inline-block;
+  margin-right: .5em;
+}
+
+.inline-checkbox {
+  display: inline-block;
+}
+
+.language-filters {
+  margin-bottom: 2em;
 }
 
 .language-select {
-  min-width: 15em !important;
+  display: inline-block;
+  width: 300px !important;
 }
 
 .form-group {
-  margin-right: 2em;
+  margin-right: 1em;
 }
 
 .search-filters {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
+}
 
-  label {
-    margin-right: .5em;
-  }
+.clickable {
+  cursor: pointer;
 }

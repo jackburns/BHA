@@ -2,6 +2,7 @@ import HomeModule from './home'
 import HomeController from './home.controller';
 import HomeComponent from './home.component';
 import HomeTemplate from './home.html';
+import _ from 'lodash';
 
 describe('Home', () => {
   let $rootScope, makeController;
@@ -30,6 +31,11 @@ describe('Home', () => {
       expect(controller.ordering).to.equal('lastName');
       expect(controller.isReverseOrder).to.equal(false);
     });
+    
+    it('initializes with selectAll unchecked', () => {
+      let controller = makeController();
+      expect(controller.willSelectAll).to.be.false;
+    });
 
     it('updates order and order direction', () => {
       let controller = makeController();
@@ -50,8 +56,45 @@ describe('Home', () => {
 
       controller.updateOrder('firstName');
       expect(controller.isReverseOrder).to.equal(false);
-    })
+    });
+    
+    it('sets all volunteers notify status to that of selectAll checkbox', () => {
+      let ctrl = makeController();
+      _.forEach(ctrl.volunteers, (volunteer) => {
+        expect(volunteer.selectedToNotify).to.be.false;
+      });
 
+      ctrl.willSelectAll = true;
+      ctrl.selectAll();
+      _.each(ctrl.volunteers, (volunteer) => {
+        expect(volunteer.selectedToNotify).to.be.true;
+      });
+
+      ctrl.willSelectAll = false;
+      ctrl.selectAll();
+      _.forEach(ctrl.volunteers, (volunteer) => {
+        expect(volunteer.selectedToNotify).to.be.false;
+      });
+    });
+
+    it('updates number volunteers selected and selectAll checkbox', () => {
+      let ctrl = makeController();
+      expect(ctrl.numberSelected).to.equal(0);
+      expect(ctrl.willSelectAll).to.be.false;
+
+      _.each(ctrl.volunteers, (volunteer) => {
+        volunteer.selectedToNotify = true;
+      });
+
+      ctrl.updateNumberSelected();
+      expect(ctrl.numberSelected).to.equal(ctrl.volunteers.length);
+      expect(ctrl.willSelectAll).to.be.true;
+
+      ctrl.volunteers[0].selectedToNotify = false;
+      ctrl.updateNumberSelected();
+      expect(ctrl.numberSelected).to.equal(ctrl.volunteers.length - 1);
+      expect(ctrl.willSelectAll).to.be.false;
+    });
   });
 
   describe('Template', () => {
