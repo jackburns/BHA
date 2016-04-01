@@ -42,9 +42,9 @@ class HomeController {
     };
 
     this.selectAll = function() {
-      _.forEach(this.volunteers, function(volunteer) {
+      _.forEach(this.volunteers, (volunteer) => {
         volunteer.selectedToNotify = this.willSelectAll;
-      }, this);
+      });
       this.numberSelected = getNumberSelected();
     };
 
