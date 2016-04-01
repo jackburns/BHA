@@ -5,12 +5,14 @@ import Components from './components/components';
 import AppComponent from './app.component';
 import bootstrap from 'angular-ui-bootstrap';
 import Restangular from 'restangular';
+import ngStorage from 'ng-storage';
 
 angular.module('app', [
     uiRouter,
     Common.name,
     Components.name,
-    'restangular'
+    'restangular',
+    'ngStorage'
   ])
   .config(['$locationProvider', 'RestangularProvider', ($locationProvider, RestangularProvider) => {
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions

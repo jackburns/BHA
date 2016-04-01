@@ -3,9 +3,9 @@
     <form class="form-signin">
       <h2 class="form-signin-heading">Sign In</h2>
       <label for="inputUn" class="sr-only">Email</label>
-      <input type="text" ng-bind="vm.email" id="inputUn" class="form-control" placeholder="Email" required autofocus>
+      <input type="text" ng-model="vm.email" id="inputUn" class="form-control" placeholder="Email" required autofocus>
       <label for="inputPw" class="sr-only">Password</label>
-      <input type="password" ng-bind="vm.password" id="inputPw" class="form-control" placeholder="Password" required>
+      <input type="password" ng-model="vm.password" id="inputPw" class="form-control" placeholder="Password" required>
       <button class="btn btn-lg btn-primary btn-block" ng-click="vm.login()">Sign in</button>
       <div id="signup"><a href="signup.html">New Volunteer? Sign up here.</a></div>
     </form>

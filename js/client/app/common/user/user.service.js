@@ -1,32 +1,22 @@
-let UserService = function () {
+let UserService = function ($http, $state) {
   let user = {
-    isSignedIn: false
+    is_signed_in: false
   };
 
   let getUser = () => {
     return user;
   };
 
-  let signIn = (newUser) => {
-    newUser = {
-      firstName: 'Mikey',
-      lastName: 'Weintraub',
-      contact: {
-        email: 'mikey@mikeymike.com',
-        phone: '555-555-5555'
-      },
-      hours: 56,
-      role: 'admin',
-      volunteerLevel: 'beenObserved'
-    };
-    newUser.isSignedIn = true;
-    user = newUser;
+  let signIn = (redirect_state) => {
+    $http.get(api + '/volunteers/me/').then(function(res) {
+      res.data.is_signed_in = true;
+      user = res.data;
+      if(redirect_state) $state.go(redirect_state);
+    });
   }
 
-  signIn();
-
   let isSignedIn = () => {
-    return user.isSignedIn;
+    return user.is_signed_in;
   };
 
   let isAdmin = () => {
@@ -34,7 +24,8 @@ let UserService = function () {
     return user.admin === 'admin';
   }
 
-  return { getUser, isSignedIn, isAdmin };
+  return { getUser, signIn, isSignedIn, isAdmin };
 };
 
+UserService.$inject = ['$http', '$state'];
 export default UserService;

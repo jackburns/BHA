@@ -6,7 +6,16 @@ from datetime import datetime
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id',  'username', 'password', 'email')
+        fields = ('id',  'username', 'email')
+        write_only_fields = ('password',)
+        read_only_fields = ('is_staff', 'is_superuser', 'is_active', 'date_joined',)
+
+    def restore_object(self, attrs, instance=None):
+        # call set_password on user object. Without this
+        # the password will be stored in plain text.
+        user = super(UserSerializer, self).restore_object(attrs, instance)
+        user.set_password(attrs['password'])
+        return user
 
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,7 +43,7 @@ def updateAttrs(self, old, new):
 
 # 2 lazy 2 figure out functional programming in python
 def updateAttr(self, old, new, key):
-    setattr(old, key, new.get(key, old.getattr(key)))
+    setattr(old, key, new.get(key, getattr(old, key)))
 
 # TODO: why do i have to write this shit? whatever move me one day plz
 # NOTE: THIS WILL NOT WORK IF YOU TRIED TO BE FANCY WITH YOUR IDS (shame on you)
@@ -56,15 +65,11 @@ class VolunteerSerializer(serializers.Serializer):
     last_name = serializers.CharField()
     middle_name = serializers.CharField()
     sex = serializers.IntegerField()
-    role = serializers.IntegerField(required=False)
-    volunteer_level = serializers.IntegerField(required=False)
-    notes = serializers.CharField(required=False)
+    role = serializers.IntegerField(required=False, read_only=True)
+    volunteer_level = serializers.IntegerField(required=False, read_only=True)
     created_at = serializers.DateTimeField(read_only=True, required=False)
-    inactive = serializers.BooleanField(required=False)
+    inactive = serializers.BooleanField(required=False, read_only=True)
     hours = serializers.IntegerField(read_only=True, required=False)
-
-    def validate(self, data):
-        return data
 
     def create(self, data):
         contact_data = data.pop('contact', None)
@@ -128,3 +133,10 @@ class VolunteerSerializer(serializers.Serializer):
         updateAttr(instance, data, 'sex')
 
         return instance
+
+class AdminVolunteerSerializer(VolunteerSerializer):
+    notes = serializers.CharField(required=False)
+    role = serializers.IntegerField(required=False)
+    volunteer_level = serializers.IntegerField(required=False)
+    inactive = serializers.BooleanField(required=False)
+    hours = serializers.IntegerField(read_only=True)
