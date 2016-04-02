@@ -12,7 +12,8 @@
     <div class="navbar-collapse collapse navbar-response-collapse" uib-collapse="vm.navCollapsed">
       <ul class="nav navbar-nav navbar-right">
         <li><a ui-sref="about">About</a></li>
-        <li ng-if="!vm.user.isSignedIn()"><a ui-sref="login">Login/Signup</a></li>
+        <li><a ui-sref="login">Login</a></li>
+        <li><a ui-sref="volunteerApplication">Apply</a></li>
         <li ng-if="vm.user.isSignedIn()"><a href="#">Profile</a></li>
       </ul>
     </div>

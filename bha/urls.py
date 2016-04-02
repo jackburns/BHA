@@ -19,12 +19,10 @@ from api import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'api/volunteers', views.VolunteerViewSet)
-router.register(r'api/users', views.UserViewSet)
+router.register(r'api/volunteers', views.VolunteerViewSet, 'Volunteer')
 
 urlpatterns = [
 	url(r'^admin/', admin.site.urls),
-	#url(r'^api/volunteers', views.volunteer_list),
 	url(r'^', include(router.urls)),
-	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+	url(r'^api/auth/', include('rest_auth.urls')),
 ]
