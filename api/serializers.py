@@ -4,11 +4,11 @@ from .models import Volunteer, Contact, Availability, Language
 from datetime import datetime
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.Field(write_only=True)
+    is_staff = serializers.BooleanField(read_only=True)
     class Meta:
         model = User
-        fields = ('id',  'username', 'email')
-        write_only_fields = ('password',)
-        read_only_fields = ('is_staff', 'is_superuser', 'is_active', 'date_joined',)
+        fields = ('id',  'username', 'email', 'password', 'is_staff')
 
     def restore_object(self, attrs, instance=None):
         # call set_password on user object. Without this
@@ -94,6 +94,7 @@ class VolunteerSerializer(serializers.Serializer):
         return volunteer
 
     # this is actually a little involved, set every field appropriately
+    # TODO: make sure this actually works and fix it when it doesnt
     def update(self, instance, data):
         contact_data = data.pop('contact')
         availability_data = data.pop('availability')

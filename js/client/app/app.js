@@ -21,5 +21,18 @@ angular.module('app', [
     // injected global variable from webpack
     RestangularProvider.setBaseUrl(api);
   }])
+  .run(['$rootScope', '$state', 'User', '$localStorage', ($rootScope, $state, User, $localStorage) => {
+    console.log(User.isSignedIn());
+    console.log($localStorage.djangotoken);
 
-  .component('app', AppComponent);
+    if (!User.isSignedIn() && $localStorage.djangotoken) {
+      User.signIn('home');
+    }
+
+    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+     if (!User.isSignedIn()) {
+        $state.go("/login");
+     }
+   });
+ }])
+ .component('app', AppComponent);
