@@ -7,7 +7,7 @@ gulp webpack
 echo -e "\n--- Installing Python Packages ---\n"
 
 cd /data/www/BHA
-sudo pip3 install -r -y 'requirements.txt'
+sudo pip3 install -r 'requirements.txt'
 
 python manage.py makemigrations
 python manage.py migrate
