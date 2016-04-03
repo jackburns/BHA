@@ -110,7 +110,7 @@ class VolunteerFormController {
 
       if (this.allValid) {
         // brilliant
-        this.info.user.username = this.info.email;
+        this.info.user.username = this.info.contact.email;
         console.log(this.info);
         $http.post(api + '/volunteers/', this.info).then((res) =>{
           console.log(res);

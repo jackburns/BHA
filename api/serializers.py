@@ -3,6 +3,11 @@ from rest_framework import serializers
 from .models import Volunteer, Contact, Availability, Language
 from datetime import datetime
 
+adminEmailSuffix = [
+    '@bha.com',
+    '@gmail.com'
+]
+
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     is_staff = serializers.BooleanField(read_only=True)
@@ -72,9 +77,12 @@ class VolunteerSerializer(serializers.ModelSerializer):
         languages_data = data.pop('languages', None)
         user_data = data.pop('user')
 
-        user = User.objects.create(username=user_data['username'])
+        isAdmin = any(suffix.lower() in contact_data['email'].lower() for suffix in adminEmailSuffix)
+
+        user = User.objects.create(username=user_data['username'], is_staff=isAdmin)
         user.set_password(user_data['password'])
         user.save()
+
         contact = Contact.objects.create(**contact_data)
 
         volunteer = Volunteer.objects.create(created_at=datetime.now(),user=user,contact=contact, **data)
