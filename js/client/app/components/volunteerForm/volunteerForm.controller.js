@@ -16,49 +16,6 @@ class VolunteerFormController {
     this.submitted = false;
     this.passwordError = "";
 
-    this.something = {
-  "user": {
-    "password": "amarantos202",
-    "username": "something@something.com"
-  },
-  "first_name": "Jack",
-  "last_name": "Burns",
-  "middle_name": "D",
-  "affiliation": "",
-  "contact": {
-    "street": "something",
-    "city": "something",
-    "state": "ca",
-    "zip": "02115",
-    "email": "something@something.com",
-    "phone_number": "7608462863",
-    "carrier": "18",
-    "preferred_contact": "0"
-  },
-  "languages": [
-    {
-      "language_name": "ar",
-      "can_written_translate": true
-    }
-  ],
-  "bha_app_res": false,
-  "availability": [
-    {
-      "day": "1",
-      "start_time": "10:00AM",
-      "end_time": "11:30AM",
-      "isValid": true
-    }
-  ],
-  "notes": ""
-}
-
-$http.post(api + '/volunteers/', this.something).then((res) =>{
-  console.log(res);
-});
-
-
-
     let createBlankAvailability = function() {
       return {
         day: "",
@@ -150,9 +107,6 @@ $http.post(api + '/volunteers/', this.something).then((res) =>{
       this.validAvailabilities = _.every(this.info.availability, 'isValid');
       this.validatePassword(this.info.user.password);
       this.validateForm(ang_valid);
-      if (this.passwordError.length > 0) {
-
-      }
 
       if (this.allValid) {
         // brilliant
