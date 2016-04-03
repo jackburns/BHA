@@ -3,16 +3,18 @@ import uiRouter from 'angular-ui-router';
 import Common from './common/common';
 import Components from './components/components';
 import AppComponent from './app.component';
-import bootstrap from 'angular-ui-bootstrap';
+import uiBootstrap from 'angular-ui-bootstrap';
 import Restangular from 'restangular';
 import ngStorage from 'ng-storage';
+
 
 angular.module('app', [
     uiRouter,
     Common.name,
     Components.name,
     'restangular',
-    'ngStorage'
+    'ngStorage',
+    uiBootstrap
   ])
   .config(['$locationProvider', 'RestangularProvider', ($locationProvider, RestangularProvider) => {
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
@@ -26,7 +28,7 @@ angular.module('app', [
     console.log($localStorage.djangotoken);
 
     if (!User.isSignedIn() && $localStorage.djangotoken) {
-      User.signIn('home');
+      User.signIn($state.current.name);
     }
 
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {

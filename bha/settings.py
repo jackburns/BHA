@@ -68,11 +68,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER':
-    'api.utils.jwt_rph_override',
-}
-
 ROOT_URLCONF = 'bha.urls'
 
 TEMPLATES = [
