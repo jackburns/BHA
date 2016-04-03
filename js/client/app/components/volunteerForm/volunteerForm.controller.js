@@ -1,17 +1,11 @@
 import _ from 'lodash';
 
 class VolunteerFormController {
-  constructor($http) {
+  constructor($http, Enums, $uibModal, $scope) {
 
-    this.selectOptions = {
-      contactMethods: ["Phone", "Email", "Text"],
-      daysOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      availabilityTimes: ["9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM",
-        "1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM"],
-      carriers: ["AT&T", "Sprint", "T-Mobile", "Verizon", "All Tell", "Boost", "Cellular South", "Centennial Wireless",
-        "Cincinnati Bell", "Cricket Wireless", "Metro PCS", "Powertel", "Qwest", "Rogers", "Suncom", "Telus",
-        "U.S. Cellular", "Virgin Mobile USA", "Other"]
-    };
+    this.selectOptions = Enums;
+    this.selectOptions.availabilityTimes = ["9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM",
+        "1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM"];
 
     this.name = 'Volunteer Application Form';
     this.allValid = false;
@@ -20,52 +14,58 @@ class VolunteerFormController {
     this.validLanguages = false;
     this.validAvailabilities = false;
     this.submitted = false;
+    this.passwordError = "";
 
     let createBlankAvailability = function() {
       return {
-        dayOfWeek: "",
-        startTime: "",
-        endTime: "",
+        day: "",
+        start_time: "",
+        end_time: "",
         isValid: false
       };
     };
 
     let createBlankLanguage = function() {
       return {
-        name: "",
-        willTranslate: false
+        language_name: "",
+        can_written_translate: false
       }
     };
 
     // initial info object
     this.info = {
-      firstName: "",
-      lastName: "",
-      middleInitial: "",
+      user: {
+        password: "",
+      },
+      first_name: "",
+      last_name: "",
+      middle_name: "",
       affiliation: "",
-      street: "",
-      city: "",
-      state: "",
-      zip: "",
-      email: "",
-      phone: "",
-      carrier: "Other",
-      contactMethod: "Phone",
+      contact: {
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+        email: "",
+        phone_number: "",
+        carrier: "18",
+        preferred_contact: "0"
+      },
       languages: [createBlankLanguage()],
       bha_app_res: false,
-      availabilities: [createBlankAvailability()],
+      availability: [createBlankAvailability()],
       notes: ""
     };
 
     this.validateAvailabilities = function() {
-      _.each(this.info.availabilities, function(av) {
-        av.isValid = (av.dayOfWeek !== "" && av.startTime !== "" && av.endTime !== "" &&
-          this.selectOptions.availabilityTimes.indexOf(av.startTime) < this.selectOptions.availabilityTimes.indexOf(av.endTime));
+      _.each(this.info.availability, function(av) {
+        av.isValid = (av.day !== "" && av.start_time !== "" && av.end_time !== "" &&
+          this.selectOptions.availabilityTimes.indexOf(av.start_time) < this.selectOptions.availabilityTimes.indexOf(av.end_time));
       }.bind(this));
     };
 
     this.validateForm = function(ang_valid) {
-      this.allValid = ang_valid && this.zip_valid && this.phone_valid && this.validAvailabilities;
+      this.allValid = ang_valid && this.zip_valid && this.phone_valid && this.validAvailabilities && this.passwordError.length == 0;
     };
 
     this.addNewLanguage = function () {
@@ -77,37 +77,44 @@ class VolunteerFormController {
     };
 
     this.addNewAvailability = function() {
-      this.info.availabilities.push(createBlankAvailability());
+      this.info.availability.push(createBlankAvailability());
     };
 
     this.removeLastAvailability = function() {
-      this.info.availabilities.pop();
+      this.info.availability.pop();
     };
+
+    this.validatePassword = function(password) {
+      if (password.length < 8) {
+        this.passwordError = "Password needs to be at least 8 characters";
+      } else if (password.length > 50) {
+        this.passwordError = "Password need to be less than 50 characters";
+      } else if (password.search(/\d/) == -1) {
+        this.passwordError = "Password needs at least one number"
+      } else if (password.search(/[a-zA-Z]/) == -1) {
+        this.passwordError = "Password needs at least one letter"
+      }
+    }
 
     // on submit
     this.submit = function(ang_valid) {
       // check custom validations
       this.submitted = true;
-      this.zip_valid = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.info.zip);
-      this.phone_valid = this.info.phone.length == 10;
-      this.validLanguages = _.every(this.info.languages, 'name');
+      this.zip_valid = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.info.contact.zip);
+      this.phone_valid = this.info.contact.phone_number.length == 10;
+      this.validLanguages = this.info.languages[0].language_name.length > 0
       this.validateAvailabilities();
-      this.validAvailabilities = _.every(this.info.availabilities, 'isValid');
+      this.validAvailabilities = _.every(this.info.availability, 'isValid');
+      this.validatePassword(this.info.user.password);
       this.validateForm(ang_valid);
 
       if (this.allValid) {
-        return true;
-        /*
-         $http.post('/volunteerApp', this.info).then(
-         //success
-         function (response) {
-         console.log("good");
-         },
-
-         //failure
-         function (response) {
-         console.log("bad");
-         });*/
+        // brilliant
+        this.info.user.username = this.info.contact.email;
+        console.log(this.info);
+        $http.post(api + '/volunteers/', this.info).then((res) =>{
+          console.log(res);
+        });
       } else {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
       }
@@ -115,5 +122,5 @@ class VolunteerFormController {
   }
 }
 
-VolunteerFormController.$inject = ['$http'];
+VolunteerFormController.$inject = ['$http', 'Enums', '$uibModal', '$scope'];
 export default VolunteerFormController;

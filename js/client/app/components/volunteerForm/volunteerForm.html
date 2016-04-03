@@ -8,13 +8,19 @@
       <p class="err" ng-show="vm.submitted && !vm.allValid">Please fix all errors and submit again!</p>
       <div class="form-group">
         <div class="col-sm-5">
-          <input required type="text" ng-class="{submitted: vm.submitted}" class="form-control" ng-model="vm.info.firstName" id="firstName" placeholder="First Name*">
+          <input required type="text" ng-class="{submitted: vm.submitted}" class="form-control" ng-model="vm.info.first_name" id="firstName" placeholder="First Name*">
         </div>
         <div class="col-sm-2">
-          <input type="text" class="form-control" ng-model="vm.info.middleInitial" id="middleInitial" placeholder="MI" maxlength="1">
+          <input type="text" class="form-control" ng-model="vm.info.middle_name" id="middleInitial" placeholder="MI" maxlength="1">
         </div>
         <div class="col-sm-5">
-          <input required type="text" ng-class="{submitted: vm.submitted}" class="form-control" ng-model="vm.info.lastName" id="lastName" placeholder="Last Name*">
+          <input required type="text" ng-class="{submitted: vm.submitted}" class="form-control" ng-model="vm.info.last_name" id="lastName" placeholder="Last Name*">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <input type="password" ng-class="{submitted: vm.submitted}" required class="form-control" ng-model="vm.info.user.password" id="password" placeholder="Password">
+          <h6 ng-show="vm.passwordError.length > 0 && vm.submitted" class="err" ng-bind="vm.password"></h6>
         </div>
       </div>
       <div class="form-group">
@@ -24,36 +30,37 @@
       </div>
       <div class="form-group">
         <div class="col-sm-12">
-          <input required ng-class="{submitted: vm.submitted}" type="text" class="form-control" ng-model="vm.info.street" id="street" placeholder="Street Address*">
+          <input required ng-class="{submitted: vm.submitted}" type="text" class="form-control" ng-model="vm.info.contact.street" id="street" placeholder="Street Address*">
         </div>
         <div class="col-sm-6">
-          <input required ng-class="{submitted: vm.submitted}" type="text" class="form-control" ng-model="vm.info.city" id="city" placeholder="City*">
+          <input required ng-class="{submitted: vm.submitted}" type="text" class="form-control" ng-model="vm.info.contact.city" id="city" placeholder="City*">
         </div>
         <div class="col-sm-3">
-          <input required ng-class="{submitted: vm.submitted}" type="text" class="form-control" ng-model="vm.info.state" id="state" maxlength="2" placeholder="State*">
+          <input required ng-class="{submitted: vm.submitted}" type="text" class="form-control" ng-model="vm.info.contact.state" id="state" maxlength="2" placeholder="State*">
         </div>
         <div class="col-sm-3">
-          <input required ng-class="{submitted: vm.submitted, invalid: !vm.zip_valid}" type="text" class="form-control" ng-model="vm.info.zip" id="zip" maxlength="10" placeholder="ZIP Code*">
+          <input required ng-class="{submitted: vm.submitted, invalid: !vm.zip_valid}" type="text" class="form-control" ng-model="vm.info.contact.zip" id="zip" maxlength="10" placeholder="ZIP Code*">
           <h6 ng-show="!vm.zip_valid && vm.submitted" class="err">Please enter a valid ZIP code.</h6>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8">
-          <input name="email" required ng-class="{submitted: vm.submitted}" type="email" class="form-control" ng-model="vm.info.email" id="email" placeholder="E-mail Address*">
+          <input name="email" required ng-class="{submitted: vm.submitted}" type="email" class="form-control" ng-model="vm.info.contact.email" id="email" placeholder="E-mail Address*">
           <h6 ng-show="!vaf.email.$valid && vm.submitted" class="err">Please enter a valid Email address.</h6>
         </div>
         <div class="col-sm-4">
-          <input name="phone" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required ng-class="{submitted: vm.submitted, invalid: !vm.phone_valid}" type="tel" maxlength="10" class="form-control" ng-model="vm.info.phone" id="phone" placeholder="Phone Number*">
+          <input name="phone" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required ng-class="{submitted: vm.submitted, invalid: !vm.phone_valid}" type="tel" maxlength="10" class="form-control" ng-model="vm.info.contact.phone_number" id="phone"
+            placeholder="Phone Number*">
           <h6 ng-show="!vm.phone_valid && vm.submitted" class="err">Please enter a valid 10-digit Phone number.</h6>
         </div>
         <label for="pref-contact" class="col-sm-4 control-label">Preferred contact method:</label>
         <div class="col-sm-2">
-          <select id="pref-contact" class="form-control" ng-model="vm.info.contactMethod" ng-options="contact for contact in vm.selectOptions.contactMethods"></select>
+          <select id="pref-contact" class="form-control" ng-model="vm.info.contact.preferred_contact" ng-options="key as value for (key, value) in vm.selectOptions.preferred_contact"></select>
         </div>
-	<label for="carrier" class="col-sm-2 control-label">Carrier:</label>
-	<div class="col-sm-4">
-	  <select id="carrier" class="form-control" ng-model="vm.info.carrier" ng-options="carrier for carrier in vm.selectOptions.carriers"></select>
-	</div>
+        <label for="carrier" class="col-sm-2 control-label">Carrier:</label>
+        <div class="col-sm-4">
+          <select id="carrier" ng-change="vm.log()" class="form-control" ng-model="vm.info.contact.carrier" ng-options="key as value for (key, value) in vm.selectOptions.carriers"></select>
+        </div>
       </div>
       <div class="form-group">
         <h4>Languages Spoken</h4>
@@ -61,14 +68,18 @@
         <div class="col-sm-12">
           <table class="table table-bordered tab">
             <thead>
-            <tr>
-              <th>Language</th>
-              <th>Willing to do written translations?</th>
-            </tr>
+              <tr>
+                <th>Language</th>
+                <th>Willing to do written translations?</th>
+              </tr>
             </thead>
             <tr ng-repeat="language in vm.info.languages track by $index">
-              <td><input type="text" class="form-control" required ng-class="{submitted: vm.submitted, invalid: !language.name}" ng-model="language.name" placeholder="Language Name"></td>
-              <td><input type="checkbox" ng-model="language.willingToTranslate"></td>
+              <td>
+                <select type="text" class="form-control" required ng-class="{submitted: vm.submitted}" ng-model="language.language_name" ng-options="key as value for (key, value) in vm.selectOptions.languages"></select>
+              </td>
+              <td>
+                <input type="checkbox" ng-model="language.can_written_translate">
+              </td>
             </tr>
           </table>
           <div class="but-tag">
@@ -94,20 +105,26 @@
         <div class="col-sm-12">
           <table class="table table-bordered tab">
             <thead>
-            <tr>
-              <th>Day of Week</th>
-              <th>Start Time</th>
-              <th>End Time</th>
-            </tr>
+              <tr>
+                <th>Day of Week</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+              </tr>
             </thead>
-            <tr ng-repeat="availability in vm.info.availabilities track by $index">
-              <td><select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.dayOfWeek" ng-options="day for day in vm.selectOptions.daysOfWeek"></select></td>
-              <td><select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.startTime" ng-options="time for time in vm.selectOptions.availabilityTimes"></select></td>
-              <td><select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.endTime" ng-options="time for time in vm.selectOptions.availabilityTimes"></select></td>
+            <tr ng-repeat="availability in vm.info.availability track by $index">
+              <td>
+                <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.day" ng-options="key as value for (key, value) in vm.selectOptions.days"></select>
+              </td>
+              <td>
+                <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.start_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
+              </td>
+              <td>
+                <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.end_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
+              </td>
             </tr>
           </table>
           <div class="but-tag">
-            <button type="button" ng-show="vm.info.availabilities.length > 1" ng-click="vm.removeLastAvailability()" class="btn add-btn" aria-label="Remove last availability">
+            <button type="button" ng-show="vm.info.availability.length > 1" ng-click="vm.removeLastAvailability()" class="btn add-btn" aria-label="Remove last availability">
               <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
             </button>
             <button type="button" ng-click="vm.addNewAvailability()" class="btn add-btn" aria-label="Add availability">

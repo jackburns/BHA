@@ -3,12 +3,17 @@ from rest_framework import serializers
 from .models import Volunteer, Contact, Availability, Language
 from datetime import datetime
 
+adminEmailSuffix = [
+    '@bha.com',
+    '@gmail.com'
+]
+
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.Field(write_only=True)
+    password = serializers.CharField(write_only=True)
     is_staff = serializers.BooleanField(read_only=True)
     class Meta:
         model = User
-        fields = ('id',  'username', 'email', 'password', 'is_staff')
+        fields = ('id',  'username', 'password', 'is_staff')
 
     def restore_object(self, attrs, instance=None):
         # call set_password on user object. Without this
@@ -28,6 +33,7 @@ class AvailabilitySerializer(serializers.ModelSerializer):
         fields = ('day', 'start_time', 'end_time')
 
 class LanguageSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Language
         fields = ('can_written_translate', 'language_name')
@@ -54,22 +60,16 @@ def purgeList(self, old_array, new_array):
         if item.id not in items_ids:
             item.delete()
 
-class VolunteerSerializer(serializers.Serializer):
+class VolunteerSerializer(serializers.ModelSerializer):
 
     contact = ContactSerializer()
-    availability = AvailabilitySerializer(required=False)
-    languages = LanguageSerializer(required=False)
+    availability = AvailabilitySerializer(many=True, read_only=True)
+    languages = LanguageSerializer(many=True, read_only=True)
     user = UserSerializer()
-    id = serializers.IntegerField(read_only=True)
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
-    middle_name = serializers.CharField()
-    sex = serializers.IntegerField()
-    role = serializers.IntegerField(required=False, read_only=True)
-    volunteer_level = serializers.IntegerField(required=False, read_only=True)
-    created_at = serializers.DateTimeField(read_only=True, required=False)
-    inactive = serializers.BooleanField(required=False, read_only=True)
-    hours = serializers.IntegerField(read_only=True, required=False)
+
+    class Meta:
+        model = Volunteer
+        fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'user')
 
     def create(self, data):
         contact_data = data.pop('contact', None)
@@ -77,20 +77,25 @@ class VolunteerSerializer(serializers.Serializer):
         languages_data = data.pop('languages', None)
         user_data = data.pop('user')
 
-        user = User.objects.create(**user_data)
-        volunteer = Volunteer.objects.create(created_at=datetime.now(),user=user, **data)
+        isAdmin = any(suffix.lower() in contact_data['email'].lower() for suffix in adminEmailSuffix)
 
-        volunteer.contact = Contact.objects.create(**contact_data)
+        user = User.objects.create(username=user_data['username'], is_staff=isAdmin)
+        user.set_password(user_data['password'])
+        user.save()
 
+        contact = Contact.objects.create(**contact_data)
+
+        volunteer = Volunteer.objects.create(created_at=datetime.now(),user=user,contact=contact, **data)
 
         if availability_data is not None:
-            for single_av_data in availbility_data:
-                volunteer.availbility.add(Availability.objects.create(single_av_data))
+            for single_av_data in availability_data:
+                Availability.objects.create(volunteer=volunteer, **single_av_data)
 
         if languages_data is not None:
             for language_data in languages_data:
-                volunteer.languages.add(Language.objects.create(language_data))
+                Language.objects.create(volunteer=volunteer, **language_data)
 
+        volunteer.save()
         return volunteer
 
     # this is actually a little involved, set every field appropriately
@@ -100,7 +105,7 @@ class VolunteerSerializer(serializers.Serializer):
         availability_data = data.pop('availability')
         languages_data = data.pop('languages')
         contact = instance.contact
-        availability = instance.availbility
+        availability = instance.availability
         languages = instance.languages
 
         contact = updateAttrs(contact, contact_data)

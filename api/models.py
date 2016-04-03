@@ -125,11 +125,6 @@ LANGUAGE_ENUM = (
 	('zh-hant', 'Traditional Chinese'),
 )
 
-class Availability(models.Model):
-    day = models.IntegerField(choices=DAY_ENUM, default=None)
-    start_time = models.TimeField()
-    end_time = models.TimeField()
-
 class Contact(models.Model):
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
@@ -139,23 +134,28 @@ class Contact(models.Model):
     email = models.EmailField()
     preferred_contact = models.IntegerField(choices=PREFERRED_CONTACT_ENUM)
 
-class Language(models.Model):
-    can_written_translate = models.BooleanField()
-    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM)
-
 class Volunteer(models.Model):
     user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
-    sex = models.IntegerField(choices=SEX_ENUM)
+    sex = models.IntegerField(choices=SEX_ENUM, null=True, blank=True)
     role = models.IntegerField(choices=ROLE_ENUM, default=0)
     volunteer_level = models.IntegerField(choices=VOLUNTEER_LEVEL_ENUM, default=0)
     created_at = models.DateTimeField()
     deleted_at = models.DateTimeField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     inactive = models.BooleanField(default=False)
-    availability = models.ForeignKey(Availability, on_delete=models.CASCADE, null=True, blank=True)
-    contact = models.OneToOneField(Contact, on_delete=models.CASCADE, null=True, blank=True)
-    languages = models.ForeignKey(Language, on_delete=models.CASCADE, null=True, blank=True)
+    contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
     hours = models.IntegerField(default=0)
+
+class Language(models.Model):
+    can_written_translate = models.BooleanField()
+    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM)
+    volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE, related_name='languages')
+
+class Availability(models.Model):
+    day = models.IntegerField(choices=DAY_ENUM, default=None)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE, related_name='availability')
