@@ -142,7 +142,15 @@ class VolunteerSerializer(serializers.ModelSerializer):
 
 class AdminVolunteerSerializer(VolunteerSerializer):
     notes = serializers.CharField(required=False)
-    role = serializers.IntegerField(required=False)
-    volunteer_level = serializers.IntegerField(required=False)
-    inactive = serializers.BooleanField(required=False)
-    hours = serializers.IntegerField(read_only=True)
+
+class AssignmentSerializer(serializers.ModelSerializer):
+    contact = ContactSerializer()
+    language = LanguageSerializer()
+    posted_by = VolunteerSerializer()
+    volunteers = VolunteerSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Assignment
+        fields = ('contact', 'language', 'posted_by', 'start_date', 'name', 'volunteers')
+
+class AdminAssignmentSerializer(AssignmentSerializer):

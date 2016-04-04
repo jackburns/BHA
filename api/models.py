@@ -159,3 +159,11 @@ class Availability(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE, related_name='availability')
+
+class Assignment(models.model):
+    name = models.CharField(max_length=120)
+    posted_by = models.ForeignKey(Volunteer, on_delete=models.UPDATE, related_name='posted_assignments', null=True, blank=True)
+    volunteers = models.ManyToManyField(Volunteer, related_name='assignments')
+    language = models.OneToOneField(Language, on_delete=models.UPDATE, null=True, blank=True)
+    start_date = models.DateTimeField()
+    contact = models.OneToOneField(Contact, null=True)

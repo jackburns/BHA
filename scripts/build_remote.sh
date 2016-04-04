@@ -4,8 +4,6 @@ cd /data/www/BHA/js
 npm install
 gulp webpack
 
-echo -e "\n--- Installing Python Packages ---\n"
-
 cd /data/www/BHA
 sudo pip3 install -r 'requirements.txt'
 
