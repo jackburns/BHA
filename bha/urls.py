@@ -20,6 +20,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'api/volunteers', views.VolunteerViewSet, 'Volunteer')
+router.register(r'api/assignments', views.AssignmentViewSet, 'Assignment')
 
 urlpatterns = [
 	url(r'^admin/', admin.site.urls),
