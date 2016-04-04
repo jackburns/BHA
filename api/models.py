@@ -133,7 +133,7 @@ ASSIGNMENT_TYPE_ENUM = (
 ASSIGNMENT_STATUS_ENUM = (
     (0, 'unapproved'),
     (1, 'approved'),
-    (2, 'complete')
+    (2, 'complete'),
 )
 
 class Contact(models.Model):
