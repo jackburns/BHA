@@ -58,3 +58,40 @@ label {
 .clickable {
   cursor: pointer;
 }
+
+// notifications modal
+.modal-title {
+  text-align: center;
+}
+
+.notifications-body {
+  margin-top: 1em;
+  margin-bottom: 2em;
+  
+  h4 {
+    text-align: center;
+  }
+}
+
+.notifications-table {
+  border-radius: 1em;
+
+  th {
+    text-align: center;
+    background-color: #f4f4f4;
+  }
+  
+  td {
+    background-color: #fafafa;
+    text-align: center;
+    
+    a {
+      cursor: pointer;
+    }
+  }
+  
+  td.x {
+    text-align: center;
+  }
+}
+

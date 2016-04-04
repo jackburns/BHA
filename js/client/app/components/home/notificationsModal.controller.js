@@ -1,52 +1,26 @@
 class NotificationsModalController {
-  constructor($scope, $state, $uibModalInstance, items, $http) {
-    $scope.items = items;
+  constructor($scope, $state, $uibModalInstance, $http, volunteerList) {
+    $scope.allVolunteers = volunteerList;
+    $scope.selectedVolunteers = [];
     $scope.notificationMessage = "There is a new appointment for you from the BHA.";
     
-    $scope.emailVolunteers = [{
-      firstName: "John",
-      lastName: "Smith",
-      email: "jon@smith.com"
-    }, {
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane@smith.com"
-    }];
-    
-    $scope.textVolunteers = [{
-      id: 1,
-      firstName: "Bob",
-      lastName: "Guy",
-      phoneNumber: "6179672390"
-    }, {
-      id: 2,
-      firstName: "Rob",
-      lastName: "Guy",
-      phoneNumber: "6152738293"
-    }, {
-      id: 3,
-      firstName: "Sally",
-      lastName: "Gal",
-      phoneNumber: "6152118293"
-    }];
-    
-    var getVolunteerEmails = function() {
-      var emails = [];
-      $scope.emailVolunteers.forEach(function(volunteer) {
-        emails.push(volunteer.email);
-      });
+    // get the list of selected volunteers
+    $scope.allVolunteers.forEach(function(volunteerObj) {
+      var newObj = {
+        fullName: volunteerObj.firstName + ' ' + volunteerObj.lastName,
+        contact: ""
+      };
       
-      return emails;
-    };
-    
-    var getVolunteerPhoneNums = function() {
-      var phoneNums = [];
-      $scope.textVolunteers.forEach(function(volunteer) {
-        phoneNums.push({id: volunteer.id, phoneNumber: volunteer.phoneNumber});
-      });
-      
-      return phoneNums;
-    };
+      if (volunteerObj.selectedToNotify) {
+        if (volunteerObj.preferredContact === 'Text' && volunteerObj.carrier != 'Other') {
+          newObj['contact'] = volunteerObj.phoneNum;
+        } else {
+          newObj['contact'] = volunteerObj.email;
+        }
+        
+        $scope.selectedVolunteers.push(newObj);
+      }
+    });
 
     // removes the given volunteer from the given list
     $scope.removeFromTable = function(volunteerList, volunteer) {
@@ -54,14 +28,22 @@ class NotificationsModalController {
       volunteerList.splice(index, 1);
     };
     
+    var getSelectedIDs = function() {
+      var selectedIDs = [];
+      $scope.selectedVolunteers.forEach(function(volunteerObj) {
+        selectedIDs.push(volunteerObj.id);
+      });
+      
+      return selectedIDs;
+    };
     
+    // send list of volunteer IDs to the back end
     $scope.sendNotifications = function() {
       $uibModalInstance.close();
       
       var postObject = {
         message: $scope.notificationMessage,
-	emails: getVolunteerEmails(),
-	texts: getVolunteerPhoneNums()
+        ids: getSelectedIDs()
       };
       
       console.log(postObject);
@@ -73,6 +55,6 @@ class NotificationsModalController {
   }
 }
 
-NotificationsModalController.$inject = ["$scope", "$state", "$uibModalInstance", "items", "$http"];
+NotificationsModalController.$inject = ["$scope", "$state", "$uibModalInstance", "$http", "volunteerList"];
 
 export default NotificationsModalController;
