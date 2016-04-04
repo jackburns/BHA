@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework.decorators import detail_route, list_route
-from rest_framework import viewsets #, status
+from rest_framework import viewsets, filters #, status
 from .models import Volunteer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -10,6 +10,11 @@ from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSeri
 
 class VolunteerViewSet(viewsets.ModelViewSet):
     queryset = Volunteer.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('first_name', 'last_name', 'languages__language_name',)
+    #def get_queryset(self):
+    #    first_name = self.request.query_params.get('first_name', *)
+    #    return Volunteer.objects.filter(first_name=first_name)
 
     @list_route(permission_classes=[IsAuthenticated])
     def me(self, request, *args, **kwargs):
