@@ -130,6 +130,12 @@ ASSIGNMENT_TYPE_ENUM = (
     (1, 'written'),
 )
 
+ASSIGNMENT_STATUS_ENUM = (
+    (0, 'unapproved'),
+    (1, 'approved'),
+    (2, 'complete')
+)
+
 class Contact(models.Model):
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
@@ -175,3 +181,5 @@ class Assignment(models.Model):
     type = models.IntegerField(default=0, choices=ASSIGNMENT_TYPE_ENUM)
     notes = models.TextField(null=True, blank=True)
     admin_notes = models.TextField(null=True, blank=True)
+    status = models.IntegerField(default=0, choices=ASSIGNMENT_STATUS_ENUM)
+    duration = models.DecimalField(default=0, max_digits=4, decimal_places=2)
