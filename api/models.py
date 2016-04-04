@@ -125,6 +125,11 @@ LANGUAGE_ENUM = (
 	('zh-hant', 'Traditional Chinese'),
 )
 
+ASSIGNMENT_TYPE_ENUM = (
+    (0, 'in-person'),
+    (1, 'written'),
+)
+
 class Contact(models.Model):
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
@@ -167,5 +172,6 @@ class Assignment(models.Model):
     language = models.OneToOneField(Language, null=True, blank=True)
     start_date = models.DateTimeField()
     contact = models.OneToOneField(Contact, null=True, blank=True)
+    type = models.IntegerField(default=0, choices=ASSIGNMENT_TYPE_ENUM)
     notes = models.TextField(null=True, blank=True)
     admin_notes = models.TextField(null=True, blank=True)
