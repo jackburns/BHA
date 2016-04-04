@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Volunteer, Contact, Availability, Language
+from .models import Volunteer, Contact, Availability, Language, Assignment
 from datetime import datetime
 
 adminEmailSuffix = [
@@ -151,6 +151,10 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Assignment
-        fields = ('contact', 'language', 'posted_by', 'start_date', 'name', 'volunteers')
+        fields = ('id', 'contact', 'language', 'posted_by', 'start_date', 'name', 'volunteers', 'notes')
+        read_only_fields = ('id', 'posted_by')
 
 class AdminAssignmentSerializer(AssignmentSerializer):
+    class Meta:
+        model = Assignment
+        fields = ('admin_notes')
