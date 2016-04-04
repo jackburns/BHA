@@ -65,11 +65,12 @@ class VolunteerSerializer(serializers.ModelSerializer):
     contact = ContactSerializer()
     availability = AvailabilitySerializer(many=True, read_only=True)
     languages = LanguageSerializer(many=True, read_only=True)
+    assignments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     user = UserSerializer()
 
     class Meta:
         model = Volunteer
-        fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'user')
+        fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'user', 'assignments')
 
     def create(self, data):
         contact_data = data.pop('contact', None)
