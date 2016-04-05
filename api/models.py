@@ -7,11 +7,6 @@ SEX_ENUM = (
     (2, 'Other'),
 )
 
-ROLE_ENUM = (
-    (0, 'User'),
-    (1, 'Admin'),
-)
-
 VOLUNTEER_LEVEL_ENUM = (
     (0, 'Unverified'),
     (1, 'Verified'),
@@ -140,7 +135,6 @@ class Volunteer(models.Model):
     last_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
     sex = models.IntegerField(choices=SEX_ENUM, null=True, blank=True)
-    role = models.IntegerField(choices=ROLE_ENUM, default=0)
     volunteer_level = models.IntegerField(choices=VOLUNTEER_LEVEL_ENUM, default=0)
     created_at = models.DateTimeField()
     deleted_at = models.DateTimeField(null=True, blank=True)
