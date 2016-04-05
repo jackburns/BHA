@@ -1,40 +1,33 @@
-let UserService = function () {
-  let user = {
-    isSignedIn: false
-  };
+let UserService = function ($http, $state, $localStorage) {
+  let user = null;
 
   let getUser = () => {
     return user;
   };
 
-  let signIn = (newUser) => {
-    newUser = {
-      firstName: 'Mikey',
-      lastName: 'Weintraub',
-      contact: {
-        email: 'mikey@mikeymike.com',
-        phone: '555-555-5555'
-      },
-      hours: 56,
-      role: 'admin',
-      volunteerLevel: 'beenObserved'
-    };
-    newUser.isSignedIn = true;
-    user = newUser;
+  let signIn = (redirect_state) => {
+    $http.get(api + '/volunteers/me/', {
+      headers: {
+        'Authorization': 'Token ' + $localStorage.djangotoken
+      }
+    }).then(function(res) {
+      $http.defaults.headers.common.Authorization = 'Token ' + $localStorage.djangotoken;
+      user = res.data;
+      console.log(user);
+      if(redirect_state) $state.go(redirect_state);
+    });
   }
 
-  signIn();
-
   let isSignedIn = () => {
-    return user.isSignedIn;
+    return !!user;
   };
 
   let isAdmin = () => {
-    // replace with role enum
-    return user.admin === 'admin';
+    return user.is_staff;
   }
 
-  return { getUser, isSignedIn, isAdmin };
+  return { getUser, signIn, isSignedIn, isAdmin };
 };
 
+UserService.$inject = ['$http', '$state', '$localStorage'];
 export default UserService;

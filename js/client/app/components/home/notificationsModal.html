@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h3 class="modal-title">Notify Volunteers</h3>
+</div>
+<div class="col-sm-12 notifications-body">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <h4>Volunteers to Notify</h4>
+    <table class="table table-bordered table-responsive notifications-table">
+      <thead>
+        <th></th>
+        <th>Name</th>
+        <th>Contact</th>
+      </thead>
+      <tbody class="table">
+        <tr ng-repeat="volunteer in selectedVolunteers">
+          <td>
+            <button type="button" class="close" ng-click="removeFromTable(selectedVolunteers, volunteer)" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </td>
+          <td ng-bind="volunteer.fullName"></td>
+          <td ng-bind="volunteer.contact"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-2"></div>
+  <h4 class="col-sm-12">Message</h4>
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <textarea ng-model="notificationMessage" class="form-control" rows="2"></textarea>
+  </div>
+  <div class="col-sm-2"></div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-disabled="selectedVolunteers.length === 0" ng-click="sendNotifications()">Send Notifications</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
