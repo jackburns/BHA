@@ -113,6 +113,7 @@ class VolunteerFormController {
         this.info.user.username = this.info.contact.email;
         console.log(this.info);
         $http.post(api + '/volunteers/', this.info).then((res) =>{
+          $state.go('/login');
           console.log(res);
         });
       } else {
