@@ -84,17 +84,19 @@ class VolunteerFormController {
       this.info.availability.pop();
     };
 
-    this.validatePassword = function(password) {
+    this.getPasswordError = function(password) {
       if (password.length < 8) {
-        this.passwordError = "Password needs to be at least 8 characters";
+        return "Password needs to be at least 8 characters";
       } else if (password.length > 50) {
-        this.passwordError = "Password need to be less than 50 characters";
+        return "Password need to be less than 50 characters";
       } else if (password.search(/\d/) == -1) {
-        this.passwordError = "Password needs at least one number"
+        return "Password needs at least one number";
       } else if (password.search(/[a-zA-Z]/) == -1) {
-        this.passwordError = "Password needs at least one letter"
+        return "Password needs at least one letter";
+      } else {
+        return "";
       }
-    }
+    };
 
     // on submit
     this.submit = function(ang_valid) {
@@ -102,10 +104,10 @@ class VolunteerFormController {
       this.submitted = true;
       this.zip_valid = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.info.contact.zip);
       this.phone_valid = this.info.contact.phone_number.length == 10;
-      this.validLanguages = this.info.languages[0].language_name.length > 0
+      this.validLanguages = this.info.languages[0].language_name.length > 0;
       this.validateAvailabilities();
       this.validAvailabilities = _.every(this.info.availability, 'isValid');
-      this.validatePassword(this.info.user.password);
+      this.passwordError = this.getPasswordError(this.info.user.password);
       this.validateForm(ang_valid);
 
       if (this.allValid) {

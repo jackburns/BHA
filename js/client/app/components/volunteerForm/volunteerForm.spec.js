@@ -2,15 +2,17 @@ import VolunteerFormModule from './volunteerForm'
 import VolunteerFormController from './volunteerForm.controller';
 import VolunteerFormComponent from './volunteerForm.component';
 import VolunteerFormTemplate from './volunteerForm.html';
+import Enums from '../../common/enums/enums';
 
 describe('VolunteerForm', () => {
-  let $rootScope, makeController;
+  let $rootScope, $http, makeController;
 
   beforeEach(window.module(VolunteerFormModule.name));
-  beforeEach(inject((_$rootScope_) => {
+  beforeEach(inject((_$rootScope_, _$http_) => {
     $rootScope = _$rootScope_;
+    $http = _$http_;
     makeController = () => {
-      return new VolunteerFormController();
+      return new VolunteerFormController($http, Enums);
     };
   }));
 
@@ -22,21 +24,21 @@ describe('VolunteerForm', () => {
     it('sets the isValid flag for every availability', () => {
       let ctrl = makeController();
       ctrl.validateAvailabilities();
-      expect(ctrl.info.availabilities[0].isValid).to.be.false;
-      ctrl.info.availabilities[0].dayOfWeek = 'Wednesday';
+      expect(ctrl.info.availability[0].isValid).to.be.false;
+      ctrl.info.availability[0].day = 'Wednesday';
       ctrl.validateAvailabilities();
-      expect(ctrl.info.availabilities[0].isValid).to.be.false;
-      ctrl.info.availabilities[0].startTime = '10:30AM';
+      expect(ctrl.info.availability[0].isValid).to.be.false;
+      ctrl.info.availability[0].start_time = '10:30AM';
       ctrl.validateAvailabilities();
-      expect(ctrl.info.availabilities[0].isValid).to.be.false;
-      ctrl.info.availabilities[0].endTime = '10:30AM';
+      expect(ctrl.info.availability[0].isValid).to.be.false;
+      ctrl.info.availability[0].end_time = '10:30AM';
       ctrl.validateAvailabilities();
-      expect(ctrl.info.availabilities[0].isValid).to.be.false;
-      ctrl.info.availabilities[0].endTime = '2:30PM';
-      ctrl.info.availabilities.push({dayOfWeek: 'Sunday', startTime: '2:00PM', endTime: '4:00PM'});
+      expect(ctrl.info.availability[0].isValid).to.be.false;
+      ctrl.info.availability[0].end_time = '2:30PM';
+      ctrl.info.availability.push({day: 'Sunday', start_time: '2:00PM', end_time: '4:00PM'});
       ctrl.validateAvailabilities();
-      expect(ctrl.info.availabilities[0].isValid).to.be.true;
-      expect(ctrl.info.availabilities[1].isValid).to.be.true;
+      expect(ctrl.info.availability[0].isValid).to.be.true;
+      expect(ctrl.info.availability[1].isValid).to.be.true;
     });
 
     it('sets allValid according to if all form entries are valid', () => {
@@ -54,7 +56,17 @@ describe('VolunteerForm', () => {
       expect(ctrl.allValid).to.be.false;
       ctrl.validateForm(true);
       expect(ctrl.allValid).to.be.true;
+    });
 
+    it('returns an appropriate error for invalid passwords', () => {
+      let ctrl = makeController();
+      expect(ctrl.getPasswordError('t')).to.be.equal('Password needs to be at least 8 characters');
+      expect(ctrl.getPasswordError('sevench')).to.be.equal('Password needs to be at least 8 characters');
+      expect(ctrl.getPasswordError('this password is essentially a short novel who could remember this')).to.be.equal(
+        'Password need to be less than 50 characters');
+      expect(ctrl.getPasswordError('nodigits')).to.be.equal('Password needs at least one number');
+      expect(ctrl.getPasswordError('1234567890')).to.be.equal('Password needs at least one letter');
+      expect(ctrl.getPasswordError('greatpassword123')).to.be.equal('');
     });
 
     it('adds a new blank language', () => {
@@ -76,27 +88,27 @@ describe('VolunteerForm', () => {
 
     it('adds a new blank availability', () => {
       let ctrl = makeController();
-      expect(ctrl.info.languages).to.have.length(1);
+      expect(ctrl.info.availability).to.have.length(1);
       ctrl.addNewAvailability();
-      expect(ctrl.info.availabilities).to.have.length(2);
-      expect(ctrl.info.availabilities[1].dayOfWeek).to.equal("");
-      expect(ctrl.info.availabilities[1].startTime).to.equal("");
-      expect(ctrl.info.availabilities[1].endTime).to.equal("");
-      expect(ctrl.info.availabilities[1].isValid).to.be.false;
+      expect(ctrl.info.availability).to.have.length(2);
+      expect(ctrl.info.availability[1].day).to.equal("");
+      expect(ctrl.info.availability[1].start_time).to.equal("");
+      expect(ctrl.info.availability[1].end_time).to.equal("");
+      expect(ctrl.info.availability[1].isValid).to.be.false;
     });
 
     it('removes the last availability', () => {
       let ctrl = makeController();
-      expect(ctrl.info.availabilities).to.have.length(1);
+      expect(ctrl.info.availability).to.have.length(1);
       ctrl.removeLastAvailability()
-      expect(ctrl.info.availabilities).to.have.length(0);
+      expect(ctrl.info.availability).to.have.length(0);
       ctrl.removeLastAvailability()
-      expect(ctrl.info.availabilities).to.have.length(0);
+      expect(ctrl.info.availability).to.have.length(0);
     });
 
-    it('contact select is initially set to Phone', () => {
+    it('contact select is initially set to 0 for email', () => {
       let ctrl = makeController();
-      expect(ctrl.info.contactMethod).to.equal("Phone");
+      expect(ctrl.info.contact.preferred_contact).to.equal('0');
     });
     
     it('click submit -> API call', () => {

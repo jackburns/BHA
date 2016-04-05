@@ -31,7 +31,7 @@ describe('Home', () => {
       expect(controller.ordering).to.equal('lastName');
       expect(controller.isReverseOrder).to.equal(false);
     });
-    
+
     it('initializes with selectAll unchecked', () => {
       let controller = makeController();
       expect(controller.willSelectAll).to.be.false;
@@ -57,7 +57,7 @@ describe('Home', () => {
       controller.updateOrder('firstName');
       expect(controller.isReverseOrder).to.equal(false);
     });
-    
+
     it('sets all volunteers notify status to that of selectAll checkbox', () => {
       let ctrl = makeController();
       _.forEach(ctrl.volunteers, (volunteer) => {
@@ -102,7 +102,7 @@ describe('Home', () => {
       let controller = makeController();
       expect(controller).to.have.property('notifyModalOpen');
       expect(controller.notifyModalOpen).to.equal(false);
-      
+
       expect(controller).to.have.property('selectedVolunteers');
       expect(controller.selectedVolunteers).to.have.length(0);
 
@@ -123,7 +123,7 @@ describe('Home', () => {
       expect(controller.selectedVolunteers.indexOf(1)).to.be.above(-1);
     });
 
-    it('removes volunteer from selected list when volunteer is deselected', () { 
+    it('removes volunteer from selected list when volunteer is deselected', () => {
       let controller = makeController();
       controller.selectVolunteer(1);
       controller.selectVolunteer(2);
@@ -140,9 +140,9 @@ describe('Home', () => {
         lastName: 'Smith',
         languages; ['Spanish'],
         email: 'john@smith.com',
-	phoneNumber: '6178762348',
-	preferredContact: 'Email'
-      };
+        phoneNumber: '6178762348',
+        preferredContact: 'Email'
+    };
 
       controller.selectVolunteer(1);
       let volunteerInfo = controller.getVolunteerInfo(1);
@@ -151,7 +151,7 @@ describe('Home', () => {
 
       expect(volunteerInfo).to.have.property('firstName');
       expect(volunteerInfo.email).to.equal('John');
-      
+
       expect(volunteerInfo).to.have.property('lastName');
       expect(volunteerInfo.email).to.equal('Smith');
 
@@ -171,9 +171,9 @@ describe('Home', () => {
         lastName: 'Smith',
         languages; ['Spanish'],
         email: 'john@smith.com',
-	phoneNumber: '6178762348',
-	preferredContact: 'Email'
-      };
+        phoneNumber: '6178762348',
+        preferredContact: 'Email'
+    };
 
       let volunteer2 = {
         id: 2,
@@ -181,9 +181,9 @@ describe('Home', () => {
         lastName: 'Smith',
         languages; ['Spanish'],
         email: 'jane@smith.com',
-	phoneNumber: '6178562348',
-	preferredContact: 'Text'
-      };
+        phoneNumber: '6178562348',
+        preferredContact: 'Text'
+    };
 
       controller.selectVolunteer(1);
       controller.selectVolunteer(2);
@@ -195,26 +195,26 @@ describe('Home', () => {
       expect(emailVolunteers.indexOf(1)).to.be.above(-1);
       expect(emailVolunteers.indexOf(1)).to.equal(-1);
       expect(emailVolunteers.indexOf(2)).to.be.above(-1);
-    });  
+    });
   });
 
   describe('Template', () => {
   });
 
   describe('Component', () => {
-      // component/directive specs
-      let component = HomeComponent;
+    // component/directive specs
+    let component = HomeComponent;
 
-      it('includes the intended template',() => {
-        expect(component.template).to.equal(HomeTemplate);
-      });
+    it('includes the intended template',() => {
+      expect(component.template).to.equal(HomeTemplate);
+    });
 
-      it('uses `controllerAs` syntax', () => {
-        expect(component).to.have.property('controllerAs');
-      });
+    it('uses `controllerAs` syntax', () => {
+      expect(component).to.have.property('controllerAs');
+    });
 
-      it('invokes the right controller', () => {
-        expect(component.controller).to.equal(HomeController);
-      });
+    it('invokes the right controller', () => {
+      expect(component.controller).to.equal(HomeController);
+    });
   });
 });

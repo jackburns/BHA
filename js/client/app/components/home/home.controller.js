@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import notificationsModalTemplate from './notificationsModal.html'
-import NotificationsModalController from './notificationsModal.controller'
+import notificationsModalTemplate from './../../common/notificationsModal/notificationsModal.html'
+import NotificationsModalController from './../../common/notificationsModal/notificationsModal.controller.js'
 
 class HomeController {
-  constructor($state, $uibModal) {
+  constructor($state, $uibModal, $http) {
     
     //TODO: Delete function once GET /volunteers/ API is set up
     let makeVolunteer = function(id, firstName, lastName, languages, email, phoneNum, preferredContact, carrier) {
@@ -95,6 +95,6 @@ class HomeController {
   }
 }
 
-HomeController.$inject = ["$state", "$uibModal"];
+HomeController.$inject = ["$state", "$uibModal", "$http"];
 
 export default HomeController;
