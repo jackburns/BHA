@@ -12,9 +12,6 @@ class VolunteerViewSet(viewsets.ModelViewSet):
     queryset = Volunteer.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('first_name', 'last_name', 'languages__language_name', 'languages__can_written_translate')
-    #def get_queryset(self):
-    #    first_name = self.request.query_params.get('first_name', *)
-    #    return Volunteer.objects.filter(first_name=first_name)
 
     @list_route(permission_classes=[IsAuthenticated])
     def me(self, request, *args, **kwargs):
