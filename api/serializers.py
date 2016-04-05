@@ -63,8 +63,8 @@ def purgeList(self, old_array, new_array):
 class VolunteerSerializer(serializers.ModelSerializer):
 
     contact = ContactSerializer()
-    availability = AvailabilitySerializer(many=True, read_only=True)
-    languages = LanguageSerializer(many=True, read_only=True)
+    availability = AvailabilitySerializer(many=True)
+    languages = LanguageSerializer(many=True)
     assignments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     user = UserSerializer()
 
