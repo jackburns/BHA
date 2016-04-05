@@ -1,23 +1,28 @@
 <div class="container-fluid">
-  <h1>{{ vm.volunteer.firstName }} 
-    {{ vm.volunteer.middleName }}
-    {{ vm.volunteer.lastName }}</h1>
+  <h1>{{ vm.volunteer.first_name }}
+    {{ vm.volunteer.middle_name }}
+    {{ vm.volunteer.last_name }}</h1>
 
   <div class="row">
     <div class="col-md-4">
       <strong>Gender:</strong><br>
-      {{ vm.volunteer.gender }}<br><br>
+      {{ vm.volunteer.gender || 'Unknown'}}<br><br>
 
       <strong>Birthday:</strong><br>
-      {{ vm.volunteer.birthday }}<br><br>
+      {{ vm.volunteer.birthday  || 'Unkown'}}<br><br>
 
       <strong>Languages:</strong><br>
-      <span ng-bind="vm.volunteer.languages.join(', ')"></span>
+        <div ng-repeat="language in vm.volunteer.languages">
+          <span ng-bind="vm.languages[language.language_name]"></span>
+          <span ng-show="language.can_written_translate" class="glyphicon glyphicon-edit"></span>
+          <span ng-show="!language.can_written_translate" class="glyphicon glyphicon-user"></span>
+        </div>
+      <span ng-bind="_.pluck(vm.volunteer.languages, 'language_name').join(', ')"></span>
 
       <br><br>
 
       <strong>Volunteer Level</strong><br>
-      {{ vm.volunteer.volunteerLevel }}<br><br>
+      {{ vm.volunteer.volunteer_level }}<br><br>
       <strong>Hours Completed:</strong><br>
       {{ vm.volunteer.hours }}<br><br>
 
@@ -27,7 +32,7 @@
         {{ vm.volunteer.contact.state }}
         {{ vm.volunteer.contact.zip }}<br>
 
-        {{ vm.volunteer.contact.phoneNumber }}<br>
+        {{ vm.volunteer.contact.phone_number }}<br>
         <a href="mailto:#">{{ vm.volunteer.contact.email }}</a><br>
       </address>
     </div>

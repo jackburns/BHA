@@ -14,7 +14,9 @@ let UserService = function ($http, $state, $localStorage) {
       $http.defaults.headers.common.Authorization = 'Token ' + $localStorage.djangotoken;
       user = res.data;
       console.log(user);
-      if(redirect_state) $state.go(redirect_state);
+      if(redirect_state) {
+        $state.go(redirect_state);
+      }
     });
   }
 

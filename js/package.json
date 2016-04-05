@@ -5,7 +5,7 @@
   "dependencies": {
     "angular": "^1.5.0",
     "angular-ui-bootstrap": "^1.2.5",
-    "angular-ui-router": "^0.2.15",
+    "angular-ui-router": "^0.2.18",
     "babel-loader": "^6.2.4",
     "faker": "^3.1.0",
     "lodash": "*",

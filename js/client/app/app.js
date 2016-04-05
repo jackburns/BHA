@@ -24,17 +24,22 @@ angular.module('app', [
     RestangularProvider.setBaseUrl(api);
   }])
   .run(['$rootScope', '$state', 'User', '$localStorage', ($rootScope, $state, User, $localStorage) => {
-    console.log(User.isSignedIn());
-    console.log($localStorage.djangotoken);
 
-    if (!User.isSignedIn() && $localStorage.djangotoken) {
-      User.signIn($state.current.name);
-    }
+    let anonStates = [
+      'login',
+      'volunteerApplication'
+    ];
+    $rootScope.$on("$stateChangeStart", function(event, toState, toParams) {
 
-    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-     if (!User.isSignedIn()) {
-        $state.go("/login");
-     }
+      // If user isnt signed in BUT we have auth token, sign in and then redirect
+      // Else redirect to login page
+      if (!User.isSignedIn() && $localStorage.djangotoken) {
+        event.preventDefault();
+        User.signIn(toState.name);
+      } else if (!User.isSignedIn() && !_.includes(anonStates, toState.name)) {
+        event.preventDefault();
+        $state.go('login');
+      }
    });
  }])
  .component('app', AppComponent);
