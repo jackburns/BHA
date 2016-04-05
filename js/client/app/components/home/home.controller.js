@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import notificationsModalTemplate from './notificationsModal.html'
-import NotificationsModalController from './notificationsModal.controller'
+import notificationsModalTemplate from './../../common/notificationsModal/notificationsModal.html'
+import NotificationsModalController from './../../common/notificationsModal/notificationsModal.controller.js'
 
 class HomeController {
   constructor($state, $uibModal, $http, Enums) {
