@@ -61,6 +61,6 @@
       </tr>
       </tbody>
     </table>
-    <button class="btn" ng-click="vm.openNotificationsModal(vm.volunteers)">Notify (<span ng-bind="vm.numberSelected"></span>) selected volunteers</button>
+    <button class="btn" ng-click="vm.openNotificationsModal(vm.getCheckedVolunteers())">Notify (<span ng-bind="vm.numberSelected"></span>) selected volunteers</button>
   </div>
 </main>

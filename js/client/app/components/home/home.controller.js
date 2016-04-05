@@ -81,6 +81,17 @@ class HomeController {
         }
       });
     };
+    
+    this.getCheckedVolunteers = function() {
+      var checked = [];
+      this.volunteers.forEach(function(volunteerObj) {
+        if (volunteerObj.selectedToNotify) {
+          checked.push(volunteerObj);
+        }
+      });
+
+      return checked;
+    }
   }
 }
 

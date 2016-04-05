@@ -11,15 +11,13 @@ class NotificationsModalController {
         contact: ""
       };
       
-      if (volunteerObj.selectedToNotify) {
-        if (volunteerObj.preferredContact === 'Text' && volunteerObj.carrier != 'Other') {
-          newObj['contact'] = volunteerObj.phoneNum;
-        } else {
-          newObj['contact'] = volunteerObj.email;
-        }
-        
-        $scope.selectedVolunteers.push(newObj);
+      if (volunteerObj.preferredContact === 'Text' && volunteerObj.carrier != 'Other') {
+        newObj['contact'] = volunteerObj.phoneNum;
+      } else {
+        newObj['contact'] = volunteerObj.email;
       }
+        
+      $scope.selectedVolunteers.push(newObj);
     });
 
     // removes the given volunteer from the given list
