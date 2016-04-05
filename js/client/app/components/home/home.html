@@ -58,7 +58,7 @@
         <td class="notify-column"><input type="checkbox" ng-model="volunteer.selectedToNotify" ng-change="vm.updateNumberSelected()"></td>
         <td class="clickable first-name-column" ng-bind="volunteer.first_name" ng-click="vm.viewVolunteer(volunteer.id)"></td>
         <td class="clickable last-name-column" ng-bind="volunteer.last_name" ng-click="vm.viewVolunteer(volunteer.id)"></td>
-        <td class="clickable languages-column" ng-bind="volunteer.languages.join(', ')" ng-click="vm.viewVolunteer(volunteer.id)"></td>
+        <td class="clickable languages-column" ng-bind="vm.getLanguagesDisplay(volunteer.languages)" ng-click="vm.viewVolunteer(volunteer.id)"></td>
       </tr>
       </tbody>
     </table>

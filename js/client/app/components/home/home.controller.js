@@ -57,6 +57,16 @@ class HomeController {
       this.willSelectAll = this.volunteers && this.numberSelected === this.volunteers.length ;
     };
 
+    this.getLanguagesDisplay = (languages) => {
+      let result = '';
+      _.forEach(languages, (language) => {
+        console.log(language)
+        result += this.allLanguages[language.language_name] + ', ';
+      });
+
+      return result.substr(0, result.length - 2);
+    }
+
     this.allLanguages = Enums.languages;
     this.ordering = 'lastName';
     this.isReverseOrder = false;
