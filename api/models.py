@@ -120,6 +120,17 @@ LANGUAGE_ENUM = (
 	('zh-hant', 'Traditional Chinese'),
 )
 
+ASSIGNMENT_TYPE_ENUM = (
+    (0, 'in-person'),
+    (1, 'written'),
+)
+
+ASSIGNMENT_STATUS_ENUM = (
+    (0, 'unapproved'),
+    (1, 'approved'),
+    (2, 'complete'),
+)
+
 class Contact(models.Model):
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
@@ -140,7 +151,7 @@ class Volunteer(models.Model):
     deleted_at = models.DateTimeField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     inactive = models.BooleanField(default=False)
-    contact = models.OneToOneField(Contact, on_delete=models.CASCADE)
+    contact = models.OneToOneField(Contact)
     hours = models.IntegerField(default=0)
 
 class Language(models.Model):
@@ -153,3 +164,16 @@ class Availability(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE, related_name='availability')
+
+class Assignment(models.Model):
+    name = models.CharField(max_length=120)
+    posted_by = models.ForeignKey(Volunteer, on_delete=models.SET_NULL, related_name='posted_assignments', null=True, blank=True)
+    volunteers = models.ManyToManyField(Volunteer, related_name='assignments', blank=True)
+    language = models.OneToOneField(Language, null=True, blank=True)
+    start_date = models.DateTimeField()
+    contact = models.OneToOneField(Contact, null=True, blank=True)
+    type = models.IntegerField(default=0, choices=ASSIGNMENT_TYPE_ENUM)
+    notes = models.TextField(null=True, blank=True)
+    admin_notes = models.TextField(null=True, blank=True)
+    status = models.IntegerField(default=0, choices=ASSIGNMENT_STATUS_ENUM)
+    duration = models.DecimalField(default=0, max_digits=4, decimal_places=2)

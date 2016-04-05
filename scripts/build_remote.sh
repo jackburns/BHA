@@ -4,8 +4,7 @@ cd /data/www/BHA/js
 npm install
 gulp webpack
 
-echo -e "\n--- Installing Python Packages ---\n"
-
+sudo ln -s /data/www/BHA/bha/config/django.ini /etc/uwsgi/vassals/django.ini
 cd /data/www/BHA
 sudo pip3 install -r 'requirements.txt'
 
