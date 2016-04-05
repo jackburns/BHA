@@ -131,6 +131,15 @@ let EnumsService = function () {
       16: "U.S. Cellular",
       17: "Virgin Mobile USA",
       18: "Other",
+    },
+    assignment_type: {
+      0: 'in-person',
+      1: 'written'
+    },
+    assignment_status: {
+      0: 'unapproved',
+      1: 'approved',
+      2: 'complete'
     }
   };
   return enums;
