@@ -11,7 +11,7 @@ from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSeri
 class VolunteerViewSet(viewsets.ModelViewSet):
     queryset = Volunteer.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('first_name', 'last_name', 'languages__language_name',)
+    filter_fields = ('first_name', 'last_name', 'languages__language_name', 'languages__can_written_translate')
     #def get_queryset(self):
     #    first_name = self.request.query_params.get('first_name', *)
     #    return Volunteer.objects.filter(first_name=first_name)
