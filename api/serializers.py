@@ -142,7 +142,9 @@ class VolunteerSerializer(serializers.ModelSerializer):
         return instance
 
 class AdminVolunteerSerializer(VolunteerSerializer):
-    notes = serializers.CharField(required=False)
+    class Meta:
+	    model = Volunteer
+	    fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'notes', 'user')
 
 class AssignmentSerializer(serializers.ModelSerializer):
     contact = ContactSerializer()

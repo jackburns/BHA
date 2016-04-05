@@ -1,15 +1,26 @@
+import django_filters
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework.decorators import detail_route, list_route
-from rest_framework import viewsets #, status
+from rest_framework import viewsets, filters #, status
 from .models import Volunteer, Assignment
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSerializer
 
 
+class VolunteerFilter(filters.FilterSet):
+    language = django_filters.CharFilter(name="languages__language_name")
+    can_write = django_filters.CharFilter(name="languages__can_written_translate")
+
+    class Meta:
+	    model = Volunteer
+	    fields = ('first_name', 'last_name', 'language', 'can_write')
+
 class VolunteerViewSet(viewsets.ModelViewSet):
     queryset = Volunteer.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = VolunteerFilter
 
     @list_route(permission_classes=[IsAuthenticated])
     def me(self, request, *args, **kwargs):
