@@ -69,7 +69,7 @@ class VolunteerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Volunteer
-        fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'notes', 'role', 'user')
+        fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'user')
 
     def create(self, data):
         contact_data = data.pop('contact', None)
@@ -142,7 +142,10 @@ class VolunteerSerializer(serializers.ModelSerializer):
 
 class AdminVolunteerSerializer(VolunteerSerializer):
     notes = serializers.CharField(required=False)
-    role = serializers.IntegerField(required=False)
     volunteer_level = serializers.IntegerField(required=False)
     inactive = serializers.BooleanField(required=False)
     hours = serializers.IntegerField(read_only=True)
+	
+    class Meta:
+	    model = Volunteer
+	    fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'notes', 'user')
