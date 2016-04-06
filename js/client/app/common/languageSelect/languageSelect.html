@@ -1,0 +1,11 @@
+<div class="language-select-group">
+  <label class="input-label">Language:</label>
+  <ui-select ng-model="vm.selectedLanguage" class="language-select">
+    <ui-select-match allow-clear="true">
+      {{$select.selected.name}}
+    </ui-select-match>
+    <ui-select-choices repeat="languageObj.key as languageObj in vm.allLanguages | filter:{name: $select.search}:vm.startsWithComparator">
+      {{languageObj.name}}
+    </ui-select-choices>
+  </ui-select>
+</div>

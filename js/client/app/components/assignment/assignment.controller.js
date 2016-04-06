@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 class AssignmentController {
-  constructor(Enums) {
+  constructor() {
 
     let makeAssignment = (name, status, language, startDate, volunteers) => {
       return {
@@ -12,24 +12,6 @@ class AssignmentController {
         volunteers: volunteers
       }
     };
-
-    function sortedLanguages() {
-      var sortedLanguageObjects = _.map(_.keys(Enums.languages), (languageKey) => {
-        return {
-          'key': languageKey,
-          'name': Enums.languages[languageKey]
-        };
-      });
-      // Sorts language objects by language name
-      sortedLanguageObjects.sort((a, b) => { return a.name.toLowerCase().localeCompare(b.name.toLowerCase()); });
-      return sortedLanguageObjects;
-    }
-
-    this.startsWithComparator = (actual, expected) => {
-      return actual.toLowerCase().indexOf(expected.toLowerCase()) === 0;
-    };
-
-    this.allLanguages = sortedLanguages();
 
     this.futureAssignments = [
       makeAssignment('assn1', 'valid', 'es', '4/4/16', []),
@@ -42,5 +24,4 @@ class AssignmentController {
   }
 }
 
-AssignmentController.$inject = ['Enums'];
 export default AssignmentController;
