@@ -8,17 +8,7 @@
       <input class="form-control" id="assignment-name" type="text" ng-model="vm.search.name">
     </div>
   </form>
-  <div class="language-select-group">
-    <label class="input-label">Language:</label>
-    <ui-select ng-model="vm.search.language" class="language-select">
-      <ui-select-match allow-clear="true">
-        {{$select.selected.name}}
-      </ui-select-match>
-      <ui-select-choices repeat="languageObj.key as languageObj in vm.allLanguages | filter:{name: $select.search}:vm.startsWithComparator">
-        {{languageObj.name}}
-      </ui-select-choices>
-    </ui-select>
-  </div>
+  <language-select selected-language="vm.search.language"></language-select>
   <div class="checkbox inline-checkbox">
     <label>
       <input type="checkbox" value=""> Only show unassigned
