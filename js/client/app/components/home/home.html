@@ -12,17 +12,7 @@
       </div>
     </form>
     <div class="language-filters">
-      <div class="language-select-group">
-        <label class="input-label">Language:</label>
-        <ui-select ng-model="vm.search.language" class="language-select">
-          <ui-select-match>
-            {{$select.selected.value}}
-          </ui-select-match>
-          <ui-select-choices repeat="language.key as (key, language) in vm.allLanguages | filter: $select.search">
-            {{language.value}}
-          </ui-select-choices>
-        </ui-select>
-      </div>
+      <language-select selected-language="vm.search.language"></language-select>
       <div class="checkbox inline-checkbox">
         <label>
           <input type="checkbox" value=""> Willing to translate
