@@ -2,8 +2,9 @@ import django_filters
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework.decorators import detail_route, list_route
-from rest_framework import viewsets, filters #, status
+from rest_framework import viewsets, views, filters #, status
 from .models import Volunteer, Assignment
+from django.core.mail import send_mail
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSerializer
@@ -16,6 +17,14 @@ class VolunteerFilter(filters.FilterSet):
     class Meta:
 	    model = Volunteer
 	    fields = ('first_name', 'last_name', 'language', 'can_write')
+
+class NotificationView(views.APIView):
+    permission_classes = []
+
+    def post(self, request, *args, **kwargs):
+        message = request.POST.get("message", "No Message")
+        send_mail('Test', message, 'bcox5021@gmail.com', ['5086889360@vtext.com'], fail_silently=False)
+        return Response({"success": True})   
 
 class VolunteerViewSet(viewsets.ModelViewSet):
     queryset = Volunteer.objects.all()
