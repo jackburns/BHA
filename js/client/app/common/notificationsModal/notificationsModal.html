@@ -2,14 +2,17 @@
   <h3 class="modal-title">Notify Volunteers</h3>
 </div>
 <div class="col-sm-12 notifications-body">
-  <div class="col-sm-2"></div>
-  <div class="col-sm-8">
-    <h4>Volunteers to Notify</h4>
+  <div class="col-sm-1"></div>
+  <div class="col-sm-10">
     <table class="table table-bordered table-responsive notifications-table">
       <thead>
-        <th></th>
-        <th>Name</th>
-        <th>Contact</th>
+        <th class="col-sm-1"></th>
+        <th class="col-sm-5">Name</th>
+        <th class="col-sm-5">Contact</th>
+        <th class="col-sm-1">
+          <div>Force Email</div>
+          <input type="checkbox" ng-model="emailAll" ng-change="forceEmailAll()">
+        </th>
       </thead>
       <tbody class="table">
         <tr ng-repeat="volunteer in selectedVolunteers">
@@ -19,12 +22,19 @@
             </button>
           </td>
           <td ng-bind="volunteer.fullName"></td>
-          <td ng-bind="volunteer.contact"></td>
+          <td ng-bind="volunteer.showEmail ? volunteer.email : volunteer.phoneNumber"></td>
+          <td><input type="checkbox" ng-model="volunteer.showEmail" ng-disabled="volunteer.onlyEmail" ng-change="updateEmailAll()"></td>
         </tr>
       </tbody>
     </table>
   </div>
+  <div class="col-sm-1"></div>
   <div class="col-sm-2"></div>
+  <h4 class="col-sm-2">Subject:</h4>
+  <div class="col-sm-6">
+    <input type="text" ng-model="notificationSubject" class="form-control">
+  </div>
+  <div class="col-sm-1"></div>
   <h4 class="col-sm-12">Message</h4>
   <div class="col-sm-2"></div>
   <div class="col-sm-8">
