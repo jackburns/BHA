@@ -6,7 +6,7 @@ from rest_framework import viewsets, filters #, status
 from .models import Volunteer, Assignment
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
-from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSerializer
+from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSerializer, AdminAssignmentSerializer, AssignmentSerializer
 
 
 class VolunteerFilter(filters.FilterSet):
