@@ -3,20 +3,21 @@ class NotificationsModalController {
     $scope.allVolunteers = volunteerList;
     $scope.selectedVolunteers = [];
     $scope.notificationMessage = "There is a new appointment for you from the BHA.";
-    
+    $scope.notificationSubject = "Alert from BHA";
+
     // get the list of selected volunteers
     $scope.allVolunteers.forEach(function(volunteerObj) {
+      console.log(volunteerObj);
       var newObj = {
-        fullName: volunteerObj.firstName + ' ' + volunteerObj.lastName,
-        contact: ""
+        id: volunteerObj.id,
+        fullName: volunteerObj.first_name + ' ' + volunteerObj.last_name,
+        phoneNumber: volunteerObj.contact.phone_number,
+        carrier: volunteerObj.contact.carrier,
+        email: volunteerObj.contact.email,
+        showEmail: volunteerObj.contact.preferred_contact != 1,
+        onlyEmail: volunteerObj.contact.carrier === 18 || volunteerObj.contact.preferred_contact != 1
       };
-      
-      if (volunteerObj.preferredContact === 'Text' && volunteerObj.carrier != 'Other') {
-        newObj['contact'] = volunteerObj.phoneNum;
-      } else {
-        newObj['contact'] = volunteerObj.email;
-      }
-        
+
       $scope.selectedVolunteers.push(newObj);
     });
 
@@ -25,26 +26,64 @@ class NotificationsModalController {
       var index = volunteerList.indexOf(volunteer);
       volunteerList.splice(index, 1);
     };
-    
-    var getSelectedIDs = function() {
-      var selectedIDs = [];
-      $scope.selectedVolunteers.forEach(function(volunteerObj) {
-        selectedIDs.push(volunteerObj.id);
+
+    $scope.updateEmailAll = function(volunteer) {
+      var allForceEmail = true;
+      $scope.selectedVolunteers.forEach(function (volunteer) {
+        if (!volunteer.showEmail) {
+          allForceEmail = false;
+        }
       });
-      
-      return selectedIDs;
+
+      $scope.emailAll = allForceEmail;
+    }
+
+    $scope.forceEmailAll = function() {
+      $scope.selectedVolunteers.forEach(function (volunteer) {
+        volunteer.showEmail = volunteer.onlyEmail || $scope.emailAll;
+      });
+    }
+
+    var getPostObject = function() {
+      var selectedEmails = [];
+      var selectedTexts = [];
+
+      $scope.selectedVolunteers.forEach(function(volunteerObj) {
+        if (volunteerObj.showEmail) {
+          selectedEmails.push({
+            id: volunteerObj.id,
+            email: volunteerObj.email
+          });
+        } else {
+          selectedTexts.push({
+            id: volunteerObj.id,
+            phoneNumber: volunteerObj.phoneNumber,
+            carrier: volunteerObj.carrier
+          });
+        }
+      });
+
+      return {
+        subject: $scope.notificationSubject,
+        message: $scope.notificationMessage,
+        emails: selectedEmails,
+        texts: selectedTexts
+      };
     };
-    
+
     // send list of volunteer IDs to the back end
     $scope.sendNotifications = function() {
-      $uibModalInstance.close();
-      
-      var postObject = {
-        message: $scope.notificationMessage,
-        ids: getSelectedIDs()
-      };
-      
+      var postObject = getPostObject();
       console.log(postObject);
+
+      $http.post(api + '/notify', postObject).then(
+        function(response) {
+          console.log(response);
+          $uibModalInstance.close();
+        },
+        function(error) {
+          console.log(error);
+        });
     };
 
     $scope.cancel = function() {
