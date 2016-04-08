@@ -29,10 +29,12 @@ angular.module('app', [
       'login',
       'volunteerApplication'
     ];
+
     $rootScope.$on("$stateChangeStart", function(event, toState, toParams) {
 
       // If user isnt signed in BUT we have auth token, sign in and then redirect
       // Else redirect to login page
+      console.log(event);
       if (!User.isSignedIn() && $localStorage.djangotoken) {
         event.preventDefault();
         User.signIn(toState.name);

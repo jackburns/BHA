@@ -12,9 +12,11 @@
     <div class="navbar-collapse collapse navbar-response-collapse" uib-collapse="vm.navCollapsed">
       <ul class="nav navbar-nav navbar-right">
         <li><a ui-sref="about">About</a></li>
-        <li><a ui-sref="login">Login</a></li>
-        <li><a ui-sref="volunteerApplication">Apply</a></li>
-        <li ng-if="vm.user.isSignedIn()"><a href="#">Profile</a></li>
+        <li ng-show="!vm.user.isSignedIn()"><a ui-sref="login">Login</a></li>
+        <li ng-show="vm.user.isSignedIn()"><a href="#" ng-click="vm.user.logout()">Logout</a></li>
+        <li ng-show="!vm.user.isSignedIn()"><a ui-sref="volunteerApplication">Apply</a></li>
+        <li ng-show="vm.user.isAdmin()"><a ui-sref="volunteerApplication">Register Volunteer</a></li>
+        <li ng-show="vm.user.isSignedIn()"><a href="#">Profile</a></li>
       </ul>
     </div>
   </div>

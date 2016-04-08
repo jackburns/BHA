@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 class VolunteerFormController {
-  constructor($http, Enums, $uibModal, $scope) {
+  constructor($http, Enums, $uibModal, $state) {
 
     this.selectOptions = Enums;
     this.selectOptions.availabilityTimes = ["9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM",
@@ -125,5 +125,5 @@ class VolunteerFormController {
   }
 }
 
-VolunteerFormController.$inject = ['$http', 'Enums', '$uibModal', '$scope'];
+VolunteerFormController.$inject = ['$http', 'Enums', '$uibModal', '$state'];
 export default VolunteerFormController;

@@ -1,4 +1,4 @@
-let UserService = function ($http, $state, $localStorage) {
+let UserService = function ($http, $state, $localStorage, $rootScope) {
   let user = null;
 
   let getUser = () => {
@@ -13,10 +13,17 @@ let UserService = function ($http, $state, $localStorage) {
     }).then(function(res) {
       $http.defaults.headers.common.Authorization = 'Token ' + $localStorage.djangotoken;
       user = res.data;
-      console.log(user);
       if(redirect_state) {
         $state.go(redirect_state);
       }
+    });
+  }
+
+  let logout = () => {
+    $http.post(api + '/auth/logout/').then(() => {
+      user = null;
+      delete $localStorage.djangotoken;
+      $state.go('login');
     });
   }
 
@@ -25,10 +32,10 @@ let UserService = function ($http, $state, $localStorage) {
   };
 
   let isAdmin = () => {
-    return user.is_staff;
+    return user && user.is_staff;
   }
 
-  return { getUser, signIn, isSignedIn, isAdmin };
+  return { getUser, signIn, isSignedIn, isAdmin, logout };
 };
 
 UserService.$inject = ['$http', '$state', '$localStorage'];
