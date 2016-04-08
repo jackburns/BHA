@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.test.client import Client
 from .models import Volunteer, Contact
 from django.utils import timezone
+from .serializers import purgeList
 
 
 volunteer_jean = {
@@ -54,6 +55,10 @@ class ApiEndpointsTests(TestCase):
         self.c = Client()
         self.c.force_login(self.user)
 
+    def test_basic_api(self):
+        response = self.c.get("")
+        self.assertEqual(response.status_code, 200)
+
     def test_get_empty_volunteers(self):
         response = self.c.get("/api/volunteers/")
         self.assertEqual(response.status_code, 200)
@@ -82,7 +87,7 @@ class ApiEndpointsTests(TestCase):
                                         created_at=timezone.now(),
                                         contact=self.create_contact())
 
-    def test_models(self):
+    def test_volunteer(self):
         con = self.create_contact()
         vol = self.create_volunteer()
         self.assertTrue(isinstance(con, Contact))
@@ -91,6 +96,12 @@ class ApiEndpointsTests(TestCase):
         self.assertEqual(vol.first_name, "John")
         self.assertEqual(vol.last_name, "Doe")
         self.assertEqual(vol.sex, 1)
+
+    def test_contact(self):
+        con = self.create_contact()
+        self.assertTrue(isinstance(con, Contact))
+        self.assertEqual(con.preferred_contact, 1)
+        self.assertEqual(con.email, "example@example.com")
 
     def test_post(self):
         response = self.c.post("/api/volunteers/", "volunteer_jean object")
@@ -108,3 +119,12 @@ class ApiEndpointsTests(TestCase):
         response = self.c.post("/api/volunteers/", "data-for-updating-a-volunteer")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['whatever_field'], "updated value")
+
+    def test_purgeList(self):
+        new_array = {'id':[1,2,3]}
+        old_array = [{'id': 3}, {'id':2}, {'id':1}]
+        purgeList(self, old_array, new_array)
+        print(old_array)
+        print(new_array)
+        self.assertTrue(False)
+
