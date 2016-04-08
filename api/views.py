@@ -22,8 +22,12 @@ class NotificationView(views.APIView):
     permission_classes = []
 
     def post(self, request, *args, **kwargs):
-        message = request.POST.get("message", "No Message")
-        send_mail('Test', message, 'cs4500BHA@gmail.com', ['bcox5021@gmail.com'], fail_silently=False)
+        subject = request.POST.get("subject", "No subject")
+        message = request.POST.get("message", "No message")
+        emailList = request.POST.getlist("emails", [{"id":1,"email":"bcox5021@gmail.com"},])
+        textList = request.POST.getlist("texts", ["5086889360@vtext.com"])
+        for id_email in emailList:
+            send_mail(subject, message, 'cs4500BHA@gmail.com', [id_email["email"]], fail_silently=False)
         return Response({"success": True})   
 
 class VolunteerViewSet(viewsets.ModelViewSet):
