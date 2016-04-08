@@ -26,5 +26,5 @@ urlpatterns = [
 	url(r'^admin/', admin.site.urls),
 	url(r'^', include(router.urls)),
 	url(r'^api/auth/', include('rest_auth.urls')),
-        url(r'api/notify', views.NotificationView.as_view(), name='Notify')
+    url(r'^api/notify/', views.NotificationView.as_view(), name='Notify')
 ]
