@@ -23,7 +23,7 @@ class NotificationView(views.APIView):
 
     def post(self, request, *args, **kwargs):
         message = request.POST.get("message", "No Message")
-        send_mail('Test', message, 'bcox5021@gmail.com', ['5086889360@vtext.com'], fail_silently=False)
+        send_mail('Test', message, 'cs4500BHA@gmail.com', ['bcox5021@gmail.com'], fail_silently=False)
         return Response({"success": True})   
 
 class VolunteerViewSet(viewsets.ModelViewSet):
