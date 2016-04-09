@@ -80,6 +80,7 @@ class HomeController {
     this.getVolunteers();
     this.viewVolunteer = viewVolunteer;
     this.updateNumberSelected();
+    this.willSelectAll = false;
 
 
     // modal stuff
