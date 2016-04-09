@@ -1,33 +1,35 @@
 class NotificationsModalController {
-  constructor($scope, $state, $uibModalInstance, $http, volunteerList) {
+  constructor($scope, $state, $uibModalInstance, $http, volunteerList, Enums) {
     $scope.allVolunteers = volunteerList;
     $scope.selectedVolunteers = [];
     $scope.notificationMessage = "There is a new appointment for you from the BHA.";
     $scope.notificationSubject = "Alert from BHA";
+    $scope.emailAll = false;
 
     // get the list of selected volunteers
     $scope.allVolunteers.forEach(function(volunteerObj) {
-      console.log(volunteerObj);
+      var vContact = volunteerObj.contact;
+      var emailStart = Enums.carriers[vContact.carrier] === "Other" || Enums.preferred_contact[vContact.preferred_contact] != "Text";
       var newObj = {
         id: volunteerObj.id,
         fullName: volunteerObj.first_name + ' ' + volunteerObj.last_name,
-        phoneNumber: volunteerObj.contact.phone_number,
-        carrier: volunteerObj.contact.carrier,
-        email: volunteerObj.contact.email,
-        showEmail: volunteerObj.contact.preferred_contact != 1,
-        onlyEmail: volunteerObj.contact.carrier === 18 || volunteerObj.contact.preferred_contact != 1
+        phoneNumber: vContact.phone_number,
+        carrier: vContact.carrier,
+        email: vContact.email,
+        showEmail: emailStart,
+        onlyEmail: emailStart
       };
 
       $scope.selectedVolunteers.push(newObj);
     });
 
     // removes the given volunteer from the given list
-    $scope.removeFromTable = function(volunteerList, volunteer) {
-      var index = volunteerList.indexOf(volunteer);
-      volunteerList.splice(index, 1);
+    $scope.removeFromTable = function(volunteer) {
+      var index = $scope.selectedVolunteers.indexOf(volunteer);
+      $scope.selectedVolunteers.splice(index, 1);
     };
 
-    $scope.updateEmailAll = function(volunteer) {
+    $scope.updateEmailAll = function() {
       var allForceEmail = true;
       $scope.selectedVolunteers.forEach(function (volunteer) {
         if (!volunteer.showEmail) {
@@ -44,7 +46,7 @@ class NotificationsModalController {
       });
     }
 
-    var getPostObject = function() {
+    $scope.getPostObject = function() {
       var selectedEmails = [];
       var selectedTexts = [];
 
@@ -58,7 +60,7 @@ class NotificationsModalController {
           selectedTexts.push({
             id: volunteerObj.id,
             phoneNumber: volunteerObj.phoneNumber,
-            carrier: volunteerObj.carrier
+            carrier: Enums.carriers[volunteerObj.carrier]
           });
         }
       });
@@ -73,8 +75,7 @@ class NotificationsModalController {
 
     // send list of volunteer IDs to the back end
     $scope.sendNotifications = function() {
-      var postObject = getPostObject();
-      console.log(postObject);
+      var postObject = $scope.getPostObject();
 
       $http.post(api + '/notify', postObject).then(
         function(response) {
@@ -92,6 +93,6 @@ class NotificationsModalController {
   }
 }
 
-NotificationsModalController.$inject = ["$scope", "$state", "$uibModalInstance", "$http", "volunteerList"];
+NotificationsModalController.$inject = ["$scope", "$state", "$uibModalInstance", "$http", "volunteerList", "Enums"];
 
 export default NotificationsModalController;
