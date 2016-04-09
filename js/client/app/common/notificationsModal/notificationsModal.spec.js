@@ -67,37 +67,6 @@ describe('NotificationsModal', () => {
   describe('Controller', () => {
     it('properly initializes list of selected volunteers', () => {
       var $scope = {};
-      var volunteerList = [{
-        id: 1,
-        first_name: "Tom",
-        last_name: "Jones",
-        contact: {
-          phone_number: "6177778772",
-          carrier: 1,
-          email: "a@b.com",
-          preferred_contact: 0
-        }
-      }, {
-        id: 2,
-        first_name: "Bob",
-        last_name: "Smith",
-        contact: {
-          phone_number: "2207318972",
-          carrier: 3,
-          email: "hi@b.com",
-          preferred_contact: 1
-        }
-      }, {
-        id: 3,
-        first_name: "Rob",
-        last_name: "Smits",
-        contact: {
-          phone_number: "1670892037",
-          carrier: 2,
-          email: "rob@b.com",
-          preferred_contact: 1
-        }
-      }];
       
       let controller = makeController($scope);
       expect($scope).to.have.property('allVolunteers');
@@ -154,37 +123,6 @@ describe('NotificationsModal', () => {
     
     it('removes a volunteer from the list on x click', () => {
       var $scope = {};
-      var volunteerList = [{
-        id: 1,
-        first_name: "Tom",
-        last_name: "Jones",
-        contact: {
-          phone_number: "6177778772",
-          carrier: 1,
-          email: "a@b.com",
-          preferred_contact: 0
-        }
-      }, {
-        id: 2,
-        first_name: "Bob",
-        last_name: "Smith",
-        contact: {
-          phone_number: "2207318972",
-          carrier: 3,
-          email: "hi@b.com",
-          preferred_contact: 1
-        }
-      }, {
-        id: 3,
-        first_name: "Rob",
-        last_name: "Smits",
-        contact: {
-          phone_number: "1670892037",
-          carrier: 2,
-          email: "rob@b.com",
-          preferred_contact: 1
-        }
-      }];
       
       let controller = makeController($scope);
       expect($scope).to.have.property('removeFromTable');
@@ -197,37 +135,6 @@ describe('NotificationsModal', () => {
     
     it('generates the correct post object', () => {
       var $scope = {};
-      var volunteerList = [{
-        id: 1,
-        first_name: "Tom",
-        last_name: "Jones",
-        contact: {
-          phone_number: "6177778772",
-          carrier: 1,
-          email: "a@b.com",
-          preferred_contact: 0
-        }
-      }, {
-        id: 2,
-        first_name: "Bob",
-        last_name: "Smith",
-        contact: {
-          phone_number: "2207318972",
-          carrier: 3,
-          email: "hi@b.com",
-          preferred_contact: 1
-        }
-      }, {
-        id: 3,
-        first_name: "Rob",
-        last_name: "Smits",
-        contact: {
-          phone_number: "1670892037",
-          carrier: 2,
-          email: "rob@b.com",
-          preferred_contact: 1
-        }
-      }];
       
       let controller = makeController($scope);
       expect($scope).to.have.property('notificationSubject');
@@ -277,37 +184,6 @@ describe('NotificationsModal', () => {
     
     it('properly checks and unchecks Force All on other updates', () => {
       var $scope = {};
-      var volunteerList = [{
-        id: 1,
-        first_name: "Tom",
-        last_name: "Jones",
-        contact: {
-          phone_number: "6177778772",
-          carrier: 1,
-          email: "a@b.com",
-          preferred_contact: 0
-        }
-      }, {
-        id: 2,
-        first_name: "Bob",
-        last_name: "Smith",
-        contact: {
-          phone_number: "2207318972",
-          carrier: 3,
-          email: "hi@b.com",
-          preferred_contact: 1
-        }
-      }, {
-        id: 3,
-        first_name: "Rob",
-        last_name: "Smits",
-        contact: {
-          phone_number: "1670892037",
-          carrier: 2,
-          email: "rob@b.com",
-          preferred_contact: 1
-        }
-      }];
       
       let controller = makeController($scope);
       expect($scope).to.have.property('updateEmailAll');
@@ -324,37 +200,6 @@ describe('NotificationsModal', () => {
     
     it('Forces all email on check Force All', () => {
       var $scope = {};
-      var volunteerList = [{
-        id: 1,
-        first_name: "Tom",
-        last_name: "Jones",
-        contact: {
-          phone_number: "6177778772",
-          carrier: 1,
-          email: "a@b.com",
-          preferred_contact: 1
-        }
-      }, {
-        id: 2,
-        first_name: "Bob",
-        last_name: "Smith",
-        contact: {
-          phone_number: "2207318972",
-          carrier: 3,
-          email: "hi@b.com",
-          preferred_contact: 1
-        }
-      }, {
-        id: 3,
-        first_name: "Rob",
-        last_name: "Smits",
-        contact: {
-          phone_number: "1670892037",
-          carrier: 2,
-          email: "rob@b.com",
-          preferred_contact: 1
-        }
-      }];
       
       let controller = makeController($scope);
       expect($scope.emailAll).to.equal(false);
