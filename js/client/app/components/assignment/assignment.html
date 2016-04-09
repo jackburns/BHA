@@ -38,7 +38,7 @@
     <tr ng-repeat="assignment in vm.futureAssignments | filter:vm.search">
       <td ng-bind="assignment.startDate"></td>
       <td ng-bind="assignment.name"></td>
-      <td ng-bind="assignment.language"></td>
+      <td ng-bind="assignment.language | languageKeyToName"></td>
       <td ng-bind="assignment.status"></td>
       <td>
         <span ng-if="!assignment.volunteers.length" class="assignment__warning">
