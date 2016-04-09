@@ -116,7 +116,7 @@ let EnumsService = function () {
       1: "Sprint",
       2: "T-Mobile",
       3: "Verizon",
-      4: "All Tell",
+      4: "Alltel",
       5: "Boost",
       6: "Cellular South",
       7: "Centennial Wireless",

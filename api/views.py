@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import detail_route, list_route
 from rest_framework import viewsets, views, filters #, status
 from .models import Volunteer, Assignment
-from django.core.mail import send_mail
+from .email import process_notification
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSerializer
@@ -22,12 +22,7 @@ class NotificationView(views.APIView):
     permission_classes = []
 
     def post(self, request, *args, **kwargs):
-        subject = request.data.get("subject", "No subject")
-        message = request.data.get("message", "No message")
-        emailList = request.data.get("emails", [{"id":1,"email":"bcox5021@gmail.com"},])
-        textList = request.data.get("texts", ["5086889360@vtext.com"])
-        for id_email in emailList:
-            send_mail(subject, message, 'cs4500BHA@gmail.com', [id_email["email"]], fail_silently=False)
+        process_notification(request)
         return Response({"success": True})
 
 class VolunteerViewSet(viewsets.ModelViewSet):
