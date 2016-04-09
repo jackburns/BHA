@@ -11,13 +11,13 @@ def process_notification(request):
 
 def send_emails(subject, message, emailList):
     for id_email in emailList:
-	    send_mail(subject, message, 'NORTHEAS10\bha', [id_email["email"]], fail_silently=False)
+	    send_mail(subject, message, 'no-reply@bha.com', [id_email["email"]], fail_silently=False)
 
 def send_texts(subject, message, textList):
     for id_num_carrier in textList:
         carrier_gateway = carriers[id_num_carrier["carrier"]]
         address = id_num_carrier["phoneNumber"] + "@" + carrier_gateway
-        send_mail(subject, message, 'NORTHEAS10\bha', [address], fail_silently=False)
+        send_mail(subject, message, 'no-reply@bha.com', [address], fail_silently=False)
 		
 carriers = {
       "AT&T": "txt.att.net",
