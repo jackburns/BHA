@@ -1,6 +1,7 @@
 import LanguageKeyToNameModule from './languageKeyToName';
 import languageKeyToNameFilter from './languageKeyToName.filter';
-import Enums from '../enums/enums'
+import Enums from '../enums/enums.service'
+let enums = Enums();
 
 describe('LanguageSelect', () => {
   let makeFilter;
@@ -8,7 +9,7 @@ describe('LanguageSelect', () => {
   beforeEach(() => {
     window.module(LanguageKeyToNameModule.name);
     makeFilter = () => {
-      return languageKeyToNameFilter(Enums);
+      return languageKeyToNameFilter(enums);
     }
   });
 
