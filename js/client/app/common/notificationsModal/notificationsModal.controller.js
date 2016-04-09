@@ -5,6 +5,8 @@ class NotificationsModalController {
     $scope.notificationMessage = "There is a new appointment for you from the BHA.";
     $scope.notificationSubject = "Alert from BHA";
     $scope.emailAll = false;
+    $scope.notificationsSent = false;
+    $scope.error = false;
 
     // get the list of selected volunteers
     $scope.allVolunteers.forEach(function(volunteerObj) {
@@ -77,13 +79,15 @@ class NotificationsModalController {
     $scope.sendNotifications = function() {
       var postObject = $scope.getPostObject();
 
-      $http.post(api + '/notify', postObject).then(
+      $http.post(api + '/notify/', postObject).then(
         function(response) {
           console.log(response);
           $uibModalInstance.close();
+          $scope.notificationsSent = true;
         },
         function(error) {
           console.log(error);
+          $scope.error = true;
         });
     };
 
