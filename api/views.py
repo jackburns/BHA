@@ -19,7 +19,7 @@ class VolunteerFilter(filters.FilterSet):
 	    fields = ('first_name', 'last_name', 'language', 'can_write')
 
 class NotificationView(views.APIView):
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         process_notification(request)
