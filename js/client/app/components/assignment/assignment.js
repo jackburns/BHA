@@ -8,7 +8,7 @@ let assignmentModule = angular.module('assignment', [
 
 .config(['$stateProvider', ($stateProvider) => {
   $stateProvider
-    .state('assignment', {
+    .state('assignments', {
       url: '/assignments',
       template: '<assignment></assignment>'
     });
