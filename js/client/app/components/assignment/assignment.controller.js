@@ -1,7 +1,9 @@
 import _ from 'lodash';
+import notificationsModalTemplate from './../../common/notificationsModal/notificationsModal.html'
+import NotificationsModalController from './../../common/notificationsModal/notificationsModal.controller.js'
 
 class AssignmentController {
-  constructor() {
+  constructor($uibModal, $http) {
 
     let makeAssignment = (name, status, language, date, volunteers) => {
       return {
@@ -20,7 +22,30 @@ class AssignmentController {
       makeAssignment('assn1', 'valid', 'es', 1462978825587, []),
       makeAssignment('assignment in the very far future', 'valid', 'ja', 1490367625587, [6])
     ];
+    
+    // modal stuff
+    this.openNotificationsModal = (languageKey) => {
+      $http.get(api + '/volunteers/', {params: {language: languageKey}}
+      ).then((res) => {
+        open(res.data.results);
+      });
+    };
+
+    let open = (volunteerList) => {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        template: notificationsModalTemplate,
+        controller: NotificationsModalController,
+        size: 'md',
+        resolve: {
+          volunteerList: function() {
+            return volunteerList;
+          }
+        }
+      });
+    }
   }
 }
 
+AssignmentController.$inject = ['$uibModal', '$http'];
 export default AssignmentController;

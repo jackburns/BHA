@@ -25,8 +25,11 @@
       <td ng-bind="assignment.name"></td>
       <td ng-bind="assignment.language | languageKeyToName"></td>
       <td>
-        <span ng-if="!assignment.volunteers.length" class="assignment__warning">
-          None assigned. <a>Find volunteer</a>
+        <span ng-if="!assignment.volunteers.length">
+          None assigned.
+          <span class="assignment__warning" ng-click="vm.openNotificationsModal(assignment.language)">
+            Find volunteer
+          </span>
         </span>
       </td>
     </tr>
