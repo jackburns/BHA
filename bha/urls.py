@@ -20,9 +20,11 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'api/volunteers', views.VolunteerViewSet, 'Volunteer')
+router.register(r'api/assignments', views.AssignmentViewSet, 'Assignment')
 
 urlpatterns = [
 	url(r'^admin/', admin.site.urls),
 	url(r'^', include(router.urls)),
 	url(r'^api/auth/', include('rest_auth.urls')),
+    url(r'^api/notify/', views.NotificationView.as_view(), name='Notify')
 ]

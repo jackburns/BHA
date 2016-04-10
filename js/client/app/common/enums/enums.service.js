@@ -116,7 +116,7 @@ let EnumsService = function () {
       1: "Sprint",
       2: "T-Mobile",
       3: "Verizon",
-      4: "All Tell",
+      4: "Alltel",
       5: "Boost",
       6: "Cellular South",
       7: "Centennial Wireless",
@@ -131,6 +131,15 @@ let EnumsService = function () {
       16: "U.S. Cellular",
       17: "Virgin Mobile USA",
       18: "Other",
+    },
+    assignment_type: {
+      0: 'in-person',
+      1: 'written'
+    },
+    assignment_status: {
+      0: 'unapproved',
+      1: 'approved',
+      2: 'complete'
     }
   };
   return enums;

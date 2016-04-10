@@ -3,32 +3,24 @@
     <h1>Find Volunteers</h1>
     <form class="form-inline search-filters">
       <div class="form-group">
-        <label for="firstName" class="input-label">First Name:</label>
-        <input class="form-control" id="firstName" type="text" ng-model="vm.search.firstName">
+        <label for="first_name" class="input-label">First Name:</label>
+        <input class="form-control" id="first_name" type="text" ng-model="vm.search.first_name">
       </div>
       <div class="form-group">
-        <label for="lastName" class="input-label">Last Name:</label>
-        <input class="form-control" id="lastName" type="text" ng-model="vm.search.lastName">
+        <label for="last_name" class="input-label">Last Name:</label>
+        <input class="form-control" id="last_name" type="text" ng-model="vm.search.last_name">
       </div>
     </form>
     <div class="language-filters">
-      <div class="language-select-group">
-        <label class="input-label">Language:</label>
-        <ui-select ng-model="vm.selectedSpokenLanguages" class="language-select">
-          <ui-select-match>
-            {{$select.selected}}
-          </ui-select-match>
-          <ui-select-choices repeat="languageItem in vm.allLanguages | filter: $select.search">
-            {{languageItem}}
-          </ui-select-choices>
-        </ui-select>
-      </div>
+      <label class="input-label">Language:</label>
+      <language-select selected-language="vm.search.language"></language-select>
       <div class="checkbox inline-checkbox">
         <label>
           <input type="checkbox" value=""> Willing to translate
         </label>
       </div>
     </div>
+    <button class="btn btn-md" ng-click="vm.getVolunteers()">Search</button>
     <div class="checkbox inline-checkbox">
       <label>
         <input type="checkbox" ng-model="vm.willSelectAll" ng-change="vm.selectAll()"> Select All
@@ -38,13 +30,13 @@
       <thead>
       <tr>
         <th class="notify-column">Notify</th>
-        <th class="first-name-column" ng-click="vm.updateOrder('firstName')">
+        <th class="first-name-column" ng-click="vm.updateOrder('first_name')">
           First Name
-          <span class="sortorder" ng-show="vm.ordering === 'firstName'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
+          <span class="sortorder" ng-show="vm.ordering === 'first_name'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
         </th>
-        <th class="last-name-column" ng-click="vm.updateOrder('lastName')">
+        <th class="last-name-column" ng-click="vm.updateOrder('last_name')">
           Last Name
-          <span class="sortorder" ng-show="vm.ordering === 'lastName'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
+          <span class="sortorder" ng-show="vm.ordering === 'last_name'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
         </th>
         <th class="languages-column" ng-click="vm.updateOrder('languages')">
           Languages
@@ -53,11 +45,11 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="volunteer in vm.volunteers | filter:vm.search | orderBy:vm.ordering:vm.isReverseOrder">
+      <tr ng-repeat="volunteer in vm.volunteers | orderBy:vm.ordering:vm.isReverseOrder">
         <td class="notify-column"><input type="checkbox" ng-model="volunteer.selectedToNotify" ng-change="vm.updateNumberSelected()"></td>
-        <td class="clickable first-name-column" ng-bind="volunteer.firstName" ng-click="vm.viewVolunteer(volunteer.id)"></td>
-        <td class="clickable last-name-column" ng-bind="volunteer.lastName" ng-click="vm.viewVolunteer(volunteer.id)"></td>
-        <td class="clickable languages-column" ng-bind="volunteer.languages.join(', ')" ng-click="vm.viewVolunteer(volunteer.id)"></td>
+        <td class="clickable first-name-column" ng-bind="volunteer.first_name" ng-click="vm.viewVolunteer(volunteer.id)"></td>
+        <td class="clickable last-name-column" ng-bind="volunteer.last_name" ng-click="vm.viewVolunteer(volunteer.id)"></td>
+        <td class="clickable languages-column" ng-bind="vm.getLanguagesDisplay(volunteer.languages)" ng-click="vm.viewVolunteer(volunteer.id)"></td>
       </tr>
       </tbody>
     </table>

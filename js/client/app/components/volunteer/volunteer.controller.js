@@ -1,8 +1,7 @@
-import faker from 'faker'
 import _ from 'lodash'
 
 class VolunteerController {
-  constructor($state, $scope) {
+  constructor($state, $scope, $http, Enums) {
 
  $scope.today = function() {
     $scope.dt = new Date();
@@ -180,10 +179,10 @@ class VolunteerController {
       console.log(vm.editMode);
     };
 
-
+    vm.languages = Enums.languages;
   };
 };
 
-VolunteerController.$inject = ["$state", "$scope"];
+VolunteerController.$inject = ["$state", "$scope", "$http", "Enums"];
 
 export default VolunteerController;

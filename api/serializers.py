@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Volunteer, Contact, Availability, Language
+from .models import Volunteer, Contact, Availability, Language, Assignment
 from datetime import datetime
 
 adminEmailSuffix = [
@@ -63,13 +63,14 @@ def purgeList(self, old_array, new_array):
 class VolunteerSerializer(serializers.ModelSerializer):
 
     contact = ContactSerializer()
-    availability = AvailabilitySerializer(many=True, read_only=True)
-    languages = LanguageSerializer(many=True, read_only=True)
+    availability = AvailabilitySerializer(many=True)
+    languages = LanguageSerializer(many=True)
+    assignments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     user = UserSerializer()
 
     class Meta:
         model = Volunteer
-        fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'user')
+        fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'user', 'assignments')
 
     def create(self, data):
         contact_data = data.pop('contact', None)
@@ -141,8 +142,22 @@ class VolunteerSerializer(serializers.ModelSerializer):
         return instance
 
 class AdminVolunteerSerializer(VolunteerSerializer):
-    notes = serializers.CharField(required=False)
-    role = serializers.IntegerField(required=False)
-    volunteer_level = serializers.IntegerField(required=False)
-    inactive = serializers.BooleanField(required=False)
-    hours = serializers.IntegerField(read_only=True)
+    class Meta:
+	    model = Volunteer
+	    fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'notes', 'user')
+
+class AssignmentSerializer(serializers.ModelSerializer):
+    contact = ContactSerializer()
+    language = LanguageSerializer()
+    posted_by = VolunteerSerializer()
+    volunteers = VolunteerSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Assignment
+        fields = ('id', 'contact', 'language', 'posted_by', 'start_date', 'name', 'volunteers', 'notes', 'type')
+        read_only_fields = ('id', 'posted_by')
+
+class AdminAssignmentSerializer(AssignmentSerializer):
+    class Meta:
+        model = Assignment
+        fields = ('admin_notes')

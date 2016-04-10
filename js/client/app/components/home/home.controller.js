@@ -1,37 +1,31 @@
 import _ from 'lodash';
-import notificationsModalTemplate from './notificationsModal.html'
-import NotificationsModalController from './notificationsModal.controller'
+import notificationsModalTemplate from './../../common/notificationsModal/notificationsModal.html'
+import NotificationsModalController from './../../common/notificationsModal/notificationsModal.controller.js'
 
 class HomeController {
-  constructor($state, $uibModal) {
-    
-    //TODO: Delete function once GET /volunteers/ API is set up
-    let makeVolunteer = function(id, firstName, lastName, languages, email, phoneNum, preferredContact, carrier) {
-      return {
-        id: id,
-        firstName: firstName,
-        lastName: lastName,
-        languages: languages,
-        selectedToNotify: false,
-        email: email,
-        phoneNum: phoneNum,
-        preferredContact: preferredContact,
-        carrier: carrier
+  constructor($state, $uibModal, $http, Enums) {
+    let getSearchConfig = () => {
+      let paramsObj = {};
+
+      // only add queries if we need to
+       _.forOwn(this.search, (value, key) => {
+        if(value) {
+          paramsObj[key] = value;
+        }
+      });
+
+      let config = {
+        params: paramsObj
       };
+
+      return config;
     };
 
-    let getVolunteers = function() {
-      //TODO: Replace with API call to GET /volunteers/
-      return [
-        makeVolunteer(0, 'Bill', 'Brown', ['German'], 'bill@brown.com', '6172228374', 'Text', 'Verizon'),
-        makeVolunteer(1, 'Ellie', 'White', ['Portuguese, Spanish'], 'ellie@white.com', '6172328374', 'Text', 'Other'),
-        makeVolunteer(3, 'Tom', 'Jones', ['Spanish', 'French'], 'tom@jones.com', '6182228374', 'Email', 'Sprint')
-      ];
-    };
-
-    let getAllLanguages = function() {
-      //TODO: Replace with API call
-      return ['Spanish', 'German', 'French', 'Portuguese'];
+    this.getVolunteers = () => {
+      $http.get(api + '/volunteers/', getSearchConfig()
+      ).then((res) => {
+        this.volunteers = res.data.results;
+      });
     };
 
     let viewVolunteer = function(volunteerId) {
@@ -39,7 +33,11 @@ class HomeController {
     };
 
     let getNumberSelected = () => {
-      return _.filter(this.volunteers, {selectedToNotify: true}).length;
+      if(this.volunteers) {
+        return _.filter(this.volunteers, {selectedToNotify: true}).length
+      } else {
+        return 0;
+      }
     };
 
     this.updateOrder = function(ordering) {
@@ -56,17 +54,32 @@ class HomeController {
 
     this.updateNumberSelected = function() {
       this.numberSelected = getNumberSelected();
-      this.willSelectAll = this.numberSelected === this.volunteers.length;
+      this.willSelectAll = this.volunteers && this.numberSelected === this.volunteers.length ;
     };
 
-    this.allLanguages = getAllLanguages();
+    this.getLanguagesDisplay = (languages) => {
+      let result = '';
+      _.forEach(languages, (language) => {
+        result += Enums.languages[language.language_name] + ', ';
+      });
+      return result.substr(0, result.length - 2);
+    };
 
     this.ordering = 'lastName';
     this.isReverseOrder = false;
-    this.volunteers = getVolunteers();
+    this.volunteers = [];
+    this.search = {
+      first_name: '',
+      last_name: '',
+      language: '',
+      can_write: false
+    };
+    this.getVolunteers();
     this.viewVolunteer = viewVolunteer;
     this.updateNumberSelected();
-    
+    this.willSelectAll = false;
+
+
     // modal stuff
     this.openNotificationsModal = function(volunteerList) {
       var modalInstance = $uibModal.open({
@@ -81,7 +94,7 @@ class HomeController {
         }
       });
     };
-    
+
     this.getCheckedVolunteers = function() {
       var checked = [];
       this.volunteers.forEach(function(volunteerObj) {
@@ -95,6 +108,6 @@ class HomeController {
   }
 }
 
-HomeController.$inject = ["$state", "$uibModal"];
+HomeController.$inject = ["$state", "$uibModal", "$http", "Enums"];
 
 export default HomeController;

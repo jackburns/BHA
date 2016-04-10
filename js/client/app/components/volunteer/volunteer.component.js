@@ -4,10 +4,13 @@ import './volunteer.scss';
 
 let volunteerComponent = {
   restrict: 'E',
-  bindings: {},
   template,
   controller,
-  controllerAs: 'vm'
+  controllerAs: 'vm',
+  bindings: {
+    volunteer: '='
+  },
+  bindToController: true
 };
 
 export default volunteerComponent;

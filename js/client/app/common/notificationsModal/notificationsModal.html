@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <h3 class="modal-title">Notify Volunteers</h3>
+</div>
+<div ng-show="notificationsSent" class="modal-body">
+  <h3>Notifications Sent Successfully!</h3>
+</div>
+<div ng-show="notificationsSent" class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="cancel()">Ok</button>
+</div>
+<div ng-show="error" class="modal-body">
+  <h3>Something went wrong...</h3>
+</div>
+<div ng-show="error" class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="cancel()">Ok</button>
+</div>
+<div ng-show="!notificationsSent && !error" class="col-sm-12 notifications-body">
+  <div class="col-sm-10 col-sm-offset-1">
+    <table class="table table-bordered table-responsive notifications-table">
+      <thead>
+        <th class="col-sm-1"></th>
+        <th class="col-sm-5">Name</th>
+        <th class="col-sm-5">Contact</th>
+        <th class="col-sm-1">
+          <div>Force Email</div>
+          <input type="checkbox" ng-model="emailAll" ng-change="forceEmailAll()">
+        </th>
+      </thead>
+      <tbody class="table">
+        <tr ng-repeat="volunteer in selectedVolunteers">
+          <td>
+            <button type="button" class="close" ng-click="removeFromTable(volunteer)" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </td>
+          <td ng-bind="volunteer.fullName"></td>
+          <td ng-bind="volunteer.showEmail ? volunteer.email : volunteer.phoneNumber"></td>
+          <td><input type="checkbox" ng-model="volunteer.showEmail" ng-disabled="volunteer.onlyEmail" ng-change="updateEmailAll()"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h4 class="col-sm-2 col-sm-offset-2">Subject:</h4>
+  <div class="col-sm-6">
+    <input type="text" ng-model="notificationSubject" class="form-control">
+  </div>
+  <h4 class="col-sm-12">Message</h4>
+  <div class="col-sm-8 col-sm-offset-2">
+    <textarea ng-model="notificationMessage" class="form-control" rows="2"></textarea>
+  </div>
+</div>
+<div ng-show="!notificationsSent && !error" class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-disabled="selectedVolunteers.length === 0" ng-click="sendNotifications()">Send Notifications</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
