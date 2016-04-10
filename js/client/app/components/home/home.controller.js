@@ -16,10 +16,10 @@ class HomeController {
 
       let config = {
         params: paramsObj
-      }
+      };
 
       return config;
-    }
+    };
 
     this.getVolunteers = () => {
       $http.get(api + '/volunteers/', getSearchConfig()
@@ -60,14 +60,11 @@ class HomeController {
     this.getLanguagesDisplay = (languages) => {
       let result = '';
       _.forEach(languages, (language) => {
-        console.log(language)
-        result += this.allLanguages[language.language_name] + ', ';
+        result += Enums.languages[language.language_name] + ', ';
       });
-
       return result.substr(0, result.length - 2);
-    }
+    };
 
-    this.allLanguages = Enums.languages;
     this.ordering = 'lastName';
     this.isReverseOrder = false;
     this.volunteers = [];
@@ -80,6 +77,7 @@ class HomeController {
     this.getVolunteers();
     this.viewVolunteer = viewVolunteer;
     this.updateNumberSelected();
+    this.willSelectAll = false;
 
 
     // modal stuff

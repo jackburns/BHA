@@ -11,6 +11,8 @@
     </div>
     <div class="navbar-collapse collapse navbar-response-collapse" uib-collapse="vm.navCollapsed">
       <ul class="nav navbar-nav navbar-right">
+        <li><a ui-sref="home">Volunteers</a></li>
+        <li><a ui-sref="assignments">Assignments</a></li>
         <li><a ui-sref="about">About</a></li>
         <li ng-show="!vm.user.isSignedIn()"><a ui-sref="login">Login</a></li>
         <li ng-show="vm.user.isSignedIn()"><a href="#" ng-click="vm.user.logout()">Logout</a></li>

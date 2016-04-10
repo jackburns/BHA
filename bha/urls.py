@@ -27,5 +27,5 @@ urlpatterns = [
 	url(r'^', include(router.urls)),
 	url(r'^api/auth/', include('rest_auth.urls')),
     url(r'^', include('django.contrib.auth.urls')),
-
+    url(r'^api/notify/', views.NotificationView.as_view(), name='Notify')
 ]

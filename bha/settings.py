@@ -88,6 +88,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bha.wsgi.application'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'ssrs.reachmail.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = r'NORTHEAS10\bha'
+EMAIL_HOST_PASSWORD = 'BHAmail3r!!'
+
+
 CORS_ORIGIN_WHITELIST = (
     'local.bha.com',
 )
