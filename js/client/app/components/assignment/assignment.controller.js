@@ -3,24 +3,23 @@ import _ from 'lodash';
 class AssignmentController {
   constructor() {
 
-    let makeAssignment = (name, status, language, startDate, volunteers) => {
+    let makeAssignment = (name, status, language, date, volunteers) => {
       return {
         name: name,
         status: status,
         language: language,
-        startDate: startDate,
+        date: date,
         volunteers: volunteers
       }
     };
 
     this.futureAssignments = [
-      makeAssignment('assn1', 'valid', 'es', '4/4/16', []),
-      makeAssignment('assn2', 'valid', 'fr', '4/6/16', [2, 3]),
-      makeAssignment('assn3', 'valid', 'ja', '5/1/16', [1]),
-      makeAssignment('assignment in the far future', 'valid', 'ca', '6/8/17', []),
-      makeAssignment('assignment in the very far future', 'valid', 'ja', '9/3/19', [6])
+      makeAssignment('assn2', 'valid', 'fr', 1462989649587, [2, 3]),
+      makeAssignment('assn3', 'valid', 'ja', 1463151625587, [1]),
+      makeAssignment('assignment in the far future', 'valid', 'ca', 1470936625587, []),
+      makeAssignment('assn1', 'valid', 'es', 1462978825587, []),
+      makeAssignment('assignment in the very far future', 'valid', 'ja', 1490367625587, [6])
     ];
-
   }
 }
 
