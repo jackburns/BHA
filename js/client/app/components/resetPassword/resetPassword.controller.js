@@ -6,7 +6,6 @@ class ResetPasswordController {
     this.newPasswordAgain = '';
     this.email = '';
     this.passwordError = "";
-    Alert.add('danger', 'Password could not be updated');
 
     this.updateState = $stateParams.userId && $stateParams.token;
 
