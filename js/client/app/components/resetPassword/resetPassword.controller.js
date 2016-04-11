@@ -1,21 +1,26 @@
 class ResetPasswordController {
-  constructor($http, $state, User) {
+  constructor($http, $state, User, $stateParams, Alert) {
+    console.log($stateParams);
     this.name = 'resetPassword';
     this.newPassword = '';
     this.newPasswordAgain = '';
     this.email = '';
     this.passwordError = "";
+    Alert.add('danger', 'Password could not be updated');
 
-    this.updateState = this.userId && this.token;
+    this.updateState = $stateParams.userId && $stateParams.token;
 
     this.resetPassword = () => {
       $http.post(api + '/auth/password/reset/', { email: this.email}).then((res) => {
-        console.log(res);
+        Alert.add('success', 'Password reset email sent');
+      }, (error) => {
+        console.log(error);
+        Alert.add('danger', 'Email not valid');
       });
     }
 
     this.canUpdate = () => {
-      this.userId && this.token && this.new_password
+      return this.userId && this.token && this.newPassword;
     }
 
     //TODO: dont leave me copied from volunteer
@@ -40,15 +45,20 @@ class ResetPasswordController {
       this.passwordError = checkPassword();
       if(!this.passwordError) {
         $http.post(api + '/auth/password/reset/confirm/', {
-          uid: this.userId,
-          token: this.token,
-          new_password1: this.new_password,
-          new_password2: this.new_password
+          uid: $stateParams.userId,
+          token: $stateParams.token,
+          new_password1: this.newPassword,
+          new_password2: this.newPassword
+        }).then(() => {
+          Alert.add('success', 'Password successfully updated');
+        }, (error) => {
+          console.log(error);
+          Alert.add('danger', 'Password could not be updated');
         });
       }
     }
   }
 }
 
-ResetPasswordController.$inject = ['$http', '$state', 'User'];
+ResetPasswordController.$inject = ['$http', '$state', 'User', '$stateParams', 'Alert'];
 export default ResetPasswordController;

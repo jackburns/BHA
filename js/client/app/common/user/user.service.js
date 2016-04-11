@@ -1,22 +1,33 @@
 let UserService = function ($http, $state, $localStorage, $rootScope) {
   let user = null;
-
+  let maxFailAttempts = 3;
+  let failAttempts = 0;
   let getUser = () => {
     return user;
   };
 
   let signIn = (redirect_state) => {
-    $http.get(api + '/volunteers/me/', {
-      headers: {
-        'Authorization': 'Token ' + $localStorage.djangotoken
-      }
-    }).then(function(res) {
-      $http.defaults.headers.common.Authorization = 'Token ' + $localStorage.djangotoken;
-      user = res.data;
-      if(redirect_state) {
-        $state.go(redirect_state);
-      }
-    });
+    if(failAttempts < maxFailAttempts) {
+      $http.get(api + '/volunteers/me/', {
+        headers: {
+          'Authorization': 'Token ' + $localStorage.djangotoken
+        }
+      }).then(function(res) {
+        maxFailAttempts = 0;
+        $http.defaults.headers.common.Authorization = 'Token ' + $localStorage.djangotoken;
+        user = res.data;
+        if(redirect_state) {
+          $state.go(redirect_state);
+        }
+      }, function(error) {
+        console.log(error);
+        failAttempts++;
+      });
+    // can't get the volunteer, somethings wrong, abort mission
+    } else {
+      delete $localStorage.djangotoken;
+      $state.go('login');
+    }
   }
 
   let logout = () => {

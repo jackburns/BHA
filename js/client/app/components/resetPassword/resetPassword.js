@@ -8,7 +8,11 @@ let resetPasswordModule = angular.module('resetPassword', [
 .config(['$stateProvider', ($stateProvider) => {
   $stateProvider
     .state('resetPassword', {
-      url: '/reset-password?userId&token',
+      url: '/reset-password',
+      template: '<reset-password></reset-password>'
+    })
+    .state('resetPasswordUpdate', {
+      url: '/reset-password/:userId/:token/',
       template: '<reset-password></reset-password>'
     });
 }])
