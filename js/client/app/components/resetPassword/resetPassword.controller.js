@@ -1,6 +1,5 @@
 class ResetPasswordController {
   constructor($http, $state, User, $stateParams, Alert) {
-    console.log($stateParams);
     this.name = 'resetPassword';
     this.newPassword = '';
     this.newPasswordAgain = '';
