@@ -22,7 +22,11 @@ class NotificationView(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        process_notification(request)
+        subject = request.data.get("subject", "No subject")
+        message = request.data.get("message", "No message")
+        emailList = request.data.get("emails", [{"id":1,"email":"bcox5021@gmail.com"},])
+        textList = request.data.get("texts", [{"id":1, "phoneNumber":"5086889360", "carrier": "Verizon"},])
+        process_notification(subject, message, emailList, textList)
         return Response({"success": True})
 
 class VolunteerViewSet(viewsets.ModelViewSet):

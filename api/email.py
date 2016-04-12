@@ -1,11 +1,7 @@
 from django.core.mail import send_mail
 
 
-def process_notification(request):
-    subject = request.data.get("subject", "No subject")
-    message = request.data.get("message", "No message")
-    emailList = request.data.get("emails", [{"id":1,"email":"bcox5021@gmail.com"},])
-    textList = request.data.get("texts", [{"id":1, "phoneNumber":"5086889360", "carrier": "Verizon"},])
+def process_notification(subject, message, emailList, textList):
     send_emails(subject, message, emailList)
     send_texts(subject, message, textList)
 
