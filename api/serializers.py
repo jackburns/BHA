@@ -160,4 +160,4 @@ class AssignmentSerializer(serializers.ModelSerializer):
 class AdminAssignmentSerializer(AssignmentSerializer):
     class Meta:
         model = Assignment
-        fields = ('admin_notes')
+        fields = ('admin_notes',)
