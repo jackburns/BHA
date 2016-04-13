@@ -114,7 +114,7 @@ class VolunteerFormController {
         // brilliant
         this.info.user.username = this.info.contact.email;
         $http.post(api + '/volunteers/', this.info).then((res) =>{
-          $state.go('/login');
+          $state.go('login');
           console.log(res);
           }, (error) => {
             console.log(error);

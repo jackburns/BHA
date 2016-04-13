@@ -1,5 +1,5 @@
 class ResetPasswordController {
-  constructor($http, $state, User, $stateParams, Alert) {
+  constructor($http, $state, $stateParams, Alert) {
     this.name = 'resetPassword';
     this.newPassword = '';
     this.newPasswordAgain = '';
@@ -15,11 +15,11 @@ class ResetPasswordController {
         console.log(error);
         Alert.add('danger', 'Email not valid');
       });
-    }
+    };
 
     this.canUpdate = () => {
       return this.userId && this.token && this.newPassword;
-    }
+    };
 
     //TODO: dont leave me copied from volunteer
     let checkPassword = () => {
@@ -49,14 +49,15 @@ class ResetPasswordController {
           new_password2: this.newPassword
         }).then(() => {
           Alert.add('success', 'Password successfully updated');
+          $state.go('login');
         }, (error) => {
           console.log(error);
           Alert.add('danger', 'Password could not be updated');
         });
       }
-    }
+    };
   }
 }
 
-ResetPasswordController.$inject = ['$http', '$state', 'User', '$stateParams', 'Alert'];
+ResetPasswordController.$inject = ['$http', '$state', '$stateParams', 'Alert'];
 export default ResetPasswordController;

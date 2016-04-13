@@ -1,6 +1,6 @@
-let UserService = function ($http, $state, $localStorage, $rootScope) {
+let UserService = function ($http, $state, $localStorage) {
   let user = null;
-  let maxFailAttempts = 3;
+  const maxFailAttempts = 3;
   let failAttempts = 0;
   let getUser = () => {
     return user;
@@ -13,7 +13,7 @@ let UserService = function ($http, $state, $localStorage, $rootScope) {
           'Authorization': 'Token ' + $localStorage.djangotoken
         }
       }).then(function(res) {
-        maxFailAttempts = 0;
+        failAttempts = 0;
         $http.defaults.headers.common.Authorization = 'Token ' + $localStorage.djangotoken;
         user = res.data;
         if(redirect_state) {

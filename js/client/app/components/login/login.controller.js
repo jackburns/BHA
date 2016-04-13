@@ -15,7 +15,7 @@ class LoginController {
       $http.post(api + "/auth/login/", user_data, {"Authorization": ""}).then(function(response) {
         $localStorage.djangotoken = response.data.key;
         User.signIn('home');
-      }, function(error) {
+      }, (error) => {
         console.log(error);
         this.error = 'Username/Password not valid';
       });
