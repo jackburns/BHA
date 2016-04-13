@@ -2,6 +2,7 @@
 .DS_STORE
 .vagrant
 .idea*
+tags
 
 # Installer logs
 pip-log.txt
