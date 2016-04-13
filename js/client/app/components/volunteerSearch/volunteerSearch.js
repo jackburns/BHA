@@ -13,7 +13,7 @@ let volunteerSearchModule = angular.module('volunteerSearch', [
   $stateProvider
     .state('volunteerSearch', {
       url: '/',
-      template: '<volunteerSearch></volunteerSearch>'
+      template: '<volunteer-search></volunteer-search>'
     });
 }]).component('volunteerSearch', volunteerSearchComponent);
 
