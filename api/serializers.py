@@ -80,7 +80,7 @@ class VolunteerSerializer(serializers.ModelSerializer):
 
         isAdmin = any(suffix.lower() in contact_data['email'].lower() for suffix in adminEmailSuffix)
 
-        user = User.objects.create(username=user_data['username'], is_staff=isAdmin)
+        user = User.objects.create(username=user_data['username'], email=contact_data['email'], is_staff=isAdmin)
         user.set_password(user_data['password'])
         user.save()
 
@@ -101,6 +101,7 @@ class VolunteerSerializer(serializers.ModelSerializer):
 
     # this is actually a little involved, set every field appropriately
     # TODO: make sure this actually works and fix it when it doesnt
+    # TODO: add updating username via email
     def update(self, instance, data):
         contact_data = data.pop('contact')
         availability_data = data.pop('availability')

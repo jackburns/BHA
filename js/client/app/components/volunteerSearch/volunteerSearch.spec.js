@@ -20,15 +20,10 @@ describe('VolunteerSearch', () => {
   });
 
   describe('Controller', () => {
-    it('initializes with three dummy volunteers', () => {
-      let controller = makeController();
-      expect(controller).to.have.property('volunteers');
-      expect(controller.volunteers).to.have.length(3);
-    });
 
     it('initializes with ordering and isReverseOrder', () => {
       let controller = makeController();
-      expect(controller.ordering).to.equal('lastName');
+      expect(controller.ordering).to.equal('last_name');
       expect(controller.isReverseOrder).to.equal(false);
     });
 
@@ -48,13 +43,13 @@ describe('VolunteerSearch', () => {
 
     it('reverses sort order when selecting the current sort field', () => {
       let controller = makeController();
-      controller.updateOrder('firstName');
+      controller.updateOrder('first_name');
       expect(controller.isReverseOrder).to.equal(false);
 
-      controller.updateOrder('firstName');
+      controller.updateOrder('first_name');
       expect(controller.isReverseOrder).to.equal(true);
 
-      controller.updateOrder('firstName');
+      controller.updateOrder('first_name');
       expect(controller.isReverseOrder).to.equal(false);
     });
 

@@ -4,6 +4,7 @@ class NavbarController {
     this.name = 'navbar';
     this.user = User;
     this.navCollapsed = true;
+
   }
 }
 

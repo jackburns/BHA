@@ -65,7 +65,7 @@ class VolunteerSearchController {
       return result.substr(0, result.length - 2);
     };
 
-    this.ordering = 'lastName';
+    this.ordering = 'last_name';
     this.isReverseOrder = false;
     this.volunteers = [];
     this.search = {
