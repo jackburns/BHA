@@ -7,10 +7,6 @@ let volunteerComponent = {
   template,
   controller,
   controllerAs: 'vm',
-  bindings: {
-    volunteer: '='
-  },
-  bindToController: true
 };
 
 export default volunteerComponent;
