@@ -1,17 +1,17 @@
-import HomeModule from './home'
-import HomeController from './home.controller';
-import HomeComponent from './home.component';
-import HomeTemplate from './home.html';
+import VolunteerSearchModule from './volunteerSearch'
+import VolunteerSearchController from './volunteerSearch.controller';
+import VolunteerSearchComponent from './volunteerSearch.component';
+import VolunteerSearchTemplate from './volunteerSearch.html';
 import _ from 'lodash';
 
-describe('Home', () => {
+describe('VolunteerSearch', () => {
   let $rootScope, makeController;
 
-  beforeEach(window.module(HomeModule.name));
+  beforeEach(window.module(VolunteerSearchModule.name));
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
     makeController = () => {
-      return new HomeController();
+      return new VolunteerSearchController();
     };
   }));
 
@@ -102,10 +102,10 @@ describe('Home', () => {
 
   describe('Component', () => {
     // component/directive specs
-    let component = HomeComponent;
+    let component = VolunteerSearchComponent;
 
     it('includes the intended template',() => {
-      expect(component.template).to.equal(HomeTemplate);
+      expect(component.template).to.equal(VolunteerSearchTemplate);
     });
 
     it('uses `controllerAs` syntax', () => {
@@ -113,7 +113,7 @@ describe('Home', () => {
     });
 
     it('invokes the right controller', () => {
-      expect(component.controller).to.equal(HomeController);
+      expect(component.controller).to.equal(VolunteerSearchController);
     });
   });
 });

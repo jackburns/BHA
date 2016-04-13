@@ -2,7 +2,7 @@ import _ from 'lodash';
 import notificationsModalTemplate from './../../common/notificationsModal/notificationsModal.html'
 import NotificationsModalController from './../../common/notificationsModal/notificationsModal.controller.js'
 
-class HomeController {
+class VolunteersController {
   constructor($state, $uibModal, $http, Enums) {
     let getSearchConfig = () => {
       let paramsObj = {};
@@ -108,6 +108,6 @@ class HomeController {
   }
 }
 
-HomeController.$inject = ["$state", "$uibModal", "$http", "Enums"];
+VolunteersController.$inject = ["$state", "$uibModal", "$http", "Enums"];
 
-export default HomeController;
+export default VolunteersController;
