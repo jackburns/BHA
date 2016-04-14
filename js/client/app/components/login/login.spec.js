@@ -20,7 +20,7 @@ describe('Login', () => {
 
   describe('Controller', () => {
     // controller specs
-    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
+    it('has a name property', () => { // erase if removing this.name from the controller
       let controller = makeController();
       expect(controller).to.have.property('name');
     });

@@ -16,22 +16,6 @@ class VolunteerFormController {
     this.submitted = false;
     this.passwordError = "";
 
-    let createBlankAvailability = function() {
-      return {
-        day: "",
-        start_time: "",
-        end_time: "",
-        isValid: false
-      };
-    };
-
-    let createBlankLanguage = function() {
-      return {
-        language_name: "",
-        can_written_translate: false
-      }
-    };
-
     // initial info object
     this.info = {
       user: {
@@ -51,9 +35,9 @@ class VolunteerFormController {
         carrier: "18",
         preferred_contact: "0"
       },
-      languages: [createBlankLanguage()],
+      languages: [],
       bha_app_res: false,
-      availability: [createBlankAvailability()],
+      availability: [],
       notes: ""
     };
 
@@ -66,22 +50,6 @@ class VolunteerFormController {
 
     this.validateForm = function(ang_valid) {
       this.allValid = ang_valid && this.zip_valid && this.phone_valid && this.validAvailabilities && this.passwordError.length == 0;
-    };
-
-    this.addNewLanguage = function () {
-      this.info.languages.push(createBlankLanguage());
-    };
-
-    this.removeLastLanguage = function() {
-      this.info.languages.pop();
-    };
-
-    this.addNewAvailability = function() {
-      this.info.availability.push(createBlankAvailability());
-    };
-
-    this.removeLastAvailability = function() {
-      this.info.availability.pop();
     };
 
     this.getPasswordError = function(password) {

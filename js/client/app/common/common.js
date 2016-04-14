@@ -5,6 +5,8 @@ import Footer from './footer/footer'
 import Enums from './enums/enums';
 import LanguageKeyToName from './languageKeyToName/languageKeyToName';
 import LanguageSelect from './languageSelect/languageSelect';
+import AvailabilityEdit from './availabilityEdit/availabilityEdit';
+import LanguageEdit from './languageEdit/languageEdit';
 import Alert from './alert/alert';
 
 let commonModule = angular.module('app.common', [
@@ -14,7 +16,9 @@ let commonModule = angular.module('app.common', [
   Enums.name,
   LanguageKeyToName.name,
   LanguageSelect.name,
-  Alert.name
+  Alert.name,
+  AvailabilityEdit.name,
+  LanguageEdit.name
 ]);
 
 export default commonModule;

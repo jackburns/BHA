@@ -1,0 +1,30 @@
+<div class="availability-edit">
+  <table class="table table-bordered tab">
+    <thead>
+      <tr>
+        <th>Day of Week</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+      </tr>
+    </thead>
+    <tr ng-repeat="availability in vm.availability track by $index">
+      <td>
+        <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.day" ng-options="key as value for (key, value) in vm.selectOptions.days"></select>
+      </td>
+      <td>
+        <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.start_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
+      </td>
+      <td>
+        <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.end_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
+      </td>
+    </tr>
+  </table>
+  <div class="but-tag">
+    <button type="button" ng-show="vm.availability.length > 1" ng-click="vm.removeLastAvailability()" class="btn add-btn" aria-label="Remove last availability">
+      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+    </button>
+    <button type="button" ng-click="vm.addNewAvailability()" class="btn add-btn" aria-label="Add availability">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>

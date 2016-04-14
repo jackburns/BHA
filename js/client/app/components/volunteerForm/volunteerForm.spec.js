@@ -69,48 +69,11 @@ describe('VolunteerForm', () => {
       expect(ctrl.getPasswordError('greatpassword123')).to.be.equal('');
     });
 
-    it('adds a new blank language', () => {
-      let ctrl = makeController();
-      expect(ctrl.info.languages).to.have.length(1);
-      ctrl.addNewLanguage();
-      expect(ctrl.info.languages).to.have.length(2);
-      expect(ctrl.info.languages[1])
-    });
-
-    it('removes the last language', () => {
-      let ctrl = makeController();
-      expect(ctrl.info.languages).to.have.length(1);
-      ctrl.removeLastLanguage();
-      expect(ctrl.info.languages).to.have.length(0);
-      ctrl.removeLastLanguage();
-      expect(ctrl.info.languages).to.have.length(0);
-    });
-
-    it('adds a new blank availability', () => {
-      let ctrl = makeController();
-      expect(ctrl.info.availability).to.have.length(1);
-      ctrl.addNewAvailability();
-      expect(ctrl.info.availability).to.have.length(2);
-      expect(ctrl.info.availability[1].day).to.equal("");
-      expect(ctrl.info.availability[1].start_time).to.equal("");
-      expect(ctrl.info.availability[1].end_time).to.equal("");
-      expect(ctrl.info.availability[1].isValid).to.be.false;
-    });
-
-    it('removes the last availability', () => {
-      let ctrl = makeController();
-      expect(ctrl.info.availability).to.have.length(1);
-      ctrl.removeLastAvailability()
-      expect(ctrl.info.availability).to.have.length(0);
-      ctrl.removeLastAvailability()
-      expect(ctrl.info.availability).to.have.length(0);
-    });
-
     it('contact select is initially set to 0 for email', () => {
       let ctrl = makeController();
       expect(ctrl.info.contact.preferred_contact).to.equal('0');
     });
-    
+
     it('click submit -> API call', () => {
       let ctrl = makeController();
       expect(ctrl.submitted).to.be.false;

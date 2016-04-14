@@ -66,30 +66,7 @@
         <h4>Languages Spoken</h4>
         <h6 ng-class="{invalid: !vm.validLanguages && vm.submitted}">Please enter at least one language.</h6>
         <div class="col-sm-12">
-          <table class="table table-bordered tab">
-            <thead>
-              <tr>
-                <th>Language</th>
-                <th>Willing to do written translations?</th>
-              </tr>
-            </thead>
-            <tr ng-repeat="language in vm.info.languages track by $index">
-              <td>
-                <language-select selected-language="language.language_name"></language-select>
-              </td>
-              <td>
-                <input type="checkbox" ng-model="language.can_written_translate">
-              </td>
-            </tr>
-          </table>
-          <div class="but-tag">
-            <button ng-show="vm.info.languages.length > 1" type="button" ng-click="vm.removeLastLanguage()" class="btn add-btn" aria-label="Remove last language">
-              <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-            </button>
-            <button type="button" ng-click="vm.addNewLanguage()" class="btn add-btn" aria-label="Add new language">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            </button>
-          </div>
+          <language-edit languages="vm.info.languages"></language-edit>
         </div>
       </div>
       <div class="form-group">
@@ -103,34 +80,7 @@
         <h6>Please enter times for which you are generally available on a weekly basis.</h6>
         <h6 ng-class="{invalid: !vm.validAvailabilities && vm.submitted}">Provide valid time slots (at least one).</h6>
         <div class="col-sm-12">
-          <table class="table table-bordered tab">
-            <thead>
-              <tr>
-                <th>Day of Week</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-              </tr>
-            </thead>
-            <tr ng-repeat="availability in vm.info.availability track by $index">
-              <td>
-                <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.day" ng-options="key as value for (key, value) in vm.selectOptions.days"></select>
-              </td>
-              <td>
-                <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.start_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
-              </td>
-              <td>
-                <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.end_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
-              </td>
-            </tr>
-          </table>
-          <div class="but-tag">
-            <button type="button" ng-show="vm.info.availability.length > 1" ng-click="vm.removeLastAvailability()" class="btn add-btn" aria-label="Remove last availability">
-              <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-            </button>
-            <button type="button" ng-click="vm.addNewAvailability()" class="btn add-btn" aria-label="Add availability">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            </button>
-          </div>
+          <availability-edit availability="vm.info.availability"></availability-edit>
         </div>
       </div>
       <div class="form-group">
