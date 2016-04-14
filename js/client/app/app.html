@@ -1,6 +1,7 @@
 <!-- Place all UI elements intended to be present across all routes in this file -->
 <div class="app">
     <navbar></navbar>
+    <uib-alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="alert.close()">{{ alert.msg }}</uib-alert>
     <div class="container">
       <div ui-view></div>
     </div>

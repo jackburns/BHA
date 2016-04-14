@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 class VolunteerFormController {
-  constructor($http, Enums, $uibModal, $scope) {
+  constructor($http, Enums, $uibModal, $state, Alert) {
 
     this.selectOptions = Enums;
     this.selectOptions.availabilityTimes = ["9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM",
@@ -113,11 +113,14 @@ class VolunteerFormController {
       if (this.allValid) {
         // brilliant
         this.info.user.username = this.info.contact.email;
-        console.log(this.info);
         $http.post(api + '/volunteers/', this.info).then((res) =>{
-          $state.go('/login');
+          $state.go('login');
           console.log(res);
-        });
+          }, (error) => {
+            console.log(error);
+            Alert.add('danger', 'Could not create your account');
+          }
+        );
       } else {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
       }
@@ -125,5 +128,5 @@ class VolunteerFormController {
   }
 }
 
-VolunteerFormController.$inject = ['$http', 'Enums', '$uibModal', '$scope'];
+VolunteerFormController.$inject = ['$http', 'Enums', '$uibModal', '$state', 'Alert'];
 export default VolunteerFormController;

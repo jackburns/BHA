@@ -7,7 +7,6 @@ import uiBootstrap from 'angular-ui-bootstrap';
 import Restangular from 'restangular';
 import ngStorage from 'ng-storage';
 
-
 angular.module('app', [
     uiRouter,
     Common.name,
@@ -27,12 +26,16 @@ angular.module('app', [
 
     let anonStates = [
       'login',
-      'volunteerApplication'
+      'volunteerApplication',
+      'resetPassword',
+      'resetPasswordUpdate'
     ];
+
     $rootScope.$on("$stateChangeStart", function(event, toState, toParams) {
 
       // If user isnt signed in BUT we have auth token, sign in and then redirect
       // Else redirect to login page
+      console.log(arguments);
       if (!User.isSignedIn() && $localStorage.djangotoken) {
         event.preventDefault();
         User.signIn(toState.name);

@@ -76,6 +76,8 @@ mysql -u root -ppassword < /vagrant/mysqlSetup.sql
 python manage.py makemigrations
 python manage.py migrate
 
+python manage.py installtasks
+
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'backend@bha.com', 'mikeymike')" | python manage.py shell
 
 deactivate
