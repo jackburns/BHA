@@ -2,16 +2,28 @@ import AvailabilityEditModule from './availabilityEdit'
 import AvailabilityEditController from './availabilityEdit.controller';
 import AvailabilityEditComponent from './availabilityEdit.component';
 import AvailabilityEditTemplate from './availabilityEdit.html';
-import Enums from '../enums/enums';
 
 describe('AvailabilityEdit', () => {
-  let $rootScope, makeController;
+  let $rootScope, $componentController, makeController, scope;
 
   beforeEach(window.module(AvailabilityEditModule.name));
-  beforeEach(inject((_$rootScope_) => {
+  beforeEach(window.module('ngMock'));
+
+  beforeEach(() => {
+    let mockEnums = {};
+
+    window.module(($provide) => {
+      $provide.value('Enums', mockEnums);
+    });
+  });
+
+  beforeEach(inject((_$rootScope_, _$componentController_) => {
     $rootScope = _$rootScope_;
+    scope = $rootScope.$new();
+    $componentController = _$componentController_;
+    let availability = [{day: 'Monday', start_time: '1:00PM', end_time: '5:00PM', isValid: true}];
     makeController = () => {
-      return new AvailabilityEditController(Enums);
+      return $componentController(AvailabilityEditModule.name, {$scope: scope}, {availability: availability});
     };
   }));
 

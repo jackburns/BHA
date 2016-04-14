@@ -22,7 +22,7 @@ describe('LanguageEdit', () => {
     scope = $rootScope.$new();
     $componentController = _$componentController_;
     makeController = () => {
-      return $componentController('languageEdit', {$scope: scope}, {languages: [{language_name: 'es'}]});
+      return $componentController(LanguageEditModule.name, {$scope: scope}, {languages: [{language_name: 'es'}]});
     };
   }));
 
