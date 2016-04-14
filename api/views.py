@@ -24,8 +24,8 @@ class NotificationView(views.APIView):
     def post(self, request, *args, **kwargs):
         subject = request.data.get("subject", "No subject")
         message = request.data.get("message", "No message")
-        emailList = request.data.get("emails", [{"id":1,"email":"bcox5021@gmail.com"},])
-        textList = request.data.get("texts", [{"id":1, "phoneNumber":"5086889360", "carrier": "Verizon"},])
+        emailList = request.data.get("emails", [{"id":1,"email":"cs4500bha@gmail.com"},])
+        textList = request.data.get("texts", [])
         process_notification(subject, message, emailList, textList)
         return Response({"success": True})
 
