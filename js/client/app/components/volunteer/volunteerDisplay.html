@@ -15,10 +15,10 @@
       </div>
       <div class="left-column__section">
         <p class="left-column__header">Languages:</p>
-          <div ng-repeat="language in vm.volunteer.languages">
-            <span ng-bind="vm.languages[language.language_name]"></span>
-            <span class="glyphicon" ng-class="{language.can_written_translate: glyphicon-edit, !language.can_written_translate: glypicon-user}"></span>
-          </div>
+        <div ng-repeat="language in vm.volunteer.languages">
+          <span ng-bind="vm.languages[language.language_name]"></span>
+          <span class="glyphicon" ng-class="{language.can_written_translate: glyphicon-edit, !language.can_written_translate: glypicon-user}"></span>
+        </div>
       </div>
 
       <div class="left-column__section">
@@ -83,10 +83,6 @@
       </div>
     </div>
   </div>
-  <div ng-show="!vm.edit">
-    <button type="button" class="btn btn-primary">Contact</button>
-    <button type="button" ng-if="vm.User.isAdmin()" class="btn btn-info">Edit</button>
-  </div>
-  <div ng-show="vm.edit">
-    <button type="button" class="btn btn-primary">Save</button>
+  <button type="button" class="btn btn-lg btn-primary">Contact</button>
+  <button type="button" ng-if="vm.user.isAdmin()" class="btn btn-lg btn-info">Edit</button>
 </div>

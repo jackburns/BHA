@@ -8,6 +8,7 @@
 
 .err {
     color: #c00;
+    display: none;
 }
 
 h6.err {
@@ -22,6 +23,16 @@ table.submitted.invalid td,
 select.submitted.ng-invalid,
 select.submitted.invalid {
     background-color: #ffeeee;
+}
+
+.ng-submitted {
+
+  .ng-invalid-required, .invalid {
+    background-color: #ffeeee;
+  }
+  .err {
+    display: block;
+  }
 }
 
 .tab th {
@@ -50,9 +61,9 @@ td {
     text-align: right;
 }
 
-h6.invalid {
-    color: #c00;
-    font-size: 1.15em;
+h6.err {
+  color: #c00;
+  font-size: 1.15em;
 }
 
 .add-btn {

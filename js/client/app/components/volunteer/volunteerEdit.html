@@ -1,0 +1,74 @@
+<div class="volunteer-edit container-fluid">
+  <h1>Edit Profile</h1>
+  <form name="volunteerEdit" novalidate role="form" ng-submit="vm.submit(volunteerEdit.$valid)" class="form-horizontal">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <h4>Name</h4>
+          </div>
+          <div class="col-sm-5">
+            <input required type="text" class="form-control" ng-model="vm.volunteer.first_name" placeholder="First Name*">
+          </div>
+          <div class="col-sm-2">
+            <input required type="text" class="form-control" ng-model="vm.volunteer.middle_name" placeholder="MI" maxlength="1">
+          </div>
+          <div class="col-sm-5">
+            <input required type="text" class="form-control" ng-model="vm.volunteer.last_name" placeholder="Last Name*">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <h4>Contact</h4>
+          </div>
+          <div class="col-sm-12">
+            <input required type="text" class="form-control" ng-model="vm.volunteer.contact.street" id="street" placeholder="Street Address*">
+          </div>
+          <div class="col-sm-6">
+            <input required type="text" class="form-control" ng-model="vm.volunteer.contact.city" id="city" placeholder="City*">
+          </div>
+          <div class="col-sm-3">
+            <input required type="text" class="form-control" ng-model="vm.volunteer.contact.state" id="state" maxlength="2" placeholder="State*">
+          </div>
+          <div class="col-sm-3">
+            <input required ng-class="{invalid: !vm.zip_valid}" type="text" class="form-control" ng-model="vm.volunteer.contact.zip" id="zip" maxlength="10" placeholder="ZIP Code*">
+            <h6 ng-show="!vm.zip_valid && vm.submitted" class="err">Please enter a valid ZIP code.</h6>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <h4>Admin</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <h4>Languages Spoken</h4>
+          </div>
+          <div class="col-sm-12">
+            <language-edit languages="vm.volunteer.languages"></language-edit>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <h4>Availability</h4>
+            <h6>Please enter times for which you are generally available on a weekly basis.</h6>
+          </div>
+          <div class="col-sm-12">
+            <availability-edit availability="vm.volunteer.availability"></availability-edit>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <h4>Additional Notes</h4>
+          </div>
+          <div class="col-sm-12">
+            <textarea class="form-control" rows="5" ng-model="vm.volunteer.notes"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <button type="button" class="btn btn-lg btn-primary">Save</button>
+</div>

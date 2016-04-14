@@ -9,13 +9,13 @@
     </thead>
     <tr ng-repeat="availability in vm.availability track by $index">
       <td>
-        <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.day" ng-options="key as value for (key, value) in vm.selectOptions.days"></select>
+        <select required class="form-control" ng-class="{invalid: !availability.isValid}" ng-model="availability.day" ng-options="key as value for (key, value) in vm.selectOptions.days"></select>
       </td>
       <td>
-        <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.start_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
+        <select required class="form-control" ng-class="{invalid: !availability.isValid}" ng-model="availability.start_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
       </td>
       <td>
-        <select required class="form-control" ng-class="{submitted: vm.submitted, invalid: !availability.isValid}" ng-model="availability.end_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
+        <select required class="form-control" ng-class="{invalid: !availability.isValid}" ng-model="availability.end_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
       </td>
     </tr>
   </table>
