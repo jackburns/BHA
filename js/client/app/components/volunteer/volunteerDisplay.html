@@ -83,6 +83,10 @@
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-primary">Contact</button>
-  <button type="button" class="btn btn-info">Edit</button>
+  <div ng-show="!vm.edit">
+    <button type="button" class="btn btn-primary">Contact</button>
+    <button type="button" ng-if="vm.User.isAdmin()" class="btn btn-info">Edit</button>
+  </div>
+  <div ng-show="vm.edit">
+    <button type="button" class="btn btn-primary">Save</button>
 </div>

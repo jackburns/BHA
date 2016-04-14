@@ -1,7 +1,14 @@
 import _ from 'lodash'
 
 class VolunteerController {
-  constructor($state, $http, Enums) {
+  constructor($state, $http, Enums, User) {
+    this.edit = false;
+    this.User = User;
+    this.user = User.getUser();
+
+    if(this.volunteer.user.id == User.getUser().user.id) {
+      this.edit = true;
+    }
 
     console.log(this);
     const vm = this;
@@ -10,6 +17,6 @@ class VolunteerController {
   };
 };
 
-VolunteerController.$inject = ["$state", "$http", "Enums"];
+VolunteerController.$inject = ["$state", "$http", "Enums", "User"];
 
 export default VolunteerController;
