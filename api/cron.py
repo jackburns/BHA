@@ -12,7 +12,6 @@ def unfilled_assignment():
     message = "These assignments are unfilled or do not have experience volunteer: \n"
     for assignment in assignments:
         message += assignment.name + ": " + assignment.start_date.strftime('%d %B %Y - %I:%M %p') + '\n'
-    print(message)
-    send_emails("Unfilled Assignment", message, [{"email": "bcox5021@gmail.com"},])
+    send_emails("Unfilled Assignment", message, [{"email": "cs4500bha@gmail.com"},])
 
 

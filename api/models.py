@@ -168,7 +168,7 @@ class Availability(models.Model):
 class Assignment(models.Model):
     name = models.CharField(max_length=120)
     posted_by = models.ForeignKey(Volunteer, on_delete=models.SET_NULL, related_name='posted_assignments', null=True, blank=True)
-    volunteers = models.ManyToManyField(Volunteer, related_name='assignments', blank=True, null=True)
+    volunteers = models.ManyToManyField(Volunteer, related_name='assignments', blank=True)
     language = models.OneToOneField(Language, null=True, blank=True)
     start_date = models.DateTimeField()
     contact = models.OneToOneField(Contact, null=True, blank=True)
