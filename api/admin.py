@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Volunteer, Availability, Contact, Language
+from .models import Volunteer, Availability, Contact, Language, Assignment
 
 # Register your models here.
 class VolunteerAdmin(admin.ModelAdmin):
@@ -17,3 +17,7 @@ admin.site.register(Contact, ContactAdmin)
 class LanguageAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Language, LanguageAdmin)
+
+class AssignmentAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Assignment, AssignmentAdmin)
