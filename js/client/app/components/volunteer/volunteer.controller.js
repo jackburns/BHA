@@ -10,12 +10,17 @@ class VolunteerController {
       this.edit = true;
     }
 
-    let validateForm = (ang_valid) => {
-      this.allValid = ang_valid && this.zip_valid && this.phone_valid && this.validAvailabilities && this.passwordError.length == 0;
-    };
-
     this.submit = (ang_valid) => {
-      validateForm(ang_valid);
+      let validAvailability = _.every(Validate.availability(this.volunteer.availability), 'isValid');
+
+      this.allValid = ang_valid
+                      && Validate.zip(this.volunteer.contact.zip)
+                      && Validate.phoneNumber(this.volunteer.contact.phone)
+                      && validAvailability;
+
+      if(this.allValid) {
+        updateVolunteer();
+      }
     };
 
     let updateVolunteer = () => {
