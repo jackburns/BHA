@@ -41,7 +41,6 @@ describe('LanguageEdit', () => {
 
     it('removes the last language', () => {
       let ctrl = makeController();
-      console.log(ctrl);
       expect(ctrl.languages).to.have.length(1);
       ctrl.removeLastLanguage();
       expect(ctrl.languages).to.have.length(0);
