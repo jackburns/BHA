@@ -2,18 +2,27 @@ import LanguageEditModule from './languageEdit'
 import LanguageEditController from './languageEdit.controller';
 import LanguageEditComponent from './languageEdit.component';
 import LanguageEditTemplate from './languageEdit.html';
-import Enums from '../enums/enums';
 
 describe('LanguageEdit', () => {
-  let $rootScope, makeController;
+  let $rootScope, $componentController, makeController, scope;
 
   beforeEach(window.module(LanguageEditModule.name));
-  beforeEach(inject((_$rootScope_) => {
+  beforeEach(window.module('ngMock'));
+
+  beforeEach(() => {
+    let mockEnums = {};
+
+    window.module(($provide) => {
+      $provide.value('Enums', mockEnums);
+    });
+  });
+
+  beforeEach(inject((_$rootScope_, _$componentController_) => {
     $rootScope = _$rootScope_;
+    scope = $rootScope.$new();
+    $componentController = _$componentController_;
     makeController = () => {
-      let ctrl = new LanguageEditController(Enums);
-      ctrl.availability = [];
-      return ctrl;
+      return $componentController(LanguageEditModule.name, {$scope: scope}, {languages: [{language_name: 'es'}]});
     };
   }));
 
