@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
 class VolunteerController {
-  constructor($state, $http, Enums, User, Alert) {
+  constructor($http, Enums, User, Alert, Validate) {
     this.edit = false;
-    this.User = User;
+    this.userIsAdmin = User.isAdmin();
     this.enums = Enums;
 
     if(this.volunteer.user.id == User.getUser().user.id) {
@@ -12,10 +12,11 @@ class VolunteerController {
 
     this.submit = (ang_valid) => {
       let validAvailability = _.every(Validate.availability(this.volunteer.availability), 'isValid');
-
+      this.zipValid = Validate.zip(this.volunteer.contact.zip);
+      this.phoneValid = Validate.phoneNumber(this.volunteer.contact.phone_number);
       this.allValid = ang_valid
-                      && Validate.zip(this.volunteer.contact.zip)
-                      && Validate.phoneNumber(this.volunteer.contact.phone)
+                      && this.zipValid
+                      && this.phoneValid
                       && validAvailability;
 
       if(this.allValid) {
@@ -24,7 +25,7 @@ class VolunteerController {
     };
 
     let updateVolunteer = () => {
-      $http.put(api + '/volunteers/' + this.volunteer.user.id + '/', this.volunteer).then((res) => {
+      $http.patch(api + '/volunteers/' + this.volunteer.user.id + '/', this.volunteer).then((res) => {
         Alert.add('sucess', 'Volunteer successfully updated');
       }, (error) => {
         Alert.add('danger', 'Error: Could not update Volunteer');
@@ -34,6 +35,6 @@ class VolunteerController {
   };
 };
 
-VolunteerController.$inject = ["$state", "$http", "Enums", "User", "Alert"];
+VolunteerController.$inject = ["$http", "Enums", "User", "Alert", "Validate"];
 
 export default VolunteerController;

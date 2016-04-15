@@ -11,7 +11,7 @@
             <input required type="text" class="form-control" ng-model="vm.volunteer.first_name" placeholder="First Name*">
           </div>
           <div class="col-sm-2">
-            <input required type="text" class="form-control" ng-model="vm.volunteer.middle_name" placeholder="MI" maxlength="1">
+            <input type="text" class="form-control" ng-model="vm.volunteer.middle_name" placeholder="MI" maxlength="1">
           </div>
           <div class="col-sm-5">
             <input required type="text" class="form-control" ng-model="vm.volunteer.last_name" placeholder="Last Name*">
@@ -21,18 +21,51 @@
           <div class="col-sm-12">
             <h4>Contact</h4>
           </div>
-          <div class="col-sm-12">
+          <div class="col-sm-4">
+            <h6>Street</h6>
+          </div>
+          <div class="col-sm-8">
             <input required type="text" class="form-control" ng-model="vm.volunteer.contact.street" id="street" placeholder="Street Address*">
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
+            <h6>City</h6>
+          </div>
+          <div class="col-sm-8">
             <input required type="text" class="form-control" ng-model="vm.volunteer.contact.city" id="city" placeholder="City*">
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-4">
+            <h6>State</h6>
+          </div>
+          <div class="col-sm-8">
             <input required type="text" class="form-control" ng-model="vm.volunteer.contact.state" id="state" maxlength="2" placeholder="State*">
           </div>
-          <div class="col-sm-3">
-            <input required ng-class="{invalid: !vm.zip_valid}" type="text" class="form-control" ng-model="vm.volunteer.contact.zip" id="zip" maxlength="10" placeholder="ZIP Code*">
-            <h6 ng-show="!vm.zip_valid && vm.submitted" class="err">Please enter a valid ZIP code.</h6>
+          <div class="col-sm-4">
+            <h6>ZIP Code</h6>
+          </div>
+          <div class="col-sm-8">
+            <input required ng-class="{invalid: !vm.zipValid}" type="text" class="form-control" ng-model="vm.volunteer.contact.zip" id="zip" maxlength="10" placeholder="ZIP Code*">
+            <h6 ng-show="!vm.zipValid" class="err">Please enter a valid ZIP code.</h6>
+          </div>
+          <br>
+          <div class="col-sm-4">
+            <h6>Phone Number</h6>
+          </div>
+          <div class="col-sm-8">
+            <input name="phone" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required ng-class="{invalid: !vm.phoneValid}" type="tel" maxlength="10" class="form-control" ng-model="vm.volunteer.contact.phone_number"
+              placeholder="Phone Number*">
+            <h6 ng-show="!vm.phoneValid" class="err">Please enter a valid 10-digit Phone number.</h6>
+          </div>
+          <div class="col-sm-4">
+            <h6>Preferred Contact Method</h6>
+          </div>
+          <div class="col-sm-8">
+            <select class="form-control" ng-model="vm.volunteer.contact.preferred_contact" ng-options="key as value for (key, value) in vm.enums.preferred_contact"></select>
+          </div>
+          <div class="col-sm-4">
+            <h6>Carrier</h6>
+          </div>
+          <div class="col-sm-8">
+            <select class="form-control" ng-model="vm.volunteer.contact.carrier" ng-options="key as value for (key, value) in vm.enums.carriers"></select>
           </div>
         </div>
         <div class="form-group" ng-if="!vm.user.isAdmin()">
@@ -81,6 +114,6 @@
         </div>
       </div>
     </div>
+    <button class="btn btn-lg btn-primary" type="submit" value="submit">Save</button>
   </form>
-  <button type="button" class="btn btn-lg btn-primary">Save</button>
 </div>
