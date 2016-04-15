@@ -2,16 +2,28 @@ import LanguageSelectModule from './languageSelect'
 import LanguageSelectController from './languageSelect.controller';
 import LanguageSelectComponent from './languageSelect.component';
 import LanguageSelectTemplate from './languageSelect.html';
-import Enums from '../enums/enums';
 
 describe('LanguageSelect', () => {
-  let $rootScope, makeController;
+  let $rootScope, $componentController, makeController, scope;
 
   beforeEach(window.module(LanguageSelectModule.name));
-  beforeEach(inject((_$rootScope_) => {
+  beforeEach(window.module('ngMock'));
+
+  beforeEach(() => {
+    let mockEnums = {};
+
+    window.module(($provide) => {
+      $provide.value('Enums', mockEnums);
+    });
+  });
+
+  beforeEach(inject((_$rootScope_, _$componentController_) => {
     $rootScope = _$rootScope_;
+    scope = $rootScope.$new();
+    $componentController = _$componentController_;
+    let availability = [{day: 'Monday', start_time: '1:00PM', end_time: '5:00PM', isValid: true}];
     makeController = () => {
-      return new LanguageSelectController(Enums);
+      return $componentController(LanguageSelectModule.name, {$scope: scope}, {availability: availability});
     };
   }));
 
