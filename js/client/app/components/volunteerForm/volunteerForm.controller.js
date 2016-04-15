@@ -49,6 +49,8 @@ class VolunteerFormController {
     this.submit = function(ang_valid) {
       // check custom validations
       this.submitted = true;
+      console.log(Validate.zip);
+      console.log(Validate.password);
       this.zip_valid = Validate.zip(this.info.contact.zip);
       this.phone_valid = Validate.phoneNumber(this.info.contact.phone_number);
       this.validLanguages = this.info.languages[0].language_name.length > 0;

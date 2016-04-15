@@ -2,17 +2,34 @@ import VolunteerFormModule from './volunteerForm'
 import VolunteerFormController from './volunteerForm.controller';
 import VolunteerFormComponent from './volunteerForm.component';
 import VolunteerFormTemplate from './volunteerForm.html';
-import Enums from '../../common/enums/enums';
 
 describe('VolunteerForm', () => {
-  let $rootScope, $http, makeController;
+  let $rootScope, $componentController, $http, makeController, scope;
 
   beforeEach(window.module(VolunteerFormModule.name));
-  beforeEach(inject((_$rootScope_, _$http_) => {
+  beforeEach(window.module('ngMock'));
+
+  beforeEach(() => {
+    let mockEnums = {};
+    let mockValidate = {};
+    let mockUibModal = {};
+    let mockAlert = {};
+
+    window.module(($provide) => {
+      $provide.value('Enums', mockEnums);
+      $provide.value('Validate', mockValidate);
+      $provide.value('$uibModal', mockUibModal);
+      $provide.value('Alert', mockAlert);
+    });
+  });
+
+  beforeEach(inject((_$rootScope_, _$http_, _$componentController_) => {
     $rootScope = _$rootScope_;
     $http = _$http_;
+    scope = $rootScope.$new();
+    $componentController = _$componentController_;
     makeController = () => {
-      return new VolunteerFormController($http, Enums);
+      return $componentController(VolunteerFormModule.name, {$scope: scope}, $http);
     };
   }));
 
@@ -21,26 +38,6 @@ describe('VolunteerForm', () => {
   });
 
   describe('Controller', () => {
-    it('sets the isValid flag for every availability', () => {
-      let ctrl = makeController();
-      ctrl.validateAvailabilities();
-      expect(ctrl.info.availability[0].isValid).to.be.false;
-      ctrl.info.availability[0].day = 'Wednesday';
-      ctrl.validateAvailabilities();
-      expect(ctrl.info.availability[0].isValid).to.be.false;
-      ctrl.info.availability[0].start_time = '10:30AM';
-      ctrl.validateAvailabilities();
-      expect(ctrl.info.availability[0].isValid).to.be.false;
-      ctrl.info.availability[0].end_time = '10:30AM';
-      ctrl.validateAvailabilities();
-      expect(ctrl.info.availability[0].isValid).to.be.false;
-      ctrl.info.availability[0].end_time = '2:30PM';
-      ctrl.info.availability.push({day: 'Sunday', start_time: '2:00PM', end_time: '4:00PM'});
-      ctrl.validateAvailabilities();
-      expect(ctrl.info.availability[0].isValid).to.be.true;
-      expect(ctrl.info.availability[1].isValid).to.be.true;
-    });
-
     it('sets allValid according to if all form entries are valid', () => {
       let ctrl = makeController();
       ctrl.validateForm(false);
@@ -58,16 +55,6 @@ describe('VolunteerForm', () => {
       expect(ctrl.allValid).to.be.true;
     });
 
-    it('returns an appropriate error for invalid passwords', () => {
-      let ctrl = makeController();
-      expect(ctrl.getPasswordError('t')).to.be.equal('Password needs to be at least 8 characters');
-      expect(ctrl.getPasswordError('sevench')).to.be.equal('Password needs to be at least 8 characters');
-      expect(ctrl.getPasswordError('this password is essentially a short novel who could remember this')).to.be.equal(
-        'Password need to be less than 50 characters');
-      expect(ctrl.getPasswordError('nodigits')).to.be.equal('Password needs at least one number');
-      expect(ctrl.getPasswordError('1234567890')).to.be.equal('Password needs at least one letter');
-      expect(ctrl.getPasswordError('greatpassword123')).to.be.equal('');
-    });
 
     it('contact select is initially set to 0 for email', () => {
       let ctrl = makeController();
