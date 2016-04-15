@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 class VolunteerFormController {
-  constructor($http, Enums, $uibModal, $state, Alert) {
+  constructor($http, Enums, $uibModal, $state, Alert, Validate) {
 
     this.selectOptions = Enums;
     this.selectOptions.availabilityTimes = ["9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM",
@@ -41,41 +41,20 @@ class VolunteerFormController {
       notes: ""
     };
 
-    this.validateAvailabilities = function() {
-      _.each(this.info.availability, function(av) {
-        av.isValid = (av.day !== "" && av.start_time !== "" && av.end_time !== "" &&
-          this.selectOptions.availabilityTimes.indexOf(av.start_time) < this.selectOptions.availabilityTimes.indexOf(av.end_time));
-      }.bind(this));
-    };
-
     this.validateForm = function(ang_valid) {
       this.allValid = ang_valid && this.zip_valid && this.phone_valid && this.validAvailabilities && this.passwordError.length == 0;
-    };
-
-    this.getPasswordError = function(password) {
-      if (password.length < 8) {
-        return "Password needs to be at least 8 characters";
-      } else if (password.length > 50) {
-        return "Password need to be less than 50 characters";
-      } else if (password.search(/\d/) == -1) {
-        return "Password needs at least one number";
-      } else if (password.search(/[a-zA-Z]/) == -1) {
-        return "Password needs at least one letter";
-      } else {
-        return "";
-      }
     };
 
     // on submit
     this.submit = function(ang_valid) {
       // check custom validations
       this.submitted = true;
-      this.zip_valid = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.info.contact.zip);
-      this.phone_valid = this.info.contact.phone_number.length == 10;
+      this.zip_valid = Validate.zip(this.info.contact.zip);
+      this.phone_valid = Validate.phoneNumber(this.info.contact.phone_number);
       this.validLanguages = this.info.languages[0].language_name.length > 0;
-      this.validateAvailabilities();
+      this.info.availability = Validate.availability(this.info.availability);
       this.validAvailabilities = _.every(this.info.availability, 'isValid');
-      this.passwordError = this.getPasswordError(this.info.user.password);
+      this.passwordError = Validate.password(this.info.user.password);
       this.validateForm(ang_valid);
 
       if (this.allValid) {
@@ -83,9 +62,7 @@ class VolunteerFormController {
         this.info.user.username = this.info.contact.email;
         $http.post(api + '/volunteers/', this.info).then((res) =>{
           $state.go('login');
-          console.log(res);
           }, (error) => {
-            console.log(error);
             Alert.add('danger', 'Could not create your account');
           }
         );
@@ -96,5 +73,5 @@ class VolunteerFormController {
   }
 }
 
-VolunteerFormController.$inject = ['$http', 'Enums', '$uibModal', '$state', 'Alert'];
+VolunteerFormController.$inject = ['$http', 'Enums', '$uibModal', '$state', 'Alert', 'Validate'];
 export default VolunteerFormController;

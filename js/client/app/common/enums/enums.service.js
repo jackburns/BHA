@@ -6,8 +6,11 @@ let EnumsService = function () {
       2: 'Other',
     },
     volunteer_level: {
-      0: 'User',
-      1: 'Admin',
+      0: 'Unverified',
+      1: 'Verified',
+      2: 'Trained',
+      3: 'hasObserved',
+      4: 'beenObserved'
     },
     days: {
       0: 'Monday',

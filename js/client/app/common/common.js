@@ -8,6 +8,7 @@ import LanguageSelect from './languageSelect/languageSelect';
 import AvailabilityEdit from './availabilityEdit/availabilityEdit';
 import LanguageEdit from './languageEdit/languageEdit';
 import Alert from './alert/alert';
+import Validate from './validate/validate';
 
 let commonModule = angular.module('app.common', [
   Navbar.name,
@@ -18,7 +19,8 @@ let commonModule = angular.module('app.common', [
   LanguageSelect.name,
   Alert.name,
   AvailabilityEdit.name,
-  LanguageEdit.name
+  LanguageEdit.name,
+  Validate.name
 ]);
 
 export default commonModule;

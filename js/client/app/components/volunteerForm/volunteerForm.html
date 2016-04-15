@@ -19,7 +19,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-12">
-          <input type="password"required class="form-control" ng-model="vm.info.user.password" id="password" placeholder="Password">
+          <input type="password" required class="form-control" ng-model="vm.info.user.password" id="password" placeholder="Password">
           <h6 ng-show="vm.passwordError.length > 0 && vm.submitted" class="err" ng-bind="vm.passwordError"></h6>
         </div>
       </div>
@@ -64,7 +64,7 @@
       </div>
       <div class="form-group">
         <h4>Languages Spoken</h4>
-        <h6 ng-show="!vm.validLanguages" class="err">Please enter at least one language.</h6>
+        <h5 ng-show="!vm.validLanguages" class="err">Please enter at least one language.</h5>
         <div class="col-sm-12">
           <language-edit languages="vm.info.languages"></language-edit>
         </div>
@@ -78,7 +78,7 @@
       <div class="form-group">
         <h4>Availability</h4>
         <h6>Please enter times for which you are generally available on a weekly basis.</h6>
-        <h6 ng-show="!vm.validAvailabilities" class="err">Provide valid time slots (at least one).</h6>
+        <h5 ng-show="!vm.validAvailabilities" class="err">Provide valid time slots (at least one).</h5>
         <div class="col-sm-12">
           <availability-edit availability="vm.info.availability"></availability-edit>
         </div>
