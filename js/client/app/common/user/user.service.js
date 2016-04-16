@@ -43,7 +43,7 @@ let UserService = function ($http, $state, $localStorage) {
   };
 
   let isAdmin = () => {
-    return user && user.is_staff;
+    return user && user.user.is_staff;
   }
 
   return { getUser, signIn, isSignedIn, isAdmin, logout };
