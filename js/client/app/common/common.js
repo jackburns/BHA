@@ -5,6 +5,7 @@ import Footer from './footer/footer'
 import Enums from './enums/enums';
 import LanguageKeyToName from './languageKeyToName/languageKeyToName';
 import LanguageSelect from './languageSelect/languageSelect';
+import Alert from './alert/alert';
 
 let commonModule = angular.module('app.common', [
   Navbar.name,
@@ -12,7 +13,8 @@ let commonModule = angular.module('app.common', [
   Footer.name,
   Enums.name,
   LanguageKeyToName.name,
-  LanguageSelect.name
+  LanguageSelect.name,
+  Alert.name
 ]);
 
 export default commonModule;

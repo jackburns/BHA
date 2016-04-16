@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from .email import process_notification
 from .models import Volunteer, Contact, Availability, Language, Assignment
 from datetime import datetime
 
@@ -80,7 +81,7 @@ class VolunteerSerializer(serializers.ModelSerializer):
 
         isAdmin = any(suffix.lower() in contact_data['email'].lower() for suffix in adminEmailSuffix)
 
-        user = User.objects.create(username=user_data['username'], is_staff=isAdmin)
+        user = User.objects.create(username=user_data['username'], email=contact_data['email'], is_staff=isAdmin)
         user.set_password(user_data['password'])
         user.save()
 
@@ -97,10 +98,14 @@ class VolunteerSerializer(serializers.ModelSerializer):
                 Language.objects.create(volunteer=volunteer, **language_data)
 
         volunteer.save()
+        process_notification("Welcome to VIP!", "Thank you for signing up to volunteer for the Boston Housing Authority Volunteers Interpreters Program! We appreciate your help!", [{"email":contact.email},], []) 
+        process_notification("New Volunteer Signup", "A new volunteer has signed up for the VIP!", [{"email":"cs4500bha@gmail.com"},], [])   
+    
         return volunteer
 
     # this is actually a little involved, set every field appropriately
     # TODO: make sure this actually works and fix it when it doesnt
+    # TODO: add updating username via email
     def update(self, instance, data):
         contact_data = data.pop('contact')
         availability_data = data.pop('availability')

@@ -26,5 +26,9 @@ urlpatterns = [
 	url(r'^admin/', admin.site.urls),
 	url(r'^', include(router.urls)),
 	url(r'^api/auth/', include('rest_auth.urls')),
-    url(r'^api/notify/', views.NotificationView.as_view(), name='Notify')
+    url(r'^', include('django.contrib.auth.urls')),
+    url(r'^api/notify/', views.NotificationView.as_view(), name='Notify'),
+    url(r'^reset-password/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    'django.contrib.auth.views.password_reset_confirm',
+    name='password_reset_confirm'),
 ]
