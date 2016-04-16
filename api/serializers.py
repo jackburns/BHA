@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from .email import process_notification
 from .models import Volunteer, Contact, Availability, Language, Assignment
 from datetime import datetime
 
@@ -97,6 +98,9 @@ class VolunteerSerializer(serializers.ModelSerializer):
                 Language.objects.create(volunteer=volunteer, **language_data)
 
         volunteer.save()
+        process_notification("Welcome to VIP!", "Thank you for signing up to volunteer for the Boston Housing Authority Volunteers Interpreters Program! We appreciate your help!", [{"email":contact.email},], []) 
+        process_notification("New Volunteer Signup", "A new volunteer has signed up for the VIP!", [{"email":"cs4500bha@gmail.com"},], [])   
+    
         return volunteer
 
     # this is actually a little involved, set every field appropriately
