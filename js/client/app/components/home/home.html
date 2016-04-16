@@ -5,13 +5,13 @@
       <h4>Welcome to the Volunteer Interpreter Online Portal!</h4>
       <div class="container">
         <div class="col-sm-12">
-          <a ui-sref="volunteerSearch">Search for volunteers</a>
+          <a ui-sref="volunteerSearch" ng-show="vm.userIsAdmin">Search for volunteers</a>
         </div>
         <div class="col-sm-12">
           <a ui-sref="assignments">Search for assignments</a>
         </div>
         <div class="col-sm-12">
-          <a ui-sref="volunteers">View your profile</a>
+          <a ui-sref="volunteer">View your profile</a>
         </div>
       </div>
     </div>
