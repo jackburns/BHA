@@ -11,6 +11,7 @@ class LanguageEditController {
     };
 
     this.addNewLanguage = function () {
+      console.log('hi');
       this.languages.push(createBlankLanguage());
     };
 

@@ -7,15 +7,15 @@
       </tr>
     </thead>
     <tr ng-repeat="language in vm.languages track by $index">
-      <td>
+      <td class="col-xs-8">
         <language-select selected-language="language.language_name"></language-select>
       </td>
-      <td>
+      <td class="col-xs-4">
         <input type="checkbox" ng-model="language.can_written_translate">
       </td>
     </tr>
   </table>
-  <div class="but-tag">
+  <div class="list-buttons">
     <button ng-show="vm.languages.length > 1" type="button" ng-click="vm.removeLastLanguage()" class="btn add-btn" aria-label="Remove last language">
       <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
     </button>

@@ -33,6 +33,7 @@ let UserService = function ($http, $state, $localStorage) {
   let logout = () => {
     $http.post(api + '/auth/logout/').then(() => {
       user = null;
+      $http.defaults.headers.common.Authorization = '';
       delete $localStorage.djangotoken;
       $state.go('login');
     });

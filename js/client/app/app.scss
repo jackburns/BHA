@@ -11,4 +11,55 @@
     top: 0;
     width: 100%;
   }
+  .jumbotron {
+    border-radius: 0;
+  }
+}
+
+form {
+  .err {
+      color: #c00;
+      display: none;
+  }
+
+  h6.err {
+    margin-top: 0;
+  }
+
+  &.ng-submitted {
+    .ng-invalid-required, .invalid {
+      background-color: #ffeeee;
+    }
+    .err {
+      display: block;
+    }
+  }
+}
+
+.list-buttons {
+  @media screen and (max-width: 767px) {
+    margin-top: -17px;
+  }
+  text-align: right;
+  margin-top: -22px;
+
+  button {
+    &:hover, &:focus {
+      color: #fff;
+    }
+    color: #f4f4f4;
+    width: 100px;
+    height: 20px;
+    padding-top: 0px;
+  }
+}
+
+.tab {
+  th {
+    text-align: center;
+    background-color: #f9f9f9;
+  }
+  td {
+    background-color: #f2f2f2;
+  }
 }
