@@ -37,26 +37,13 @@ let app = angular.module('app', [
       // Else redirect to login page
       if (!User.isSignedIn() && $localStorage.djangotoken) {
         event.preventDefault();
-        User.signIn(toState.name);
+        User.signIn(() => {
+          $state.go(toState, toParams);
+        });
       } else if (!User.isSignedIn() && !_.includes(anonStates, toState.name)) {
         event.preventDefault();
-        $state.go('login');
+        $state.go('login', toParams);
       }
    });
  }])
  .component('app', AppComponent);
-
- app.directive('convertNumber', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, el, attr, ctrl) {
-      ctrl.$parsers.push(function(value) {
-        return parseInt(value, 10);
-      });
-
-      ctrl.$formatters.push(function(value) {
-        return value.toString();
-      });
-    }
-  }
-});

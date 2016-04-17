@@ -3,6 +3,9 @@
 
 .app {
   height: 100%;
+  & > .container {
+    padding: 0;
+  }
 
   .alert {
     z-index: 100;
@@ -38,11 +41,8 @@ form {
 }
 
 .list-buttons {
-  @media screen and (max-width: 767px) {
-    margin-top: -17px;
-  }
   text-align: right;
-  margin-top: -22px;
+  margin-top: -15px;
 
   button {
     &:hover, &:focus {

@@ -6,7 +6,7 @@ let UserService = function ($http, $state, $localStorage) {
     return user;
   };
 
-  let signIn = (redirect_state) => {
+  let signIn = (callback) => {
     if(failAttempts < maxFailAttempts) {
       $http.get(api + '/volunteers/me/', {
         headers: {
@@ -16,8 +16,8 @@ let UserService = function ($http, $state, $localStorage) {
         failAttempts = 0;
         $http.defaults.headers.common.Authorization = 'Token ' + $localStorage.djangotoken;
         user = res.data;
-        if(redirect_state) {
-          $state.go(redirect_state);
+        if(callback) {
+          callback();
         }
       }, function(error) {
         console.log(error);

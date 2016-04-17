@@ -12,7 +12,6 @@ class VolunteerController {
 
     this.submit = (ang_valid) => {
       let validAvailability = _.every(Validate.availability(this.volunteer.availability), 'isValid');
-      console.log(this.volunteer.availability);
       this.zipValid = Validate.zip(this.volunteer.contact.zip);
       this.phoneValid = Validate.phoneNumber(this.volunteer.contact.phone_number);
       this.allValid = ang_valid

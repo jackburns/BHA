@@ -10,7 +10,6 @@ import ResetPassword from './resetPassword/resetPassword'
 
 let componentModule = angular.module('app.components', [
   Home.name,
-  About.name,
   Login.name,
   VolunteerForm.name,
   Volunteer.name,
