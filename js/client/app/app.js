@@ -7,7 +7,7 @@ import uiBootstrap from 'angular-ui-bootstrap';
 import Restangular from 'restangular';
 import ngStorage from 'ng-storage';
 
-angular.module('app', [
+let app = angular.module('app', [
     uiRouter,
     Common.name,
     Components.name,
@@ -45,3 +45,18 @@ angular.module('app', [
    });
  }])
  .component('app', AppComponent);
+
+ app.directive('convertNumber', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, el, attr, ctrl) {
+      ctrl.$parsers.push(function(value) {
+        return parseInt(value, 10);
+      });
+
+      ctrl.$formatters.push(function(value) {
+        return value.toString();
+      });
+    }
+  }
+});

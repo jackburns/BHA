@@ -2,7 +2,7 @@ let ValidateService = function (Enums) {
   let availability = function(availability) {
     return _.each(availability, function(av) {
       av.isValid = (av.day !== "" && av.start_time !== "" && av.end_time !== "" &&
-        Enums.availabilityTimes.indexOf(av.start_time) < Enums.availabilityTimes.indexOf(av.end_time));
+        Enums.arrays.availability_times.indexOf(av.start_time) < Enums.arrays.availability_times.indexOf(av.end_time));
     });
   };
 

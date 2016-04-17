@@ -30,7 +30,7 @@ class VolunteerFormController {
         zip: "",
         email: "",
         phone_number: "",
-        carrier: "18",
+        carrier: "0",
         preferred_contact: "0"
       },
       languages: [],
