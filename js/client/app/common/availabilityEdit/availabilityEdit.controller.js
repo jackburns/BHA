@@ -6,8 +6,6 @@ class AvailabilityEditController {
       availabilityTimes: Enums.arrays.availability_times
     };
 
-    console.log(this);
-
     let createBlankAvailability = function() {
       return {
         day: "",

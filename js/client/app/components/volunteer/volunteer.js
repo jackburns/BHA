@@ -7,7 +7,6 @@ let volunteerModule = angular.module('volunteer', [
 ])
 
 .config(['$stateProvider', ($stateProvider) => {
-  console.log($stateProvider);
   $stateProvider.state('volunteer', {
     url: '/volunteers/:volunteerId',
     controller: ['$scope', 'volunteer', ($scope, volunteer) => {
@@ -16,7 +15,6 @@ let volunteerModule = angular.module('volunteer', [
     template: '<volunteer volunteer="$resolve.volunteer"></volunteer>',
     resolve: {
       volunteer: ['$http', '$stateParams', ($http, $stateParams) => {
-        console.log($stateParams);
         if($stateParams.volunteer) {
           return volunteer
         } else {
