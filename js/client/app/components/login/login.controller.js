@@ -1,5 +1,5 @@
 class LoginController {
-  constructor($http, User, $localStorage) {
+  constructor($http, User, $localStorage, Alert) {
     this.name = 'login';
     this.email = '';
     this.password = '';
@@ -17,10 +17,10 @@ class LoginController {
         User.signIn('home');
       }, (error) => {
         console.log(error);
-        this.error = 'Username/Password not valid';
+        Alert.add('danger', 'Username/Password not valid');
       });
     }
   }
 }
-LoginController.$inject = ['$http','User', '$localStorage'];
+LoginController.$inject = ['$http','User', '$localStorage', 'Alert'];
 export default LoginController;
