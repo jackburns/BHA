@@ -21,7 +21,7 @@ let UserService = function ($http, $state, $localStorage, Alert) {
           callback();
         }
       }, function(error) {
-        Alert('danger', 'Could not log in');
+        Alert.add('danger', 'Could not log in');
         console.log(error);
         failAttempts++;
       });

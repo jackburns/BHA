@@ -5,16 +5,39 @@
       <div class="col-md-4">
         <div class="form-group">
           <div class="col-sm-12">
-            <h4>Name</h4>
+            <h4>About</h4>
           </div>
-          <div class="col-sm-5">
-            <input required type="text" class="form-control" ng-model="vm.volunteer.first_name" placeholder="First Name*">
+          <div class="row">
+            <div class="col-sm-4">
+              <h6>First Name</h6>
+            </div>
+            <div class="col-sm-8">
+              <input required type="text" class="form-control" ng-model="vm.volunteer.first_name" placeholder="First Name*">
+            </div>
           </div>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" ng-model="vm.volunteer.middle_name" placeholder="MI" maxlength="1">
+          <div class="row">
+            <div class="col-sm-4">
+              <h6>Middle Initial</h6>
+            </div>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" ng-model="vm.volunteer.middle_name" placeholder="MI" maxlength="1">
+            </div>
           </div>
-          <div class="col-sm-5">
-            <input required type="text" class="form-control" ng-model="vm.volunteer.last_name" placeholder="Last Name*">
+          <div class="row">
+            <div class="col-sm-4">
+              <h6>Last Name</h6>
+            </div>
+            <div class="col-sm-8">
+              <input required type="text" class="form-control" ng-model="vm.volunteer.last_name" placeholder="Last Name*">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h6>Organization</h6>
+            </div>
+            <div class="col-sm-8">
+              <input required type="text" class="form-control" ng-model="vm.volunteer.organization" placeholder="Organization">
+            </div>
           </div>
         </div>
         <div class="form-group">
