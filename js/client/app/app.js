@@ -43,14 +43,8 @@ let app = angular.module('app', [
 
     let isValidPermissions = (toStateName) => {
       let userLevel = User.getLevel();
-      let state = _.find(statePermissions, (state) => {
-        return toStateName === state.name;
-      });
-      if(state) {
-        return userLevel >= state.level;
-      } else {
-        return true;
-      }
+      let state = _.find(statePermissions, {name: toStateName});
+      return !state || userLevel >= state.level;
     }
 
     $rootScope.$on("$stateChangeStart", function(event, toState, toParams) {
@@ -67,7 +61,7 @@ let app = angular.module('app', [
           $state.go('login');
         }
       // Else check state permissions
-      } else if(!isValidPermissions(toState.name)){
+      } else if(!User.isAdmin() && !isValidPermissions(toState.name)){
         event.preventDefault();
         $state.go('home');
       }

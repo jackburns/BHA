@@ -1,7 +1,8 @@
-let UserService = function ($http, $state, $localStorage) {
+let UserService = function ($http, $state, $localStorage, Alert) {
   let user = null;
   const maxFailAttempts = 3;
   let failAttempts = 0;
+
   let getUser = () => {
     return user;
   };
@@ -20,6 +21,7 @@ let UserService = function ($http, $state, $localStorage) {
           callback();
         }
       }, function(error) {
+        Alert('danger', 'Could not log in');
         console.log(error);
         failAttempts++;
       });
@@ -51,8 +53,14 @@ let UserService = function ($http, $state, $localStorage) {
     return user && user.volunteer_level;
   }
 
-  return { getUser, signIn, isSignedIn, isAdmin, logout, getLevel };
+  let viewProfile = () => {
+    $state.go('volunteer', {
+      volunteerId: user.id,
+      volunteer: user
+    });
+  }
+  return { getUser, signIn, isSignedIn, isAdmin, logout, getLevel, viewProfile };
 };
 
-UserService.$inject = ['$http', '$state', '$localStorage'];
+UserService.$inject = ['$http', '$state', '$localStorage', 'Alert'];
 export default UserService;
