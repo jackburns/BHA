@@ -131,6 +131,25 @@ ASSIGNMENT_STATUS_ENUM = (
     (2, 'complete'),
 )
 
+CARRIERS_ENUM = (
+    (0, ''),
+    (1, 'txt.att.net'),
+    (2, 'messaging.sprintpcs.com'),
+    (3, 'tmomail.net'),
+    (4, 'vtext.com'),
+    (5, 'sms.alltelwireless.com'),
+    (6, 'sms.myboostmobile.com'),
+    (7, 'cwemail.com'),
+    (8, 'gocbw.com'),
+    (9, 'sms.mycricket.com'),
+    (10, 'mymetropcs.com'),
+    (11, 'qwestmp.com'),
+    (12, 'sms.rogers.com'),
+    (13, 'msg.telus.com'),
+    (14, 'email.uscc.net'),
+    (15, 'vmobl.com'),
+)
+
 class Contact(models.Model):
     street = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
@@ -139,6 +158,7 @@ class Contact(models.Model):
     phone_number = models.CharField(max_length=50)
     email = models.EmailField()
     preferred_contact = models.IntegerField(choices=PREFERRED_CONTACT_ENUM)
+    carrier = models.IntegerField(choices=CARRIERS_ENUM)
 
 class Volunteer(models.Model):
     user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
@@ -153,6 +173,7 @@ class Volunteer(models.Model):
     inactive = models.BooleanField(default=False)
     contact = models.OneToOneField(Contact)
     hours = models.IntegerField(default=0)
+    organization = models.CharField(max_length=120, null=True, blank=True)
 
 class Language(models.Model):
     can_written_translate = models.BooleanField()

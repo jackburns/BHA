@@ -1,100 +1,108 @@
-<div class="container c m750">
-  <div class="jumbotron holder">
-    <div class="c">
-      <img src="static/viplogo.png">
-      <h2>Volunteer Interpreter Application Form</h2>
+<div class="volunteer-form container">
+  <div class="">
+    <div class="jumbotron holder">
+      <div class="header">
+        <img src="static/viplogo.png">
+        <h2>Volunteer Interpreter Application Form</h2>
+      </div>
+      <form name="vaf" novalidate role="form" ng-submit="vm.submit(vaf.$valid)" class="form-horizontal vaf">
+        <p class="err" ng-show="vm.submitted && !vm.allValid">Please fix all errors and submit again!</p>
+        <div class="form-group">
+          <div class="col-sm-5">
+            <input required type="text" class="form-control" ng-model="vm.info.first_name" id="firstName" placeholder="First Name*">
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ng-model="vm.info.middle_name" id="middleInitial" placeholder="MI" maxlength="1">
+          </div>
+          <div class="col-sm-5">
+            <input required type="text" class="form-control" ng-model="vm.info.last_name" id="lastName" placeholder="Last Name*">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <input type="password" required class="form-control" ng-model="vm.info.user.password" id="password" placeholder="Password">
+            <h6 ng-show="vm.passwordError.length > 0 && vm.submitted" class="err" ng-bind="vm.passwordError"></h6>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <input type="text" class="form-control" ng-model="vm.info.organization" id="organization" placeholder="Current Affiliation/School/Organization">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <input required type="text" class="form-control" ng-model="vm.info.contact.street" id="street" placeholder="Street Address*">
+          </div>
+          <div class="col-sm-6">
+            <input required type="text" class="form-control" ng-model="vm.info.contact.city" id="city" placeholder="City*">
+          </div>
+          <div class="col-sm-3">
+            <input required type="text" class="form-control" ng-model="vm.info.contact.state" id="state" maxlength="2" placeholder="State*">
+          </div>
+          <div class="col-sm-3">
+            <input required ng-class="{invalid: !vm.zip_valid}" type="text" class="form-control" ng-model="vm.info.contact.zip" id="zip" maxlength="10" placeholder="ZIP Code*">
+            <h6 ng-show="!vm.zip_valid  && vm.submitted" class="err">Please enter a valid ZIP code.</h6>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-8">
+            <input name="email" required type="email" class="form-control" ng-model="vm.info.contact.email" id="email" placeholder="E-mail Address*">
+            <h6 ng-show="!vaf.email.$valid  && vm.submitted" class="err">Please enter a valid Email address.</h6>
+          </div>
+          <div class="col-sm-4">
+            <input name="phone" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required ng-class="{invalid: !vm.phone_valid}" type="tel" maxlength="10" class="form-control" ng-model="vm.info.contact.phone_number" id="phone"
+              placeholder="Phone Number*">
+            <h6 ng-show="!vm.phone_valid && vm.submitted" class="err">Please enter a valid 10-digit Phone number.</h6>
+          </div>
+          <label for="pref-contact" class="col-sm-4 control-label">Preferred contact method:</label>
+          <div class="col-sm-2">
+            <select id="pref-contact" class="form-control" ng-model="vm.info.contact.preferred_contact" ng-options="key as value for (key, value) in vm.selectOptions.preferred_contact"></select>
+          </div>
+          <label for="carrier" class="col-sm-2 control-label">Carrier:</label>
+          <div class="col-sm-4">
+            <select id="carrier" ng-change="vm.log()" class="form-control" ng-model="vm.info.contact.carrier" ng-options="key as value for (key, value) in vm.selectOptions.carriers"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <h4>Languages Spoken</h4>
+            <h5 ng-show="!vm.validLanguages" class="err">Please enter at least one language.</h5>
+          </div>
+          <div class="col-sm-12">
+            <language-edit languages="vm.info.languages"></language-edit>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-10">
+            <label>Are you currently a BHA housing applicant or a BHA resident?</label>
+          </div>
+          <div class="col-xs-2">
+            <input id="bha" type="checkbox" ng-model="vm.info.bha_app_res" />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <h4>Availability</h4>
+            <h6>Please enter times for which you are generally available on a weekly basis.</h6>
+            <h5 ng-show="!vm.validAvailabilities" class="err">Provide valid time slots (at least one).</h5>
+          </div>
+          <div class="col-sm-12">
+            <availability-edit availability="vm.info.availability"></availability-edit>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4">Additional Notes</label>
+          <div class="col-sm-12">
+            <textarea class="form-control" rows="5" ng-model="vm.info.notes"></textarea>
+          </div>
+        </div>
+        <div class="sub">
+          <input class="sub btn btn-primary" type="submit" value="Submit" />
+        </div>
+        <div class="message">
+          <h6>If you have any questions, feel free to contact us at <a href="mailto:LanguageAccessTeam@bostonhousing.org">LanguageAccessTeam@bostonhousing.org</a></h6>
+        </div>
+      </form>
     </div>
-    <form name="vaf" novalidate role="form" ng-submit="vm.submit(vaf.$valid)" class="form-horizontal vaf">
-      <p class="err" ng-show="vm.submitted && !vm.allValid">Please fix all errors and submit again!</p>
-      <div class="form-group">
-        <div class="col-sm-5">
-          <input required type="text" class="form-control" ng-model="vm.info.first_name" id="firstName" placeholder="First Name*">
-        </div>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" ng-model="vm.info.middle_name" id="middleInitial" placeholder="MI" maxlength="1">
-        </div>
-        <div class="col-sm-5">
-          <input required type="text" class="form-control" ng-model="vm.info.last_name" id="lastName" placeholder="Last Name*">
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-12">
-          <input type="password" required class="form-control" ng-model="vm.info.user.password" id="password" placeholder="Password">
-          <h6 ng-show="vm.passwordError.length > 0 && vm.submitted" class="err" ng-bind="vm.passwordError"></h6>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-12">
-          <input type="text" class="form-control" ng-model="vm.info.affiliation" id="affiliation" placeholder="Current Affiliation/School/Organization">
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-12">
-          <input required type="text" class="form-control" ng-model="vm.info.contact.street" id="street" placeholder="Street Address*">
-        </div>
-        <div class="col-sm-6">
-          <input required type="text" class="form-control" ng-model="vm.info.contact.city" id="city" placeholder="City*">
-        </div>
-        <div class="col-sm-3">
-          <input required type="text" class="form-control" ng-model="vm.info.contact.state" id="state" maxlength="2" placeholder="State*">
-        </div>
-        <div class="col-sm-3">
-          <input required ng-class="{invalid: !vm.zip_valid}" type="text" class="form-control" ng-model="vm.info.contact.zip" id="zip" maxlength="10" placeholder="ZIP Code*">
-          <h6 ng-show="!vm.zip_valid  && vm.submitted" class="err">Please enter a valid ZIP code.</h6>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-8">
-          <input name="email" required type="email" class="form-control" ng-model="vm.info.contact.email" id="email" placeholder="E-mail Address*">
-          <h6 ng-show="!vaf.email.$valid  && vm.submitted" class="err">Please enter a valid Email address.</h6>
-        </div>
-        <div class="col-sm-4">
-          <input name="phone" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required ng-class="{submitted: vm.submitted, invalid: !vm.phone_valid}" type="tel" maxlength="10" class="form-control" ng-model="vm.info.contact.phone_number" id="phone"
-            placeholder="Phone Number*">
-          <h6 ng-show="!vm.phone_valid && vm.submitted" class="err">Please enter a valid 10-digit Phone number.</h6>
-        </div>
-        <label for="pref-contact" class="col-sm-4 control-label">Preferred contact method:</label>
-        <div class="col-sm-2">
-          <select id="pref-contact" class="form-control" ng-model="vm.info.contact.preferred_contact" ng-options="key as value for (key, value) in vm.selectOptions.preferred_contact"></select>
-        </div>
-        <label for="carrier" class="col-sm-2 control-label">Carrier:</label>
-        <div class="col-sm-4">
-          <select id="carrier" ng-change="vm.log()" class="form-control" ng-model="vm.info.contact.carrier" ng-options="key as value for (key, value) in vm.selectOptions.carriers"></select>
-        </div>
-      </div>
-      <div class="form-group">
-        <h4>Languages Spoken</h4>
-        <h5 ng-show="!vm.validLanguages" class="err">Please enter at least one language.</h5>
-        <div class="col-sm-12">
-          <language-edit languages="vm.info.languages"></language-edit>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="bha" class="col-sm-11">Are you currently a BHA housing applicant or a BHA resident?</label>
-        <div class="col-sm-1">
-          <input id="bha" type="checkbox" ng-model="vm.info.bha_app_res" />
-        </div>
-      </div>
-      <div class="form-group">
-        <h4>Availability</h4>
-        <h6>Please enter times for which you are generally available on a weekly basis.</h6>
-        <h5 ng-show="!vm.validAvailabilities" class="err">Provide valid time slots (at least one).</h5>
-        <div class="col-sm-12">
-          <availability-edit availability="vm.info.availability"></availability-edit>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-4">Additional Notes</label>
-        <div class="col-sm-12">
-          <textarea class="form-control" rows="5" ng-model="vm.info.notes"></textarea>
-        </div>
-      </div>
-      <div class="sub">
-        <input class="sub btn btn-primary" type="submit" value="Submit" />
-      </div>
-      <div class="message">
-        <h6>If you have any questions, feel free to contact us at <a href="mailto:LanguageAccessTeam@bostonhousing.org">LanguageAccessTeam@bostonhousing.org</a></h6>
-      </div>
-    </form>
   </div>
 </div>

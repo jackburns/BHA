@@ -7,23 +7,44 @@
         <th>End Time</th>
       </tr>
     </thead>
-    <tr ng-repeat="availability in vm.availability track by $index">
-      <td>
-        <select required class="form-control" ng-class="{invalid: !availability.isValid}" ng-model="availability.day" ng-options="key as value for (key, value) in vm.selectOptions.days"></select>
+    <tr ng-repeat="availability in vm.availability">
+      <td class="col-sm-4">
+        <ui-select ng-model="availability.day" ng-class="{invalid: !availability.isValid}" class="availability-select">
+          <ui-select-match>
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="dayObj.key as dayObj in vm.selectOptions.days | filter:{name: $select.search}">
+            {{dayObj.name}}
+          </ui-select-choices>
+        </ui-select>
+      </td>
+      <td class="col-sm-4">
+        <ui-select ng-model="availability.start_time" ng-class="{invalid: !availability.isValid}" class="availability-select">
+          <ui-select-match>
+            {{$select.selected}}
+          </ui-select-match>
+          <ui-select-choices repeat="timeObj in vm.selectOptions.availabilityTimes">
+            {{timeObj}}
+          </ui-select-choices>
+        </ui-select>
       </td>
       <td>
-        <select required class="form-control" ng-class="{invalid: !availability.isValid}" ng-model="availability.start_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
-      </td>
-      <td>
-        <select required class="form-control" ng-class="{invalid: !availability.isValid}" ng-model="availability.end_time" ng-options="time for time in vm.selectOptions.availabilityTimes"></select>
+        <ui-select ng-model="availability.end_time" ng-class="{invalid: !availability.isValid}" class="availability-select">
+          <ui-select-match>
+            {{$select.selected}}
+          </ui-select-match>
+          <ui-select-choices repeat="timeObj in vm.selectOptions.availabilityTimes">
+            {{timeObj}}
+          </ui-select-choices>
+        </ui-select>
       </td>
     </tr>
   </table>
-  <div class="but-tag">
-    <button type="button" ng-show="vm.availability.length > 1" ng-click="vm.removeLastAvailability()" class="btn add-btn" aria-label="Remove last availability">
+  <div class="list-buttons">
+    <button type="button" ng-show="vm.availability.length > 1" ng-click="vm.removeLastAvailability()" class="btn" aria-label="Remove last availability">
       <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
     </button>
-    <button type="button" ng-click="vm.addNewAvailability()" class="btn add-btn" aria-label="Add availability">
+    <button type="button" ng-click="vm.addNewAvailability()" class="btn" aria-label="Add availability">
       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
   </div>
