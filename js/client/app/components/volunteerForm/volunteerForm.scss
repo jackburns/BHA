@@ -8,11 +8,10 @@
 
 .err {
     color: #c00;
+    display: none;
 }
-
 h6.err {
-    margin-top: 0px;
-    font-size: .83em;
+  margin-top: 0;
 }
 
 input.ng-invalid.submitted,
@@ -22,6 +21,16 @@ table.submitted.invalid td,
 select.submitted.ng-invalid,
 select.submitted.invalid {
     background-color: #ffeeee;
+}
+
+.ng-submitted {
+
+  .ng-invalid-required, .invalid {
+    background-color: #ffeeee;
+  }
+  .err {
+    display: block;
+  }
 }
 
 .tab th {
@@ -48,11 +57,6 @@ td {
 .sub {
     margin-top: 4px;
     text-align: right;
-}
-
-h6.invalid {
-    color: #c00;
-    font-size: 1.15em;
 }
 
 .add-btn {
