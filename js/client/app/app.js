@@ -31,6 +31,7 @@ let app = angular.module('app', [
     ];
 
     let anonStates = [
+      'login',
       'volunteerApplication',
       'resetPassword',
       'resetPasswordUpdate'
@@ -42,24 +43,35 @@ let app = angular.module('app', [
 
     let isValidPermissions = (toStateName) => {
       let userLevel = User.getLevel();
-      return _.find(statePermissions, (state) => {
-        return toStateName === state.name && userLevel >= state.level;
+      let state = _.find(statePermissions, (state) => {
+        return toStateName === state.name;
       });
+      if(state) {
+        return userLevel >= state.level;
+      } else {
+        return true;
+      }
     }
 
     $rootScope.$on("$stateChangeStart", function(event, toState, toParams) {
-      // If user isnt signed in BUT we have auth token, sign in and then redirect
-      if (!User.isSignedIn() && $localStorage.djangotoken) {
-        event.preventDefault();
-        User.signIn(() => {
-          $state.go(toState, toParams);
-        });
-      // Else redirect to login page if not anon state
-      } else if (!User.isSignedIn() && !isAnonState(toState.name)) {
-        event.preventDefault();
-        $state.go('login', toParams);
+      if (!User.isSignedIn()) {
+        console.log('not signed in');
+        // If user isnt signed in BUT we have auth token, sign in and then redirect
+        if($localStorage.djangotoken) {
+          console.log('token');
+          event.preventDefault();
+          User.signIn(() => {
+            $state.go(toState, toParams);
+          });
+        // Check for Anon State
+        } else if(!isAnonState(toState.name)) {
+          console.log('not anon');
+          event.preventDefault();
+          $state.go('login');
+        }
       // Else check state permissions
-      } else if(!User.isAdmin() & !isValidPermissions(toState.name)){
+      } else if(!isValidPermissions(toState.name)){
+        console.log('not valid permissions');
         event.preventDefault();
         $state.go('home');
       }

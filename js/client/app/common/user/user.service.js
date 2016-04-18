@@ -48,10 +48,10 @@ let UserService = function ($http, $state, $localStorage) {
   }
 
   let getLevel = () => {
-    return user.volunteer_level;
+    return user && user.volunteer_level;
   }
 
-  return { getUser, signIn, isSignedIn, isAdmin, logout };
+  return { getUser, signIn, isSignedIn, isAdmin, logout, getLevel };
 };
 
 UserService.$inject = ['$http', '$state', '$localStorage'];
