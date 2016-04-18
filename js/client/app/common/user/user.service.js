@@ -1,12 +1,13 @@
-let UserService = function ($http, $state, $localStorage) {
+let UserService = function ($http, $state, $localStorage, Alert) {
   let user = null;
   const maxFailAttempts = 3;
   let failAttempts = 0;
+
   let getUser = () => {
     return user;
   };
 
-  let signIn = (redirect_state) => {
+  let signIn = (callback) => {
     if(failAttempts < maxFailAttempts) {
       $http.get(api + '/volunteers/me/', {
         headers: {
@@ -16,10 +17,11 @@ let UserService = function ($http, $state, $localStorage) {
         failAttempts = 0;
         $http.defaults.headers.common.Authorization = 'Token ' + $localStorage.djangotoken;
         user = res.data;
-        if(redirect_state) {
-          $state.go(redirect_state);
+        if(callback) {
+          callback();
         }
       }, function(error) {
+        Alert('danger', 'Could not log in');
         console.log(error);
         failAttempts++;
       });
@@ -33,6 +35,7 @@ let UserService = function ($http, $state, $localStorage) {
   let logout = () => {
     $http.post(api + '/auth/logout/').then(() => {
       user = null;
+      $http.defaults.headers.common.Authorization = '';
       delete $localStorage.djangotoken;
       $state.go('login');
     });
@@ -46,8 +49,18 @@ let UserService = function ($http, $state, $localStorage) {
     return user && user.user.is_staff;
   }
 
-  return { getUser, signIn, isSignedIn, isAdmin, logout };
+  let getLevel = () => {
+    return user && user.volunteer_level;
+  }
+
+  let viewProfile = () => {
+    $state.go('volunteer', {
+      volunteerId: user.id,
+      volunteer: user
+    });
+  }
+  return { getUser, signIn, isSignedIn, isAdmin, logout, getLevel, viewProfile };
 };
 
-UserService.$inject = ['$http', '$state', '$localStorage'];
+UserService.$inject = ['$http', '$state', '$localStorage', 'Alert'];
 export default UserService;

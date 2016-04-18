@@ -1,87 +1,28 @@
-.c {
+.volunteer-form {
+  max-width: 750px;
+  margin-top: 30px;
+
+  .header {
     text-align: center;
-}
-
-.m750 {
-    max-width: 750px;
-}
-
-.err {
-    color: #c00;
-    display: none;
-}
-h6.err {
-  margin-top: 0;
-}
-
-input.ng-invalid.submitted,
-input.ng-invalid.submitted,
-input.invalid.submitted,
-table.submitted.invalid td,
-select.submitted.ng-invalid,
-select.submitted.invalid {
-    background-color: #ffeeee;
-}
-
-.ng-submitted {
-
-  .ng-invalid-required, .invalid {
-    background-color: #ffeeee;
   }
-  .err {
-    display: block;
+
+  label {
+    font-weight: bold;
   }
-}
 
-.tab th {
-    text-align: center;
-    background-color: #f9f9f9;
-}
-
-td {
-    background-color: #f2f2f2;
-}
-
-.vaf input, .vaf select {
+  input, select {
     margin-top: 4px;
     margin-bottom: 4px;
     border-radius: 4px !important;
-}
+  }
 
-.vaf label {
-    text-align: left;
-    font-weight: bold;
-    padding-top: 10px;
-}
-
-.sub {
+  .sub {
     margin-top: 4px;
     text-align: right;
-}
+  }
 
-.add-btn {
-    color: #f4f4f4;
-    width: 100px;
-    height: 20px;
-    padding-top: 0px;
-}
-
-.but-tag {
-    text-align: right;
-    margin-top: -22px;
-}
-
-@media screen and (max-width: 767px) {
-    .but-tag {
-        margin-top: -17px;
-    }
-}
-
-.add-btn:hover, .add-btn:focus {
-    color: #fff;
-}
-
-.vaf select {
+  select {
     padding-left: 5px;
     padding-right: 0px;
+  }
 }

@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from api import views
 from rest_framework import routers
 
@@ -29,6 +30,6 @@ urlpatterns = [
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^api/notify/', views.NotificationView.as_view(), name='Notify'),
     url(r'^reset-password/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-    'django.contrib.auth.views.password_reset_confirm',
+    auth_views.password_reset_confirm,
     name='password_reset_confirm'),
 ]

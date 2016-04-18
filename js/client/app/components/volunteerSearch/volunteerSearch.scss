@@ -1,97 +1,100 @@
-.sortorder:after {
-  content: '\25b2';
-}
+.volunteer-search {
+  margin: 10px 0 30px;
+  
+  .sortorder:after {
+    content: '\25b2';
+  }
 
-.sortorder.isReverseOrder:after {
-  content: '\25bc';
-}
+  .sortorder.isReverseOrder:after {
+    content: '\25bc';
+  }
 
-label {
-  font-weight: normal;
-}
+  label {
+    font-weight: normal;
+  }
 
-.volunteers-table {
-  th {
+  .volunteers-table {
+    th {
+      cursor: pointer;
+    }
+
+    .notify-column {
+      text-align: center;
+      width: 10%;
+    }
+
+    .first-name-column, .last-name-column, .languages-column {
+      width: 30%;
+    }
+  }
+
+  .input-label {
+    margin-right: .5em;
+  }
+
+  .language-filters {
+    width: 400px;
+    margin-bottom: 2em;
+  }
+
+  .language-select-group {
+    display: inline-block;
+    margin-right: .5em;
+  }
+
+  .inline-checkbox {
+    display: inline-block;
+  }
+
+  .language-select {
+    display: inline-block;
+  }
+
+  .form-group {
+    margin-right: 1em;
+  }
+
+  .search-filters {
+    margin-bottom: 1em;
+  }
+
+  .clickable {
     cursor: pointer;
   }
 
-  .notify-column {
-    text-align: center;
-    width: 10%;
-  }
-
-  .first-name-column, .last-name-column, .languages-column {
-    width: 30%;
-  }
-}
-
-.input-label {
-  margin-right: .5em;
-}
-
-.language-select-group {
-  display: inline-block;
-  margin-right: .5em;
-}
-
-.inline-checkbox {
-  display: inline-block;
-}
-
-.language-filters {
-  margin-bottom: 2em;
-}
-
-.language-select {
-  display: inline-block;
-  width: 300px !important;
-}
-
-.form-group {
-  margin-right: 1em;
-}
-
-.search-filters {
-  margin-bottom: 1em;
-}
-
-.clickable {
-  cursor: pointer;
-}
-
-// notifications modal
-.modal-title {
-  text-align: center;
-}
-
-.notifications-body {
-  margin-top: 1em;
-  margin-bottom: 2em;
-  
-  h4 {
+  // notifications modal
+  .modal-title {
     text-align: center;
   }
-}
 
-.notifications-table {
-  border-radius: 1em;
+  .notifications-body {
+    margin-top: 1em;
+    margin-bottom: 2em;
 
-  th {
-    text-align: center;
-    background-color: #f4f4f4;
-  }
-  
-  td {
-    background-color: #fafafa;
-    text-align: center;
-    
-    a {
-      cursor: pointer;
+    h4 {
+      text-align: center;
     }
   }
-  
-  td.x {
-    text-align: center;
+
+  .notifications-table {
+    border-radius: 1em;
+
+    th {
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+
+    td {
+      background-color: #fafafa;
+      text-align: center;
+
+      a {
+        cursor: pointer;
+      }
+    }
+
+    td.x {
+      text-align: center;
+    }
   }
 }
-

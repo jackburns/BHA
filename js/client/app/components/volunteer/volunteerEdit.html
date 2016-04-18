@@ -56,19 +56,33 @@
             <h6 ng-show="!vm.phoneValid" class="err">Please enter a valid 10-digit Phone number.</h6>
           </div>
           <div class="col-sm-4">
-            <h6>Preferred Contact Method</h6>
-          </div>
-          <div class="col-sm-8">
-            <select class="form-control" ng-model="vm.volunteer.contact.preferred_contact" ng-options="key as value for (key, value) in vm.enums.preferred_contact"></select>
-          </div>
-          <div class="col-sm-4">
             <h6>Carrier</h6>
           </div>
           <div class="col-sm-8">
-            <select class="form-control" ng-model="vm.volunteer.contact.carrier" ng-options="key as value for (key, value) in vm.enums.carriers"></select>
+            <ui-select required ng-model="vm.volunteer.contact.carrier" class="availability-select">
+              <ui-select-match>
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="carrier.key as carrier in vm.enums.arrays.carriers | filter:{name: $select.search}">
+                {{carrier.name}}
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="col-sm-4">
+            <h6>Preferred Contact Method</h6>
+          </div>
+          <div class="col-sm-8">
+            <ui-select required ng-model="vm.volunteer.contact.preferred_contact" class="availability-select">
+              <ui-select-match>
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="prefObj.key as prefObj in vm.enums.arrays.preferred_contact | filter:{name: $select.search}">
+                {{prefObj.name}}
+              </ui-select-choices>
+            </ui-select>
           </div>
         </div>
-        <div class="form-group" ng-if="!vm.user.isAdmin()">
+        <div class="form-group" ng-if="vm.userIsAdmin">
           <div class="col-sm-12">
             <h4>Admin</h4>
           </div>
@@ -82,7 +96,14 @@
             <h6>Volunteer Level</h6>
           </div>
           <div class="col-sm-8">
-            <select required class="form-control" ng-model="vm.volunteer.volunteer_level" ng-options="key as value for (key, value) in vm.enums.volunteer_level"></select>
+            <ui-select required ng-model="vm.volunteer.volunteer_level" class="availability-select">
+              <ui-select-match>
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="levelObj.key as levelObj in vm.enums.arrays.volunteer_level | filter:{name: $select.search}">
+                {{levelObj.name}}
+              </ui-select-choices>
+            </ui-select>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ class VolunteerController {
     this.userIsAdmin = User.isAdmin();
     this.enums = Enums;
 
-    if(this.volunteer.user.id == User.getUser().user.id) {
+    if(this.volunteer.id == User.getUser().id) {
       this.edit = true;
     }
 
@@ -25,8 +25,8 @@ class VolunteerController {
     };
 
     let updateVolunteer = () => {
-      $http.patch(api + '/volunteers/' + this.volunteer.user.id + '/', this.volunteer).then((res) => {
-        Alert.add('sucess', 'Volunteer successfully updated');
+      $http.patch(api + '/volunteers/' + this.volunteer.id + '/', this.volunteer).then((res) => {
+        Alert.add('success', 'Volunteer successfully updated');
       }, (error) => {
         Alert.add('danger', 'Error: Could not update Volunteer');
         console.log(error);

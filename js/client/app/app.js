@@ -7,7 +7,7 @@ import uiBootstrap from 'angular-ui-bootstrap';
 import Restangular from 'restangular';
 import ngStorage from 'ng-storage';
 
-angular.module('app', [
+let app = angular.module('app', [
     uiRouter,
     Common.name,
     Components.name,
@@ -24,6 +24,12 @@ angular.module('app', [
   }])
   .run(['$rootScope', '$state', 'User', '$localStorage', ($rootScope, $state, User, $localStorage) => {
 
+    // level > 5 means only admin access
+    let statePermissions = [
+      {name: 'volunteerSearch', level: 6},
+      {name: 'assignments', level: 1}
+    ];
+
     let anonStates = [
       'login',
       'volunteerApplication',
@@ -31,16 +37,33 @@ angular.module('app', [
       'resetPasswordUpdate'
     ];
 
-    $rootScope.$on("$stateChangeStart", function(event, toState, toParams) {
+    let isAnonState = (toStateName) => {
+      return _.includes(anonStates, toStateName);
+    }
 
-      // If user isnt signed in BUT we have auth token, sign in and then redirect
-      // Else redirect to login page
-      if (!User.isSignedIn() && $localStorage.djangotoken) {
+    let isValidPermissions = (toStateName) => {
+      let userLevel = User.getLevel();
+      let state = _.find(statePermissions, {name: toStateName});
+      return !state || userLevel >= state.level;
+    }
+
+    $rootScope.$on("$stateChangeStart", function(event, toState, toParams) {
+      if (!User.isSignedIn()) {
+        // If user isnt signed in BUT we have auth token, sign in and then redirect
+        if($localStorage.djangotoken) {
+          event.preventDefault();
+          User.signIn(() => {
+            $state.go(toState, toParams);
+          });
+        // Check for Anon State
+        } else if(!isAnonState(toState.name)) {
+          event.preventDefault();
+          $state.go('login');
+        }
+      // Else check state permissions
+      } else if(!User.isAdmin() && !isValidPermissions(toState.name)){
         event.preventDefault();
-        User.signIn(toState.name);
-      } else if (!User.isSignedIn() && !_.includes(anonStates, toState.name)) {
-        event.preventDefault();
-        $state.go('login');
+        $state.go('home');
       }
    });
  }])

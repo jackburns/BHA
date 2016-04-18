@@ -4,8 +4,6 @@ class VolunteerFormController {
   constructor($http, Enums, $uibModal, $state, Alert, Validate) {
 
     this.selectOptions = Enums;
-    this.selectOptions.availabilityTimes = ["9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM",
-        "1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM"];
 
     this.name = 'Volunteer Application Form';
     this.allValid = false;
@@ -32,7 +30,7 @@ class VolunteerFormController {
         zip: "",
         email: "",
         phone_number: "",
-        carrier: "18",
+        carrier: "0",
         preferred_contact: "0"
       },
       languages: [],
@@ -49,8 +47,6 @@ class VolunteerFormController {
     this.submit = function(ang_valid) {
       // check custom validations
       this.submitted = true;
-      console.log(Validate.zip);
-      console.log(Validate.password);
       this.zip_valid = Validate.zip(this.info.contact.zip);
       this.phone_valid = Validate.phoneNumber(this.info.contact.phone_number);
       this.validLanguages = this.info.languages[0].language_name.length > 0;

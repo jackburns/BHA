@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="volunteer-display container-fluid">
   <h1>{{ vm.volunteer.first_name }}
     {{ vm.volunteer.middle_name }}
     {{ vm.volunteer.last_name }}</h1>
@@ -84,5 +84,5 @@
     </div>
   </div>
   <button type="button" class="btn btn-lg btn-primary">Contact</button>
-  <button type="button" ng-if="vm.userIsAdmin" class="btn btn-lg btn-info">Edit</button>
+  <button type="button" ng-if="vm.userIsAdmin" ng-click="vm.edit = true" class="btn btn-lg btn-info">Edit</button>
 </div>
