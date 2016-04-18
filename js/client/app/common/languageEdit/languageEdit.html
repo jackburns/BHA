@@ -1,0 +1,26 @@
+<div class="language-edit">
+  <table class="table table-bordered tab">
+    <thead>
+      <tr>
+        <th>Language</th>
+        <th>Willing to do written translations?</th>
+      </tr>
+    </thead>
+    <tr ng-repeat="language in vm.languages track by $index">
+      <td>
+        <language-select selected-language="language.language_name"></language-select>
+      </td>
+      <td>
+        <input type="checkbox" ng-model="language.can_written_translate">
+      </td>
+    </tr>
+  </table>
+  <div class="but-tag">
+    <button ng-show="vm.languages.length > 1" type="button" ng-click="vm.removeLastLanguage()" class="btn add-btn" aria-label="Remove last language">
+      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+    </button>
+    <button type="button" ng-click="vm.addNewLanguage()" class="btn add-btn" aria-label="Add new language">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>

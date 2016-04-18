@@ -1,15 +1,40 @@
-import _ from 'lodash'
+import _ from 'lodash';
 
 class VolunteerController {
-  constructor($state, $http, Enums) {
+  constructor($http, Enums, User, Alert, Validate) {
+    this.edit = false;
+    this.userIsAdmin = User.isAdmin();
+    this.enums = Enums;
 
-    console.log(this);
-    const vm = this;
+    if(this.volunteer.user.id == User.getUser().user.id) {
+      this.edit = true;
+    }
 
-    vm.languages = Enums.languages;
+    this.submit = (ang_valid) => {
+      let validAvailability = _.every(Validate.availability(this.volunteer.availability), 'isValid');
+      this.zipValid = Validate.zip(this.volunteer.contact.zip);
+      this.phoneValid = Validate.phoneNumber(this.volunteer.contact.phone_number);
+      this.allValid = ang_valid
+                      && this.zipValid
+                      && this.phoneValid
+                      && validAvailability;
+
+      if(this.allValid) {
+        updateVolunteer();
+      }
+    };
+
+    let updateVolunteer = () => {
+      $http.patch(api + '/volunteers/' + this.volunteer.user.id + '/', this.volunteer).then((res) => {
+        Alert.add('sucess', 'Volunteer successfully updated');
+      }, (error) => {
+        Alert.add('danger', 'Error: Could not update Volunteer');
+        console.log(error);
+      });
+    }
   };
 };
 
-VolunteerController.$inject = ["$state", "$http", "Enums"];
+VolunteerController.$inject = ["$http", "Enums", "User", "Alert", "Validate"];
 
 export default VolunteerController;
