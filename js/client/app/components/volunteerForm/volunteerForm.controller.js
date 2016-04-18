@@ -22,7 +22,7 @@ class VolunteerFormController {
       first_name: "",
       last_name: "",
       middle_name: "",
-      affiliation: "",
+      organization: "",
       contact: {
         street: "",
         city: "",

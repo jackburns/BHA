@@ -173,6 +173,7 @@ class Volunteer(models.Model):
     inactive = models.BooleanField(default=False)
     contact = models.OneToOneField(Contact)
     hours = models.IntegerField(default=0)
+    organization = models.CharField(max_length=120, null=True, blank=True)
 
 class Language(models.Model):
     can_written_translate = models.BooleanField()
