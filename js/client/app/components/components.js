@@ -1,7 +1,6 @@
 import angular from 'angular';
 import Home from './home/home';
 import VolunteerSearch from './volunteerSearch/volunteerSearch';
-import About from './about/about';
 import Volunteer from './volunteer/volunteer';
 import Login from './login/login';
 import VolunteerForm from './volunteerForm/volunteerForm';

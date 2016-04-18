@@ -24,25 +24,44 @@ let app = angular.module('app', [
   }])
   .run(['$rootScope', '$state', 'User', '$localStorage', ($rootScope, $state, User, $localStorage) => {
 
+    // level > 5 means only admin access
+    let statePermissions = [
+      {name: 'volunteerSearch', level: 6},
+      {name: 'assignment', level: 1}
+    ];
+
     let anonStates = [
-      'login',
       'volunteerApplication',
       'resetPassword',
       'resetPasswordUpdate'
     ];
 
-    $rootScope.$on("$stateChangeStart", function(event, toState, toParams) {
+    let isAnonState = (toStateName) => {
+      return _.includes(anonStates, toStateName);
+    }
 
+    let isValidPermissions = (toStateName) => {
+      let userLevel = User.getLevel();
+      return _.find(statePermissions, (state) => {
+        return toStateName === state.name && userLevel >= state.level;
+      });
+    }
+
+    $rootScope.$on("$stateChangeStart", function(event, toState, toParams) {
       // If user isnt signed in BUT we have auth token, sign in and then redirect
-      // Else redirect to login page
       if (!User.isSignedIn() && $localStorage.djangotoken) {
         event.preventDefault();
         User.signIn(() => {
           $state.go(toState, toParams);
         });
-      } else if (!User.isSignedIn() && !_.includes(anonStates, toState.name)) {
+      // Else redirect to login page if not anon state
+      } else if (!User.isSignedIn() && !isAnonState(toState.name)) {
         event.preventDefault();
         $state.go('login', toParams);
+      // Else check state permissions
+      } else if(!User.isAdmin() & !isValidPermissions(toState.name)){
+        event.preventDefault();
+        $state.go('home');
       }
    });
  }])

@@ -47,6 +47,10 @@ let UserService = function ($http, $state, $localStorage) {
     return user && user.user.is_staff;
   }
 
+  let getLevel = () => {
+    return user.volunteer_level;
+  }
+
   return { getUser, signIn, isSignedIn, isAdmin, logout };
 };
 
