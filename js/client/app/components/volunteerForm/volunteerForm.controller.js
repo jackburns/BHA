@@ -40,7 +40,7 @@ class VolunteerFormController {
     };
 
     this.validateForm = function(ang_valid) {
-      this.allValid = ang_valid && this.zip_valid && this.phone_valid && this.validAvailabilities && this.validCarrier && this.passwordError.length == 0;
+      this.allValid = ang_valid && this.zip_valid && this.phone_valid && this.validAvailabilities && this.carrierValid && this.passwordError.length == 0;
     };
 
     // on submit
@@ -54,7 +54,6 @@ class VolunteerFormController {
       this.validAvailabilities = _.every(this.info.availability, 'isValid');
       this.passwordError = Validate.password(this.info.user.password);
       this.carrierValid = Validate.carrier(this.info.contact.preferred_contact, this.info.contact.carrier);
-      console.log(this.carrierValid);
       this.validateForm(ang_valid);
 
       if (this.allValid) {
