@@ -14,9 +14,11 @@ class VolunteerController {
       let validAvailability = _.every(Validate.availability(this.volunteer.availability), 'isValid');
       this.zipValid = Validate.zip(this.volunteer.contact.zip);
       this.phoneValid = Validate.phoneNumber(this.volunteer.contact.phone_number);
+      this.carrierValid = Validate.carrier(this.volunteer.contact.preferred_contact, this.volunteer.contact.carrier);
       this.allValid = ang_valid
                       && this.zipValid
                       && this.phoneValid
+                      && this.carrierValid
                       && validAvailability;
 
       if(this.allValid) {
