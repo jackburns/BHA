@@ -163,8 +163,18 @@
             <textarea class="form-control" rows="5" ng-model="vm.volunteer.notes"></textarea>
           </div>
         </div>
+        <div ng-if="vm.userIsAdmin" class="form-group">
+          <div class="col-sm-12">
+            <h4>Admin Notes</h4>
+          </div>
+          <div class="col-sm-12">
+            <textarea class="form-control" rows="5" ng-model="vm.volunteer.admin_notes"></textarea>
+          </div>
+        </div>
       </div>
     </div>
-    <button class="btn btn-lg btn-primary" type="submit" value="submit">Save</button>
+    <div class="col-sm-12">
+      <button class="btn btn-lg btn-primary" type="submit" value="submit">Save</button>
+    </div>
   </form>
 </div>
