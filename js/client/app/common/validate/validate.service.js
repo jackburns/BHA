@@ -29,11 +29,16 @@ let ValidateService = function (Enums) {
     return phone.length == 10;
   }
 
+  let carrier = function(preferred_contact, carrier) {
+    return !(parseInt(preferred_contact) > 0 && parseInt(carrier) <= 0)
+  }
+
   return {
     password: password,
     zip: zip,
     availability: availability,
-    phoneNumber: phoneNumber
+    phoneNumber: phoneNumber,
+    carrier: carrier
   };
 };
 ValidateService.$inject = ['Enums'];

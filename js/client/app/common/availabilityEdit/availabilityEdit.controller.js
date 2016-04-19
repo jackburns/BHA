@@ -8,7 +8,7 @@ class AvailabilityEditController {
 
     let createBlankAvailability = function() {
       return {
-        day: "",
+        day: "0",
         start_time: "",
         end_time: "",
         isValid: false
