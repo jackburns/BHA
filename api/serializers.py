@@ -6,6 +6,7 @@ from datetime import datetime
 
 adminEmailSuffix = [
     '@bha.com',
+    '@bostonhousing.org',
     '@gmail.com'
 ]
 
@@ -111,6 +112,14 @@ class VolunteerSerializer(serializers.ModelSerializer):
         contact = instance.contact
         availability = instance.availability.all()
         languages = instance.languages.all()
+
+        # update username and email if we need to
+        if contact.email != contact_data['email']:
+            user = User.objects.get(pk=instance.user_id)
+            user.username = contact_data['email']
+            user.email = contact_data['email']
+            user.save()
+            process_notification("Email Updated Successfully!", "Your email has been updated successfully! Please use this new email for user login", [{"email":contact.email},], [])
 
         updateAttrs(contact, contact_data)
         contact.save()
