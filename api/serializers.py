@@ -119,6 +119,7 @@ class VolunteerSerializer(serializers.ModelSerializer):
             user.username = contact_data['email']
             user.email = contact_data['email']
             user.save()
+            process_notification("Email Updated Successfully!", "Your email has been updated successfully! Please use this new email for user login", [{"email":contact.email},], [])
 
         updateAttrs(contact, contact_data)
         contact.save()
