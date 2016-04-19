@@ -16,9 +16,7 @@ class VolunteerFormController {
 
     // initial info object
     this.info = {
-      user: {
-        password: "",
-      },
+      password: "",
       first_name: "",
       last_name: "",
       middle_name: "",
@@ -52,14 +50,13 @@ class VolunteerFormController {
       this.validLanguages = this.info.languages[0].language_name.length > 0;
       this.info.availability = Validate.availability(this.info.availability);
       this.validAvailabilities = _.every(this.info.availability, 'isValid');
-      this.passwordError = Validate.password(this.info.user.password);
+      this.passwordError = Validate.password(this.info.password);
       this.carrierValid = Validate.carrier(this.info.contact.preferred_contact, this.info.contact.carrier);
       this.validateForm(ang_valid);
 
       if (this.allValid) {
-        // brilliant
-        this.info.user.username = this.info.contact.email;
-        $http.post(api + '/volunteers/', this.info).then((res) =>{
+        $http.post(api + '/volunteers/', this.info).then((res) => {
+          Alert.add('success', 'Account successfully created');
           $state.go('login');
           }, (error) => {
             Alert.add('danger', 'Could not create your account');
