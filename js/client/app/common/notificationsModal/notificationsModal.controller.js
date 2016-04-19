@@ -78,9 +78,8 @@ class NotificationsModalController {
     // send list of volunteer IDs to the back end
     $scope.sendNotifications = function() {
       var postObject = $scope.getPostObject();
-      console.log(postObject);
 
-      /*$http.post(api + '/notify/', postObject).then(
+      $http.post(api + '/notify/', postObject).then(
         function(response) {
           console.log(response);
           $uibModalInstance.close();
@@ -89,7 +88,7 @@ class NotificationsModalController {
         function(error) {
           console.log(error);
           $scope.error = true;
-        });*/
+        });
     };
 
     $scope.cancel = function() {
