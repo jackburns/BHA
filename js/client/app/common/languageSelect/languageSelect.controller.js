@@ -1,12 +1,7 @@
 class LanguageSelectController {
   constructor(Enums) {
     function sortedLanguages() {
-      var sortedLanguageObjects = _.map(_.keys(Enums.languages), (languageKey) => {
-        return {
-          'key': languageKey,
-          'name': Enums.languages[languageKey]
-        };
-      });
+      var sortedLanguageObjects = Enums.arrays.languages;
       // Sorts language objects by language name
       sortedLanguageObjects.sort((a, b) => { return a.name.toLowerCase().localeCompare(b.name.toLowerCase()); });
       return sortedLanguageObjects;

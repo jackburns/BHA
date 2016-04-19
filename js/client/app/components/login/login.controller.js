@@ -1,5 +1,5 @@
 class LoginController {
-  constructor($http, User, $localStorage, Alert) {
+  constructor($http, User, $localStorage, Alert, $state) {
     this.name = 'login';
     this.email = '';
     this.password = '';
@@ -14,7 +14,10 @@ class LoginController {
 
       $http.post(api + "/auth/login/", user_data, {"Authorization": ""}).then(function(response) {
         $localStorage.djangotoken = response.data.key;
-        User.signIn('home');
+
+        User.signIn(() => {
+          $state.go('home');
+        });
       }, (error) => {
         console.log(error);
         Alert.add('danger', 'Username/Password not valid');
@@ -22,5 +25,5 @@ class LoginController {
     }
   }
 }
-LoginController.$inject = ['$http','User', '$localStorage', 'Alert'];
+LoginController.$inject = ['$http','User', '$localStorage', 'Alert', '$state'];
 export default LoginController;

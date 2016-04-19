@@ -7,7 +7,7 @@ class NavbarController {
     this.viewProfile = () => {
       let volunteer = this.user.getUser();
       $state.go('volunteer', {
-        volunteerId: volunteer.user.id,
+        volunteerId: volunteer.id,
         volunteer: volunteer});
     }
   }
