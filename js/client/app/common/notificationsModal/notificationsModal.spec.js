@@ -86,10 +86,10 @@ describe('NotificationsModal', () => {
           expect(curObj.carrier).to.equal(1);
           expect(curObj).to.have.property('email');
           expect(curObj.email).to.equal('a@b.com');
-          expect(curObj).to.have.property('showEmail');
-          expect(curObj.showEmail).to.equal(true);
+          expect(curObj).to.have.property('contactMethod');
+          expect(curObj.contactMethod).to.equal('Email');
           expect(curObj).to.have.property('onlyEmail');
-          expect(curObj.showEmail).to.equal(true);
+          expect(curObj.onlyEmail).to.equal(false);
         } else if (curObj.id === 2) {
           expect(curObj).to.have.property('fullName');
           expect(curObj.fullName).to.equal('Bob Smith');
@@ -99,10 +99,10 @@ describe('NotificationsModal', () => {
           expect(curObj.carrier).to.equal(3);
           expect(curObj).to.have.property('email');
           expect(curObj.email).to.equal('hi@b.com');
-          expect(curObj).to.have.property('showEmail');
-          expect(curObj.showEmail).to.equal(true);
+          expect(curObj).to.have.property('contactMethod');
+          expect(curObj.contactMethod).to.equal('Email');
           expect(curObj).to.have.property('onlyEmail');
-          expect(curObj.showEmail).to.equal(true);
+          expect(curObj.onlyEmail).to.equal(true);
         } else {
           expect(curObj.id).to.equal(3);
           expect(curObj).to.have.property('fullName');
@@ -113,10 +113,10 @@ describe('NotificationsModal', () => {
           expect(curObj.carrier).to.equal(2);
           expect(curObj).to.have.property('email');
           expect(curObj.email).to.equal('rob@b.com');
-          expect(curObj).to.have.property('showEmail');
-          expect(curObj.showEmail).to.equal(false);
+          expect(curObj).to.have.property('contactMethod');
+          expect(curObj.contactMethod).to.equal('Text');
           expect(curObj).to.have.property('onlyEmail');
-          expect(curObj.showEmail).to.equal(false);
+          expect(curObj.onlyEmail).to.equal(false);
         }
       }
     });
@@ -139,19 +139,23 @@ describe('NotificationsModal', () => {
       let controller = makeController($scope);
       expect($scope).to.have.property('notificationSubject');
       expect($scope).to.have.property('notificationMessage');
+      expect($scope).to.have.property('notificationTextMessage');
       expect($scope).to.have.property('getPostObject');
       
       $scope.notificationSubject = "BHA Assignment";
       $scope.notificationMessage = "Hello, there is a new assignment for you!";
+      $scope.notificationTextMessage = "New assignment waiting";
       let postObj = $scope.getPostObject();
       
       expect(postObj).to.have.property('subject');
       expect(postObj).to.have.property('message');
+      expect(postObj).to.have.property('textMessage');
       expect(postObj).to.have.property('emails');
       expect(postObj).to.have.property('texts');
       
       expect(postObj.subject).to.equal("BHA Assignment");
       expect(postObj.message).to.equal("Hello, there is a new assignment for you!");
+      expect(postObj.textMessage).to.equal("New assignment waiting");
       
       let postEmails = postObj.emails;
       expect(postEmails.length).to.equal(2);
@@ -182,32 +186,26 @@ describe('NotificationsModal', () => {
       expect(postTexts[0].carrier).to.equal('AT&T');
     });
     
-    it('properly checks and unchecks Force All on other updates', () => {
+    it('Properly updates based on All contact method', () => {
       var $scope = {};
       
       let controller = makeController($scope);
-      expect($scope).to.have.property('updateEmailAll');
-      expect($scope).to.have.property('emailAll');
-      expect($scope.emailAll).to.equal(false);
-      let checkVolunteer = $scope.selectedVolunteers[2];
-      checkVolunteer.showEmail = true;
-      $scope.updateEmailAll();
-      expect($scope.emailAll).to.equal(true);
-      checkVolunteer.showEmail = false;
-      $scope.updateEmailAll();
-      expect($scope.emailAll).to.equal(false);
-    });
-    
-    it('Forces all email on check Force All', () => {
-      var $scope = {};
-      
-      let controller = makeController($scope);
-      expect($scope.emailAll).to.equal(false);
-      expect($scope).to.have.property('forceEmailAll');
-      $scope.emailAll = true;
-      $scope.forceEmailAll();
+      expect($scope.contactMethodAll).to.equal("");
+      expect($scope).to.have.property('updateAllContactMethods');
+      $scope.contactMethodAll = 'Email';
+      $scope.updateAllContactMethods();
       for (var i; i < $scope.selectedVolunteers.length; i++) {
-        expect($scope.selectedVolunteers[i].showEmail).to.equal(true);
+        expect($scope.selectedVolunteers[i].contactMethod).to.equal('Email');
+      }
+      
+      $scope.contactMethodAll = 'Text';
+      $scope.updateAllContactMethods();
+      for (var i; i < $scope.selectedVolunteers.length; i++) {
+        if ($scope.selectedVolunteers[i].onlyEmail) {
+          expect($scope.selectedVolunteers[i].contactMethod).to.equal('Email');
+        } else {
+          expect($scope.selectedVolunteers[i].contactMethod).to.equal('Text');
+        } 
       }
     });
   });
