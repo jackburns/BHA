@@ -75,8 +75,12 @@ form {
   }
   
   table.notifications-table {
-    th {
+    th, td {
       text-align: center;
+    }
+    
+    td {
+      vertical-align: middle;
     }
     
     background-color: #fafafa;
