@@ -131,6 +131,11 @@ ASSIGNMENT_STATUS_ENUM = (
     (2, 'complete'),
 )
 
+ASSIGNMENT_TRAINING = (
+    (0, 'not a training assignment'),
+    (1, 'training assignment'),
+)
+
 CARRIERS_ENUM = (
     (0, ''),
     (1, 'txt.att.net'),
@@ -198,3 +203,4 @@ class Assignment(models.Model):
     admin_notes = models.TextField(null=True, blank=True)
     status = models.IntegerField(default=0, choices=ASSIGNMENT_STATUS_ENUM)
     duration = models.DecimalField(default=0, max_digits=4, decimal_places=2)
+    training = models.IntegerField(default=0, choices=ASSIGNMENT_TRAINING)
