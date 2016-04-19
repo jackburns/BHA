@@ -36,8 +36,8 @@ class VolunteerViewSet(viewsets.ModelViewSet):
 
     @list_route(permission_classes=[IsAuthenticated])
     def me(self, request, *args, **kwargs):
-        self.object = get_object_or_404(Volunteer, user_id=request.user.id)
-        serializer = self.get_serializer(self.object, context={'request': request})
+        volunteer = get_object_or_404(Volunteer, user_id=request.user.id)
+        serializer = self.get_serializer(volunteer, context={'request': request})
         return Response(serializer.data)
 
     def get_permissions(self):
@@ -46,8 +46,8 @@ class VolunteerViewSet(viewsets.ModelViewSet):
                 else IsAuthenticated()),
 
     def get_serializer_class(self):
-        # if (self.request.user.is_staff):
-        #     return AdminVolunteerSerializer
+        if (self.request.user.is_staff):
+            return AdminVolunteerSerializer
         return VolunteerSerializer
 
 class AssignmentViewSet(viewsets.ModelViewSet):

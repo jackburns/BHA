@@ -170,6 +170,7 @@ class Volunteer(models.Model):
     created_at = models.DateTimeField()
     deleted_at = models.DateTimeField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
+    admin_notes = models.TextField(null=True, blank=True)
     inactive = models.BooleanField(default=False)
     contact = models.OneToOneField(Contact)
     hours = models.IntegerField(default=0)

@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'password', 'is_staff')
-        write_only_fields = ('password')
+        write_only_fields = ('password',)
 
     def restore_object(self, attrs, instance=None):
         # call set_password on user object. Without this
@@ -69,7 +69,7 @@ class VolunteerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Volunteer
-        fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'user', 'assignments', 'organization')
+        fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'user', 'assignments', 'organization', 'notes')
         read_only_fields = ('user')
 
     def create(self, data):
@@ -153,7 +153,7 @@ class VolunteerSerializer(serializers.ModelSerializer):
 class AdminVolunteerSerializer(VolunteerSerializer):
     class Meta:
 	    model = Volunteer
-	    fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'notes', 'user')
+	    fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'notes', 'user', 'admin_notes')
 
 class AssignmentSerializer(serializers.ModelSerializer):
     contact = ContactSerializer()
@@ -167,6 +167,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'posted_by')
 
 class AdminAssignmentSerializer(AssignmentSerializer):
-    class Meta(AssignmentSerializer.Meta):
+    class Meta:
         model = Assignment
-        fields = ('admin_notes',)
+        fields = ('id', 'contact', 'language', 'posted_by', 'start_date', 'name', 'volunteers', 'notes', 'type', 'admin_notes')
+        read_only_fields = ('id', 'posted_by')
