@@ -64,3 +64,21 @@ form {
     background-color: #f2f2f2;
   }
 }
+
+.notifications-body {
+  h4 {
+    text-align: center;
+  }
+  
+  textarea {
+    margin-bottom: 20px;
+  }
+  
+  table.notifications-table {
+    th {
+      text-align: center;
+    }
+    
+    background-color: #fafafa;
+  }
+}
