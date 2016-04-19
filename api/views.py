@@ -56,9 +56,17 @@ class VolunteerViewSet(viewsets.ModelViewSet):
         return VolunteerSerializer
 
 class AssignmentViewSet(viewsets.ModelViewSet):
-    queryset = Assignment.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = AssignmentFilter
+
+    def get_queryset(self):
+        me = get_object_or_404(Volunteer, user_id=self.request.user.id)
+        # If volunteers are verified but not trained, only return training assignments
+        if me.volunteer_level == 1:
+            Assignment.objects.filter(training=1)
+        else:
+            Assignment.objects.all()
+
 
     def get_serializer_class(self):
         if (self.request.user.is_staff):
