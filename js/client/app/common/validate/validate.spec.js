@@ -10,7 +10,11 @@ describe('Validate', () => {
   beforeEach(window.module('ngMock'));
 
   beforeEach(() => {
-    let mockEnums = {};
+    let mockEnums = {
+      arrays: {
+        availability_times: ['10:00:00', '10:30:00', '11:00:00']
+      }
+    };
 
     window.module(($provide) => {
       $provide.value('Enums', mockEnums);
@@ -21,7 +25,9 @@ describe('Validate', () => {
     $rootScope = _$rootScope_;
     scope = $rootScope.$new();
     makeService = () => {
-      return ValidateService(ValidateModule.name, {$scope: scope});
+      return ValidateService(ValidateModule.name, {
+        $scope: scope
+      });
     };
   }));
 
@@ -51,16 +57,20 @@ describe('Validate', () => {
       ctrl.availability(availability);
       expect(availability[0].isValid).to.be.false;
 
-      availability[0].start_time = '10:30AM';
+      availability[0].start_time = '10:00:00';
       ctrl.availability(availability);
       expect(availability[0].isValid).to.be.false;
 
-      availability[0].end_time = '10:30AM';
+      availability[0].end_time = '10:00:00';
       ctrl.availability(availability);
       expect(availability[0].isValid).to.be.false;
 
-      availability[0].end_time = '2:30PM';
-      availability.push({day: 'Sunday', start_time: '2:00PM', end_time: '4:00PM'});
+      availability[0].end_time = '11:00:00';
+      availability.push({
+        day: 'Sunday',
+        start_time: '10:00:00',
+        end_time: '10:30:00'
+      });
       ctrl.availability(availability);
       expect(availability[0].isValid).to.be.true;
       expect(availability[1].isValid).to.be.true;
@@ -69,7 +79,7 @@ describe('Validate', () => {
     it('determines whether a phone number is valid or not', () => {
       let ctrl = makeService();
       expect(ctrl.phoneNumber('123456789')).to.be.false;
-      expect(ctrl.phoneNumber('1234567890')).to.be.true;
+      expect(ctrl.phoneNumber('2234567890')).to.be.true;
       expect(ctrl.phoneNumber('123')).to.be.false;
       expect(ctrl.phoneNumber('11234567890')).to.be.false;
     });
