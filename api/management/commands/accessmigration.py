@@ -26,6 +26,7 @@ def create_contact(contact_fields):
                                      zip=address.postal,
                                      phone_number=contact_fields['Phone'],
                                      email=contact_fields['Email'],
+                                     carrier=0,
                                      preferred_contact=2)
 
     return contact
