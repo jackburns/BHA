@@ -74,7 +74,6 @@ def import_volunteers_from_file(file):
                     'volunteer': ['First Name', 'Family Name', 'Middle Name', 'Sex', 'Notes', 'Active?'],
                     'volunteer_level': ['training', 'Observation1', 'Observation2'],
                     'contact': ['Address', 'Phone', 'Email']}
-    User.objects.all().delete()
 
     with open(file) as csvfile:
         reader = csv.DictReader(csvfile)
