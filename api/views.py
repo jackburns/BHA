@@ -62,10 +62,10 @@ class AssignmentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         me = get_object_or_404(Volunteer, user_id=self.request.user.id)
         # If volunteers are verified but not trained, only return training assignments
-        if me.volunteer_level == 1:
+        if me.volunteer_level < 2:
             return Assignment.objects.filter(type=2)
         else:
-            return Assignment.objects.all()
+            return Assignment.objects.exclude(type=2)
 
 
     def get_serializer_class(self):

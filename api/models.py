@@ -182,7 +182,7 @@ class Volunteer(models.Model):
 
 class Language(models.Model):
     can_written_translate = models.BooleanField()
-    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM)
+    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM, blank=True)
     volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE, related_name='languages')
 
 class Availability(models.Model):
