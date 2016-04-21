@@ -20,7 +20,7 @@
         </div>
         <div class="form-group">
           <div class="col-sm-12">
-            <input type="password" required class="form-control" ng-model="vm.info.user.password" id="password" placeholder="Password">
+            <input type="password" required class="form-control" ng-model="vm.info.password" id="password" placeholder="Password">
             <h6 ng-show="vm.passwordError.length > 0 && vm.submitted" class="err" ng-bind="vm.passwordError"></h6>
           </div>
         </div>
@@ -60,7 +60,8 @@
           </div>
           <label for="carrier" class="col-sm-2 control-label">Carrier:</label>
           <div class="col-sm-4">
-            <select id="carrier" ng-change="vm.log()" class="form-control" ng-model="vm.info.contact.carrier" ng-options="key as value for (key, value) in vm.selectOptions.carriers"></select>
+            <select id="carrier" ng-class="{invalid: !vm.carrierValid}" class="form-control" ng-model="vm.info.contact.carrier" ng-options="key as value for (key, value) in vm.selectOptions.carriers"></select>
+            <h6 ng-show="!vm.carrierValid && vm.submitted" class="err">Please select a phone service carrier</h6>
           </div>
         </div>
         <div class="form-group">

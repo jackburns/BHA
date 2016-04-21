@@ -10,8 +10,11 @@ describe('LanguageSelect', () => {
   beforeEach(window.module('ngMock'));
 
   beforeEach(() => {
-    let mockEnums = {};
-
+    let mockEnums = {
+      arrays: {
+        languages: [{key: 'es', name: 'English'}, {key: 'es', name:'Spanish'}]
+      }
+    };
     window.module(($provide) => {
       $provide.value('Enums', mockEnums);
     });

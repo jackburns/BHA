@@ -18,11 +18,10 @@
     <table class="table table-bordered table-responsive notifications-table">
       <thead>
         <th class="col-sm-1"></th>
-        <th class="col-sm-5">Name</th>
-        <th class="col-sm-5">Contact</th>
-        <th class="col-sm-1">
-          <div>Force Email</div>
-          <input type="checkbox" ng-model="emailAll" ng-change="forceEmailAll()">
+        <th class="col-sm-4">Name</th>
+        <th class="col-sm-4">Contact</th>
+        <th class="col-sm-3">
+          <select class="form-control" ng-model="contactMethodAll" ng-options="method for method in contactMethods" ng-change="updateAllContactMethods()"></select>
         </th>
       </thead>
       <tbody class="table">
@@ -33,8 +32,8 @@
             </button>
           </td>
           <td ng-bind="volunteer.fullName"></td>
-          <td ng-bind="volunteer.showEmail ? volunteer.email : volunteer.phoneNumber"></td>
-          <td><input type="checkbox" ng-model="volunteer.showEmail" ng-disabled="volunteer.onlyEmail" ng-change="updateEmailAll()"></td>
+          <td ng-bind="volunteer.contactMethod === 'Email' ? volunteer.email : volunteer.phoneNumber"></td>
+          <td><select class="form-control" ng-model="volunteer.contactMethod" ng-disabled="volunteer.onlyEmail" ng-options="method for method in contactMethods"></td>
         </tr>
       </tbody>
     </table>
@@ -43,9 +42,13 @@
   <div class="col-sm-6">
     <input type="text" ng-model="notificationSubject" class="form-control">
   </div>
-  <h4 class="col-sm-12">Message</h4>
+  <h4 class="col-sm-12">Email Message</h4>
   <div class="col-sm-8 col-sm-offset-2">
     <textarea ng-model="notificationMessage" class="form-control" rows="2"></textarea>
+  </div>
+  <h4 class="col-sm-12">Text Message</h4>
+  <div class="col-sm-8 col-sm-offset-2">
+    <textarea ng-model="notificationTextMessage" class="form-control" rows="2"></textarea>
   </div>
 </div>
 <div ng-show="!notificationsSent && !error" class="modal-footer">

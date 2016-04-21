@@ -3,23 +3,31 @@ class NotificationsModalController {
     $scope.allVolunteers = volunteerList;
     $scope.selectedVolunteers = [];
     $scope.notificationMessage = "There is a new appointment for you from the BHA.";
+    $scope.notificationTextMessage = "There is a new appointment for you from the BHA.";
     $scope.notificationSubject = "Alert from BHA";
-    $scope.emailAll = false;
+    $scope.contactMethodAll = "";
+    $scope.contactMethods = ["Email", "Text"];
     $scope.notificationsSent = false;
     $scope.error = false;
 
     // get the list of selected volunteers
     $scope.allVolunteers.forEach(function(volunteerObj) {
       var vContact = volunteerObj.contact;
-      var emailStart = Enums.carriers[vContact.carrier] === "Other" || Enums.preferred_contact[vContact.preferred_contact] != "Text";
+      var noTexting = Enums.carriers[vContact.carrier] === "Other";
+      var contact;
+      if (noTexting || Enums.preferred_contact[vContact.preferred_contact] != "Text") {
+        contact = "Email";
+      } else {
+        contact = "Text";
+      }
       var newObj = {
         id: volunteerObj.id,
         fullName: volunteerObj.first_name + ' ' + volunteerObj.last_name,
         phoneNumber: vContact.phone_number,
         carrier: vContact.carrier,
         email: vContact.email,
-        showEmail: emailStart,
-        onlyEmail: emailStart
+        contactMethod: contact,
+        onlyEmail: noTexting
       };
 
       $scope.selectedVolunteers.push(newObj);
@@ -31,20 +39,11 @@ class NotificationsModalController {
       $scope.selectedVolunteers.splice(index, 1);
     };
 
-    $scope.updateEmailAll = function() {
-      var allForceEmail = true;
+    $scope.updateAllContactMethods = function() {
       $scope.selectedVolunteers.forEach(function (volunteer) {
-        if (!volunteer.showEmail) {
-          allForceEmail = false;
+        if (!volunteer.onlyEmail) {
+          volunteer.contactMethod = $scope.contactMethodAll;
         }
-      });
-
-      $scope.emailAll = allForceEmail;
-    }
-
-    $scope.forceEmailAll = function() {
-      $scope.selectedVolunteers.forEach(function (volunteer) {
-        volunteer.showEmail = volunteer.onlyEmail || $scope.emailAll;
       });
     }
 
@@ -53,7 +52,7 @@ class NotificationsModalController {
       var selectedTexts = [];
 
       $scope.selectedVolunteers.forEach(function(volunteerObj) {
-        if (volunteerObj.showEmail) {
+        if (volunteerObj.contactMethod === 'Email') {
           selectedEmails.push({
             id: volunteerObj.id,
             email: volunteerObj.email
@@ -70,6 +69,7 @@ class NotificationsModalController {
       return {
         subject: $scope.notificationSubject,
         message: $scope.notificationMessage,
+        textMessage: $scope.notificationTextMessage,
         emails: selectedEmails,
         texts: selectedTexts
       };

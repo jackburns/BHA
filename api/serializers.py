@@ -6,6 +6,7 @@ from datetime import datetime
 
 adminEmailSuffix = [
     '@bha.com',
+    '@bostonhousing.org',
     '@gmail.com'
 ]
 
@@ -13,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'password', 'is_staff')
-        write_only_fields = ('password')
+        write_only_fields = ('password',)
 
     def restore_object(self, attrs, instance=None):
         # call set_password on user object. Without this
@@ -58,32 +59,38 @@ def purgeList(old_array, new_array):
         if item.id not in item_ids:
             item.delete()
 
-class VolunteerSerializer(serializers.ModelSerializer):
+class VolunteerSerializer(serializers.Serializer):
 
     contact = ContactSerializer()
     availability = AvailabilitySerializer(many=True)
     languages = LanguageSerializer(many=True)
     assignments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     user = UserSerializer(read_only=True)
-
-    class Meta:
-        model = Volunteer
-        fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'user', 'assignments', 'organization')
-        read_only_fields = ('user')
+    first_name = serializers.CharField(max_length=50)
+    last_name = serializers.CharField(max_length=50)
+    sex = serializers.IntegerField(allow_null=True, required=False)
+    volunteer_level = serializers.IntegerField(allow_null=True, required=False)
+    inactive = serializers.BooleanField(default=False, required=False)
+    hours = serializers.IntegerField(allow_null=True, required=False)
+    organization = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    notes = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    id = serializers.IntegerField(allow_null=True, required=False)
+    password = serializers.CharField(allow_null=True, required=False)
 
     def create(self, data):
         contact_data = data.pop('contact', None)
         availability_data = data.pop('availability', None)
         languages_data = data.pop('languages', None)
-        user_data = data.pop('user')
+        password_data = data.pop('password')
 
         isAdmin = any(suffix.lower() in contact_data['email'].lower() for suffix in adminEmailSuffix)
 
-        user = User.objects.create(username=user_data['username'], email=contact_data['email'], is_staff=isAdmin)
-        user.set_password(user_data['password'])
+        user = User.objects.create(username=contact_data['email'], email=contact_data['email'], is_staff=isAdmin)
+        user.set_password(password_data)
         user.save()
 
         contact = Contact.objects.create(**contact_data)
+
 
         volunteer = Volunteer.objects.create(created_at=datetime.now(),user=user,contact=contact, **data)
 
@@ -111,6 +118,14 @@ class VolunteerSerializer(serializers.ModelSerializer):
         contact = instance.contact
         availability = instance.availability.all()
         languages = instance.languages.all()
+
+        # update username and email if we need to
+        if contact.email != contact_data['email']:
+            user = User.objects.get(pk=instance.user_id)
+            user.username = contact_data['email']
+            user.email = contact_data['email']
+            user.save()
+            process_notification("Email Updated Successfully!", "Your email has been updated successfully! Please use this new email for user login", [{"email":contact.email},], [])
 
         updateAttrs(contact, contact_data)
         contact.save()
@@ -142,9 +157,22 @@ class VolunteerSerializer(serializers.ModelSerializer):
         return instance
 
 class AdminVolunteerSerializer(VolunteerSerializer):
-    class Meta:
-	    model = Volunteer
-	    fields = ('contact', 'availability', 'languages', 'id', 'first_name', 'last_name', 'sex', 'volunteer_level', 'inactive', 'hours', 'notes', 'user')
+    contact = ContactSerializer()
+    availability = AvailabilitySerializer(many=True)
+    languages = LanguageSerializer(many=True)
+    assignments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    user = UserSerializer(read_only=True)
+    first_name = serializers.CharField(max_length=50)
+    last_name = serializers.CharField(max_length=50)
+    sex = serializers.IntegerField(allow_null=True, required=False)
+    volunteer_level = serializers.IntegerField(allow_null=True, required=False)
+    inactive = serializers.BooleanField(default=False, required=False)
+    hours = serializers.IntegerField(allow_null=True, required=False)
+    organization = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    notes = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    id = serializers.IntegerField(allow_null=True, required=False)
+    password = serializers.CharField(allow_null=True, required=False)
+    admin_notes = serializers.CharField(allow_blank=True, allow_null=True, required=False)
 
 class AssignmentSerializer(serializers.ModelSerializer):
     contact = ContactSerializer()
@@ -158,6 +186,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'posted_by')
 
 class AdminAssignmentSerializer(AssignmentSerializer):
-    class Meta(AssignmentSerializer.Meta):
+    class Meta:
         model = Assignment
-        fields = ('admin_notes',)
+        fields = ('id', 'contact', 'language', 'posted_by', 'start_date', 'name', 'volunteers', 'notes', 'type', 'admin_notes')
+        read_only_fields = ('id', 'posted_by')
