@@ -10,8 +10,11 @@ describe('AvailabilityEdit', () => {
   beforeEach(window.module('ngMock'));
 
   beforeEach(() => {
-    let mockEnums = {};
-
+    let mockEnums = {
+      arrays: {
+        days: ['Monday', 'Tuesday']
+      }
+    };
     window.module(($provide) => {
       $provide.value('Enums', mockEnums);
     });
@@ -37,7 +40,7 @@ describe('AvailabilityEdit', () => {
       expect(ctrl.availability).to.have.length(1);
       ctrl.addNewAvailability();
       expect(ctrl.availability).to.have.length(2);
-      expect(ctrl.availability[1].day).to.equal("");
+      expect(ctrl.availability[1].day).to.equal("0");
       expect(ctrl.availability[1].start_time).to.equal("");
       expect(ctrl.availability[1].end_time).to.equal("");
       expect(ctrl.availability[1].isValid).to.be.false;

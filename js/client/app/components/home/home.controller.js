@@ -4,7 +4,7 @@ import NotificationsModalController from './../../common/notificationsModal/noti
 
 class HomeController {
   constructor($state, $uibModal, $http, User) {
-    this.userIsAdmin = User.isAdmin();
+    this.user = User;
   }
 }
 

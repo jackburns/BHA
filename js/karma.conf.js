@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = function (config) {
   config.set({
     // base path used to resolve all patterns
@@ -35,7 +37,12 @@ module.exports = function (config) {
           { test: /\.scss$/, loader: 'style!css!sass' },
           { test: /\.css$/, loader: 'style!css' }
         ]
-      }
+      },
+      plugins: [
+        new webpack.DefinePlugin({
+          'api': '"http://api.local.bha.com/api"'
+        })
+      ]
     },
 
     webpackServer: {

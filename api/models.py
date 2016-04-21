@@ -177,6 +177,9 @@ class Volunteer(models.Model):
     hours = models.IntegerField(default=0)
     organization = models.CharField(max_length=120, null=True, blank=True)
 
+    def __str__(self):
+        return "{} {} {}".format(self.first_name, self.middle_name, self.last_name)
+
 class Language(models.Model):
     can_written_translate = models.BooleanField()
     language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM)
@@ -192,7 +195,8 @@ class Assignment(models.Model):
     name = models.CharField(max_length=120)
     posted_by = models.ForeignKey(Volunteer, on_delete=models.SET_NULL, related_name='posted_assignments', null=True, blank=True)
     volunteers = models.ManyToManyField(Volunteer, related_name='assignments', blank=True)
-    language = models.OneToOneField(Language, null=True, blank=True)
+    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM)
+    is_translation = models.BooleanField(default=False)
     start_date = models.DateTimeField()
     contact = models.OneToOneField(Contact, null=True, blank=True)
     type = models.IntegerField(default=0, choices=ASSIGNMENT_TYPE_ENUM)
@@ -200,3 +204,7 @@ class Assignment(models.Model):
     admin_notes = models.TextField(null=True, blank=True)
     status = models.IntegerField(default=0, choices=ASSIGNMENT_STATUS_ENUM)
     duration = models.DecimalField(default=0, max_digits=4, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+

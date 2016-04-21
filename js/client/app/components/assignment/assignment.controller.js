@@ -14,15 +14,20 @@ class AssignmentController {
         volunteers: volunteers
       }
     };
-
-    this.futureAssignments = [
-      makeAssignment('assn2', 'valid', 'fr', 1462989649587, [2, 3]),
-      makeAssignment('assn3', 'valid', 'ja', 1463151625587, [1]),
-      makeAssignment('assignment in the far future', 'valid', 'ca', 1470936625587, []),
-      makeAssignment('assn1', 'valid', 'es', 1462978825587, []),
-      makeAssignment('assignment in the very far future', 'valid', 'ja', 1490367625587, [6])
-    ];
     
+    let getAssignments = () => {
+      $http.get(api + '/assignments/').then((res) => {
+        this.futureAssignments = res.data.results;
+        return res.data.results;
+      }, (error) => {
+        console.log(error);
+        return error;
+      });
+    };
+
+    this.futureAssignments = [];
+    getAssignments();
+
     // modal stuff
     this.openNotificationsModal = (languageKey) => {
       $http.get(api + '/volunteers/', {params: {language: languageKey}}
