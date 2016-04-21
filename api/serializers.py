@@ -176,17 +176,16 @@ class AdminVolunteerSerializer(VolunteerSerializer):
 
 class AssignmentSerializer(serializers.ModelSerializer):
     contact = ContactSerializer()
-    language = LanguageSerializer()
     posted_by = VolunteerSerializer()
     volunteers = VolunteerSerializer(read_only=True, many=True)
 
     class Meta:
         model = Assignment
-        fields = ('id', 'contact', 'language', 'posted_by', 'start_date', 'name', 'volunteers', 'notes', 'type')
+        fields = ('id', 'contact', 'language_name', 'is_translation', 'posted_by', 'start_date', 'name', 'volunteers', 'notes', 'type')
         read_only_fields = ('id', 'posted_by')
 
 class AdminAssignmentSerializer(AssignmentSerializer):
     class Meta:
         model = Assignment
-        fields = ('id', 'contact', 'language', 'posted_by', 'start_date', 'name', 'volunteers', 'notes', 'type', 'admin_notes')
+        fields = ('id', 'contact', 'language_name', 'is_translation', 'posted_by', 'start_date', 'name', 'volunteers', 'notes', 'type', 'admin_notes')
         read_only_fields = ('id', 'posted_by')
