@@ -22,11 +22,12 @@ describe('Assignment', () => {
   });
 
   describe('Controller', () => {
-    it('initializes with allLanguages, a comparator, and futureAssignments', () => {
-      $httpBackend.expectGET('http://api.local.bha.com/api/assignments/').respond({'results': [0, 1]});
+    it('initializes with futureAssignments fetched from the API', () => {
+      $httpBackend.expectGET(api + '/assignments/').respond({'results': [0, 1]});
       let controller = makeController();
       $httpBackend.flush();
       expect(controller).to.have.property('futureAssignments');
+      expect(controller.futureAssignments).to.have.length(2);
     });
   });
 

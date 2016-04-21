@@ -16,7 +16,8 @@ class AssignmentController {
     };
     
     let getAssignments = () => {
-      $http.get('http://api.local.bha.com/api/assignments/').then((res) => {
+      $http.get(api + '/assignments/').then((res) => {
+        this.futureAssignments = res.data.results;
         return res.data.results;
       }, (error) => {
         console.log(error);
@@ -25,7 +26,7 @@ class AssignmentController {
     };
 
     this.futureAssignments = [];
-    this.futureAssignments = getAssignments();
+    getAssignments();
 
     // modal stuff
     this.openNotificationsModal = (languageKey) => {
