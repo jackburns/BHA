@@ -123,17 +123,13 @@ LANGUAGE_ENUM = (
 ASSIGNMENT_TYPE_ENUM = (
     (0, 'in-person'),
     (1, 'written'),
+    (2, 'training'),
 )
 
 ASSIGNMENT_STATUS_ENUM = (
     (0, 'unapproved'),
     (1, 'approved'),
     (2, 'complete'),
-)
-
-ASSIGNMENT_TRAINING = (
-    (0, 'not a training assignment'),
-    (1, 'training assignment'),
 )
 
 CARRIERS_ENUM = (
@@ -204,4 +200,3 @@ class Assignment(models.Model):
     admin_notes = models.TextField(null=True, blank=True)
     status = models.IntegerField(default=0, choices=ASSIGNMENT_STATUS_ENUM)
     duration = models.DecimalField(default=0, max_digits=4, decimal_places=2)
-    training = models.IntegerField(default=0, choices=ASSIGNMENT_TRAINING)
