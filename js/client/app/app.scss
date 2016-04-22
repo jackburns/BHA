@@ -89,10 +89,17 @@ form {
 
 #add-assignment-container {
   max-width: 800px;
-  min-width: 800px;
   margin: 0 auto;
   
-  label {
-    vertical-align: middle;
+  h2 {
+    text-align: center;
+  }
+  
+  h5, h4 {
+    margin-bottom: 2px;
+  }
+  
+  btns div {
+    text-align: right;
   }
 }
