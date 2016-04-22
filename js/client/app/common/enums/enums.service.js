@@ -134,7 +134,9 @@ let EnumsService = function () {
     },
     assignment_type: {
       0: 'in-person',
-      1: 'written'
+      1: 'written',
+      2: 'training',
+      3: 'phone'
     },
     assignment_status: {
       0: 'unapproved',

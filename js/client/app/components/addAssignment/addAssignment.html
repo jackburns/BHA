@@ -1,3 +1,30 @@
-<div>
-  <h1>{{ vm.name }}</h1>
+<div class="jumbotron" id="add-assignment-container">
+  <h3>Add Assignment</h3>
+  <form name="add-assignment" validate role="form" ng-submit="vm.submit()" class="form-horizontal">
+    <div class="form-group">
+      <div class="col-sm-5">
+        <input required type="text" class="form-control" ng-model="vm.info.name" placeholder="Assignment Name">
+      </div>
+      <div class="col-sm-2 col-sm-offset-1">
+        <h4>Language:</h4>
+      </div>
+      <div class="col-sm-4">
+        <language-select selected-language="vm.info.language_name"></language-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-1">
+        <h4>Date:</h4>
+      </div>
+      <div class="col-sm-3">
+        <input required type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" is-open="vm.datePickerOpen" show-button-bar="false" ng-model="vm.info.date" ng-click="vm.openDatePicker()" datepicker-options="vm.dateOptions">
+      </div>
+      <div class="col-sm-2 col-sm-offset-2">
+        <h4>Start Time:</h4>
+      </div>
+      <div class="col-sm-3">
+        <uib-timepicker ng-model="vm.info.start_time" show-spinners="false"></uib-timepicker>
+    </div>
+    <a ng-click="vm.submits()">HEY</a>
+  </form>
 </div>
