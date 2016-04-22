@@ -182,7 +182,7 @@ class Volunteer(models.Model):
 
 class Language(models.Model):
     can_written_translate = models.BooleanField()
-    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM, blank=True)
+    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM)
     volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE, related_name='languages')
 
 class Availability(models.Model):
@@ -195,7 +195,7 @@ class Assignment(models.Model):
     name = models.CharField(max_length=120)
     posted_by = models.ForeignKey(Volunteer, on_delete=models.SET_NULL, related_name='posted_assignments', null=True, blank=True)
     volunteers = models.ManyToManyField(Volunteer, related_name='assignments', blank=True)
-    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM)
+    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM, blank=True)
     is_translation = models.BooleanField(default=False)
     start_date = models.DateTimeField()
     contact = models.OneToOneField(Contact, null=True, blank=True)
