@@ -1,9 +1,7 @@
 import _ from 'lodash';
-import notificationsModalTemplate from './../../common/notificationsModal/notificationsModal.html'
-import NotificationsModalController from './../../common/notificationsModal/notificationsModal.controller.js'
 
 class VolunteerSearchController {
-  constructor($state, $uibModal, $http, Enums) {
+  constructor($state, Requests, Modals, Enums) {
     let getSearchConfig = () => {
       let paramsObj = {};
 
@@ -22,9 +20,8 @@ class VolunteerSearchController {
     };
 
     this.getVolunteers = () => {
-      $http.get(api + '/volunteers/', getSearchConfig()
-      ).then((res) => {
-        this.volunteers = res.data.results;
+      Requests.getVolunteers(getSearchConfig(), (volunteers) => {
+        this.volunteers = volunteers;
       });
     };
 
@@ -79,35 +76,14 @@ class VolunteerSearchController {
     this.updateNumberSelected();
     this.willSelectAll = false;
 
-
-    // modal stuff
-    this.openNotificationsModal = function(volunteerList) {
-      var modalInstance = $uibModal.open({
-        animation: true,
-        template: notificationsModalTemplate,
-        controller: NotificationsModalController,
-        size: 'md',
-        resolve: {
-          volunteerList: function() {
-            return volunteerList;
-          }
-        }
-      });
-    };
+    this.openNotificationsModal = Modals.openNotifications;
 
     this.getCheckedVolunteers = function() {
-      var checked = [];
-      this.volunteers.forEach(function(volunteerObj) {
-        if (volunteerObj.selectedToNotify) {
-          checked.push(volunteerObj);
-        }
-      });
-
-      return checked;
+      return _.filter(this.volunteers, {selectedToNotify: true});
     }
   }
 }
 
-VolunteerSearchController.$inject = ["$state", "$uibModal", "$http", "Enums"];
+VolunteerSearchController.$inject = ["$state", "Requests", "Modals", "Enums"];
 
 export default VolunteerSearchController;

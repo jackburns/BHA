@@ -12,13 +12,11 @@ describe('VolunteerForm', () => {
   beforeEach(() => {
     let mockEnums = {};
     let mockValidate = {};
-    let mockUibModal = {};
     let mockAlert = {};
 
     window.module(($provide) => {
       $provide.value('Enums', mockEnums);
       $provide.value('Validate', mockValidate);
-      $provide.value('$uibModal', mockUibModal);
       $provide.value('Alert', mockAlert);
     });
   });
