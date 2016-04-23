@@ -4,7 +4,7 @@
     <div class="form-group">
       <div class="col-sm-6">
         <h5>Assignment Name</h5>
-        <input required type="text" class="form-control" ng-model="vm.info.name">
+        <input required ng-required="true" type="text" class="form-control" ng-model="vm.info.name">
       </div>
       <div class="col-sm-5 col-sm-offset-1">
         <h5>Language</h5>
@@ -14,19 +14,19 @@
     <div class="form-group">
       <div class="col-sm-3">
         <h5>Date</h5>
-        <input required type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" is-open="vm.datePickerOpen" show-button-bar="false" ng-model="vm.info.date" ng-click="vm.openDatePicker()" datepicker-options="vm.dateOptions">
+        <input required ng-required="true" type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" is-open="vm.datePickerOpen" show-button-bar="false" ng-model="vm.info.start_date" ng-click="vm.datePickerOpen = true" datepicker-options="vm.dateOptions">
       </div>
       <div class="col-sm-3">
         <h5>Start Time</h5>
-        <uib-timepicker ng-model="vm.info.start_time" show-spinners="false"></uib-timepicker>
+        <uib-timepicker ng-model="vm.info.start_date" show-spinners="false"></uib-timepicker>
       </div>
       <div class="col-sm-3">
         <h5>Duration (minutes)</h5>
-        <input required type="text" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="vm.info.duration"></input>
+        <input required ng-required="true" type="text" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="vm.info.duration"></input>
       </div>
       <div class="col-sm-3">
         <h5>Type</h5>
-        <select class="form-control" ng-options="type for type in vm.selectOptions.assignment_type" ng-model="vm.info.type"></select>
+        <select class="form-control" ng-options="key as name for (key, name) in vm.selectOptions.assignment_type" ng-model="vm.info.type"></select>
       </div>
     </div>
     <div class="form-group">
