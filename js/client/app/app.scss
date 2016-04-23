@@ -91,7 +91,7 @@ form {
   max-width: 800px;
   margin: 0 auto;
   
-  h2 {
+  h2, h4.error {
     text-align: center;
   }
   
@@ -99,7 +99,13 @@ form {
     margin-bottom: 2px;
   }
   
-  btns div {
-    text-align: right;
+  h4.error {
+    color: #d00;
+  }
+  
+  language-select.error {
+    input, span.ui-select-toggle {
+      background-color: #fee;
+    }
   }
 }

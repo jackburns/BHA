@@ -2,6 +2,7 @@ class AddAssignmentController {
   constructor($http, $filter, Enums, Alert, User) {
     this.name = 'New Assignment';
     this.selectOptions = Enums;
+    this.error = false;
     
     var startingDate = new Date();
     startingDate.setHours("9");
@@ -33,16 +34,20 @@ class AddAssignmentController {
       volunteers: [],
       status: "0"
     };
-
+    
     // on submit
-    this.submit = function() {
-      console.log(this.info);
-      $http.post(api + '/assignments/', this.info).then((res) => {
-          Alert.add('success', 'Success: Assignment Created');
-          $state.go('assignment');
-        }, (error) => {
-          Alert.add('danger', 'Error: Assignment Not Created');
-        });
+    this.submit = function(ang_valid) {
+      if (ang_valid && this.info.language_name != "") {
+        this.error = false;
+        $http.post(api + '/assignments/', this.info).then((res) => {
+            Alert.add('success', 'Success: Assignment Created');
+            $state.go('assignment');
+          }, (error) => {
+            Alert.add('danger', 'Error: Assignment Not Created');
+          });
+      } else {
+        this.error = true;
+      }
     };
   }
 }
