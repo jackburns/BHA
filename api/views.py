@@ -8,6 +8,7 @@ from .email import process_notification
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSerializer, AdminAssignmentSerializer, AssignmentSerializer
+from django.forms.models import model_to_dict
 
 
 class VolunteerFilter(filters.FilterSet):
@@ -66,15 +67,6 @@ class AssignmentViewSet(viewsets.ModelViewSet):
             return Assignment.objects.filter(type=2)
         else:
             return Assignment.objects.exclude(type=2)
-
-
-    def create(self, data):
-        print(dir(request.data))
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def get_serializer_class(self):
         if (self.request.user.is_staff):

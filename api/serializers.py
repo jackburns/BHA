@@ -3,6 +3,8 @@ from rest_framework import serializers
 from .email import process_notification
 from .models import Volunteer, Contact, Availability, Language, Assignment
 from datetime import datetime
+from django.shortcuts import get_object_or_404
+
 
 adminEmailSuffix = [
     '@bha.com',
@@ -176,16 +178,31 @@ class AdminVolunteerSerializer(VolunteerSerializer):
 
 class AssignmentSerializer(serializers.ModelSerializer):
     contact = ContactSerializer()
-    posted_by = VolunteerSerializer(many=False)
+    posted_by = VolunteerSerializer(required=False)
     volunteers = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    posted_by_id = serializers.IntegerField(allow_null=True, required=False)
 
     class Meta:
         model = Assignment
-        fields = ('id', 'contact', 'language_name', 'posted_by', 'start_date', 'name', 'volunteers', 'notes', 'type')
+        fields = ('id', 'contact', 'language_name', 'posted_by', 'posted_by_id', 'start_date', 'name', 'volunteers', 'notes', 'type')
         read_only_fields = ('id', 'posted_by')
+
+    def create(self, data):
+        contact_data = data.pop('contact', None)
+        posted_by_id = data.pop('posted_by_id', None)
+        print(posted_by_id)
+        posted_by = get_object_or_404(Volunteer, id=posted_by_id)
+
+        contact = Contact.objects.create(**contact_data)
+
+        assignment = Assignment.objects.create(contact=contact, posted_by=posted_by, **data)
+
+        assignment.save()
+
+        return assignment
 
 class AdminAssignmentSerializer(AssignmentSerializer):
     class Meta:
         model = Assignment
-        fields = ('id', 'contact', 'language_name', 'posted_by', 'start_date', 'name', 'volunteers', 'notes', 'type', 'admin_notes')
+        fields = ('id', 'contact', 'language_name', 'posted_by', 'posted_by_id', 'start_date', 'name', 'volunteers', 'notes', 'type', 'admin_notes')
         read_only_fields = ('id', 'posted_by')
