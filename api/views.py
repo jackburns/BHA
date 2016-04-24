@@ -53,6 +53,14 @@ class VolunteerViewSet(viewsets.ModelViewSet):
 class AssignmentViewSet(viewsets.ModelViewSet):
     queryset = Assignment.objects.all()
 
+    def create(self, data):
+        print(dir(request.data))
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def get_serializer_class(self):
         if (self.request.user.is_staff):
             return AdminAssignmentSerializer
