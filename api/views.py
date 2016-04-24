@@ -67,11 +67,20 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         else:
             return Assignment.objects.exclude(type=2)
 
+    def get_permissions(self):
+        return (IsAuthenticated()),
 
     def get_serializer_class(self):
         if (self.request.user.is_staff):
             return AdminAssignmentSerializer
         return AssignmentSerializer
+
+    @list_route(permission_classes=[IsAuthenticated])
+    def me(self, request, pk=None):
+        volunteer = get_object_or_404(Volunteer, user_id=request.user.id)
+        assignments = Assignment.objects.filter(volunteers=volunteer)
+        serializer = self.get_serializer(assignments, context={'request': request}, many=True)
+        return Response(serializer.data)
 
     @detail_route(methods=['post'])
     def add_volunteer(self, request, pk=None):
