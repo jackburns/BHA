@@ -8,7 +8,6 @@ from .email import process_notification
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSerializer, AdminAssignmentSerializer, AssignmentSerializer
-from django.forms.models import model_to_dict
 
 
 class VolunteerFilter(filters.FilterSet):
