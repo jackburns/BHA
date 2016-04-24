@@ -1,0 +1,76 @@
+<div class="jumbotron" id="add-assignment-container">
+  <h2>Add Assignment</h2>
+  <h4 class="error" ng-show="vm.error">Error: Please fill out all required fields</h4>
+  <form name="add_assignment" novalidate role="form" ng-submit="vm.submit(add_assignment.$valid)" class="form-horizontal">
+    <div class="form-group">
+      <div class="col-sm-6">
+        <h5>Assignment Name</h5>
+        <input required ng-required="true" type="text" class="form-control" ng-model="vm.info.name">
+      </div>
+      <div class="col-sm-5 col-sm-offset-1">
+        <h5>Language</h5>
+        <language-select ng-class="{error: vm.error && vm.info.language_name === ''}" selected-language="vm.info.language_name"></language-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3">
+        <h5>Date</h5>
+        <input required ng-required="true" type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" is-open="vm.datePickerOpen" show-button-bar="false" ng-model="vm.info.start_date" ng-click="vm.datePickerOpen = true" datepicker-options="vm.dateOptions">
+      </div>
+      <div class="col-sm-3">
+        <h5>Start Time</h5>
+        <uib-timepicker ng-model="vm.info.start_date" show-spinners="false"></uib-timepicker>
+      </div>
+      <div class="col-sm-3">
+        <h5>Duration (minutes)</h5>
+        <input required ng-required="true" type="text" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="vm.info.duration"></input>
+      </div>
+      <div class="col-sm-3">
+        <h5>Type</h5>
+        <select class="form-control" ng-options="key as name for (key, name) in vm.selectOptions.assignment_type" ng-model="vm.info.type"></select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-6">
+        <h5>Public Notes (optional)</h5>
+        <textarea class="form-control" ng-model="vm.info.notes" rows="4" placeholder="These notes will be seen by volunteers viewing the assignment"></textarea>
+      </div>
+      <div class="col-sm-6">
+        <h5>Admin Notes (optional)</h5>
+        <textarea class="form-control" ng-model="vm.info.admin_notes" rows="4" placeholder="These notes will only be visible to admins"></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <h4 class="col-sm-12">Contact Information (optional)</h4>
+      <div class="col-sm-5">
+        <h5>Street Address</h5>
+        <input type="text" class="form-control" ng-model="vm.info.contact.street">
+      </div>
+      <div class="col-sm-3">
+        <h5>City</h5>
+        <input type="text" class="form-control" ng-model="vm.info.contact.city">
+      </div>
+      <div class="col-sm-2">
+        <h5>State</h5>
+        <input type="text" class="form-control" ng-model="vm.info.contact.state" maxlength="2">
+      </div>
+      <div class="col-sm-2">
+        <h5>Zip</h5>
+        <input type="text" class="form-control" ng-model="vm.info.contact.zip">
+      </div>
+      <div class="col-sm-6">
+        <h5>Email Address</h5>
+        <input type="email" class="form-control" ng-model="vm.info.contact.email">
+      </div>
+      <div class="col-sm-6">
+        <h5>Phone Number</h5>
+        <input type="tel" class="form-control" ng-model="vm.info.contact.phone_number">
+      </div>
+    </div>
+    <div class="form-group btns">
+      <div class="col-sm-2 col-sm-offset-10">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
