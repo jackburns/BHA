@@ -135,8 +135,7 @@ let EnumsService = function () {
     assignment_type: {
       0: 'in-person',
       1: 'written',
-      2: 'training',
-      3: 'phone'
+      2: 'training'
     },
     assignment_status: {
       0: 'unapproved',
@@ -280,8 +279,7 @@ let EnumsService = function () {
     assignment_type: [
       {'key': 0, 'name': 'in-person'},
       {'key': 1, 'name': 'written'},
-      {'key': 2, 'name': 'training'},
-      {'key': 3, 'name': 'phone'}
+      {'key': 2, 'name': 'training'}
     ],
     assignment_status: [
       {'key': 0, 'name': 'unapproved'},

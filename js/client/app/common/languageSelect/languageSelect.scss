@@ -7,3 +7,9 @@
     margin: 0;
   }
 }
+
+.language-select.error {
+  input, span.ui-select-toggle {
+    background-color: #fee;
+  }
+}
