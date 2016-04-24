@@ -186,11 +186,11 @@ class AssignmentSerializer(serializers.ModelSerializer):
         model = Assignment
         fields = ('id', 'contact', 'language_name', 'posted_by', 'posted_by_id', 'start_date', 'name', 'volunteers', 'notes', 'type')
         read_only_fields = ('id', 'posted_by')
+        write_only_fields = ('posted_by_id',)
 
     def create(self, data):
         contact_data = data.pop('contact', None)
         posted_by_id = data.pop('posted_by_id', None)
-        print(posted_by_id)
         posted_by = get_object_or_404(Volunteer, id=posted_by_id)
 
         contact = Contact.objects.create(**contact_data)
@@ -206,3 +206,4 @@ class AdminAssignmentSerializer(AssignmentSerializer):
         model = Assignment
         fields = ('id', 'contact', 'language_name', 'posted_by', 'posted_by_id', 'start_date', 'name', 'volunteers', 'notes', 'type', 'admin_notes')
         read_only_fields = ('id', 'posted_by')
+        write_only_fields = ('posted_by_id',)
