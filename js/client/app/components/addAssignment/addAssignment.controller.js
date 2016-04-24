@@ -3,7 +3,7 @@ class AddAssignmentController {
     this.name = 'New Assignment';
     this.selectOptions = Enums;
     this.error = false;
-    
+
     var startingDate = new Date();
     startingDate.setHours("9");
     startingDate.setMinutes("0");
@@ -12,7 +12,7 @@ class AddAssignmentController {
       initDate: startingDate,
       showWeeks: false
     };
-    
+
     // initial info object
     this.info = {
       name: "",
@@ -21,7 +21,6 @@ class AddAssignmentController {
       type: "0",
       notes: "",
       admin_notes: "",
-      duration: "",
       contact: {
         street: "",
         city: "",
@@ -30,11 +29,11 @@ class AddAssignmentController {
         phone_number: "",
         email: ""
       },
-      posted_by: User.getUser().id,
+      posted_by_id: User.getUser().id,
       volunteers: [],
       status: "0"
     };
-    
+
     // on submit
     this.submit = function(ang_valid) {
       if (ang_valid && this.info.language_name != "") {

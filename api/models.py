@@ -152,14 +152,14 @@ CARRIERS_ENUM = (
 )
 
 class Contact(models.Model):
-    street = models.CharField(max_length=50)
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    zip = models.CharField(max_length=50)
-    phone_number = models.CharField(max_length=50)
-    email = models.EmailField()
-    preferred_contact = models.IntegerField(choices=PREFERRED_CONTACT_ENUM)
-    carrier = models.IntegerField(choices=CARRIERS_ENUM)
+    street = models.CharField(max_length=50, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
+    state = models.CharField(max_length=50, null=True, blank=True)
+    zip = models.CharField(max_length=50, null=True, blank=True)
+    phone_number = models.CharField(max_length=50, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    preferred_contact = models.IntegerField(default=0, choices=PREFERRED_CONTACT_ENUM)
+    carrier = models.IntegerField(default=0, choices=CARRIERS_ENUM)
 
 class Volunteer(models.Model):
     user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
@@ -207,4 +207,3 @@ class Assignment(models.Model):
 
     def __str__(self):
         return self.name
-

@@ -67,7 +67,6 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         else:
             return Assignment.objects.exclude(type=2)
 
-
     def get_serializer_class(self):
         if (self.request.user.is_staff):
             return AdminAssignmentSerializer
