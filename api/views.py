@@ -15,8 +15,13 @@ class VolunteerFilter(filters.FilterSet):
     can_write = django_filters.CharFilter(name="languages__can_written_translate")
 
     class Meta:
-	    model = Volunteer
-	    fields = ('first_name', 'last_name', 'language', 'can_write')
+        model = Volunteer
+        fields = ('first_name', 'last_name', 'language', 'can_write', 'volunteer_level')
+
+class AssignmentFilter(filters.FilterSet):
+    class Meta:
+        model = Assignment
+        fields = ('name', 'type', 'status')
 
 class NotificationView(views.APIView):
     permission_classes = [IsAuthenticated]
@@ -51,7 +56,17 @@ class VolunteerViewSet(viewsets.ModelViewSet):
         return VolunteerSerializer
 
 class AssignmentViewSet(viewsets.ModelViewSet):
-    queryset = Assignment.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = AssignmentFilter
+
+    def get_queryset(self):
+        me = get_object_or_404(Volunteer, user_id=self.request.user.id)
+        # If volunteers are verified but not trained, only return training assignments
+        if me.volunteer_level < 2:
+            return Assignment.objects.filter(type=2)
+        else:
+            return Assignment.objects.exclude(type=2)
+
 
     def create(self, data):
         print(dir(request.data))

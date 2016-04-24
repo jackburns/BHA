@@ -86,3 +86,20 @@ form {
     background-color: #fafafa;
   }
 }
+
+#add-assignment-container {
+  max-width: 800px;
+  margin: 0 auto;
+  
+  h2, h4.error {
+    text-align: center;
+  }
+  
+  h5, h4 {
+    margin-bottom: 2px;
+  }
+  
+  h4.error {
+    color: #d00;
+  }
+}
