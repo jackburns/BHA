@@ -3,11 +3,12 @@ import notificationsModalTemplate from './../../common/notificationsModal/notifi
 import NotificationsModalController from './../../common/notificationsModal/notificationsModal.controller.js'
 
 class HomeController {
-  constructor($state, $uibModal, $http, User) {
+  constructor($state, $uibModal, $http, User, Assignments) {
     this.user = User;
+    Assignments.getMyAssignments();
   }
 }
 
-HomeController.$inject = ["$state", "$uibModal", "$http", "User"];
+HomeController.$inject = ["$state", "$uibModal", "$http", "User", "Assignments"];
 
 export default HomeController;
