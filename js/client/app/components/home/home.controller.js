@@ -4,8 +4,8 @@ import NotificationsModalController from './../../common/notificationsModal/noti
 
 class HomeController {
   constructor($state, $uibModal, $http, User, Assignments) {
-    this.user = User;
-    Assignments.getMyAssignments().then((res) => {
+    this.user = User.getUser();
+    Assignments.getUserAssignments(this.user.id).then((res) => {
       this.assignments = res.data;
     });
   }
