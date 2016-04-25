@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 class VolunteerFormController {
-  constructor($http, Enums, $uibModal, $state, Alert, Validate) {
+  constructor($http, Enums, $state, Alert, Validate) {
 
     this.selectOptions = Enums;
 
@@ -69,5 +69,5 @@ class VolunteerFormController {
   }
 }
 
-VolunteerFormController.$inject = ['$http', 'Enums', '$uibModal', '$state', 'Alert', 'Validate'];
+VolunteerFormController.$inject = ['$http', 'Enums', '$state', 'Alert', 'Validate'];
 export default VolunteerFormController;

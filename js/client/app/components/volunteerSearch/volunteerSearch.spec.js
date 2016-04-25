@@ -5,13 +5,33 @@ import VolunteerSearchTemplate from './volunteerSearch.html';
 import _ from 'lodash';
 
 describe('VolunteerSearch', () => {
-  let $rootScope, makeController;
+  let $rootScope, $componentController, makeController, mockRequests, mockModals, mockEnums;
+
+  let mockVolunteers = [
+    { selectedToNotify: false },
+    { selectedToNotify: false },
+    { selectedToNotify: false }
+  ];
+
 
   beforeEach(window.module(VolunteerSearchModule.name));
-  beforeEach(inject((_$rootScope_) => {
+  beforeEach(inject((_$rootScope_, _$componentController_) => {
     $rootScope = _$rootScope_;
+    $componentController = _$componentController_;
+    
+    mockRequests = {getVolunteers: sinon.stub()};
+    mockRequests.getVolunteers.callsArgWith(1, mockVolunteers);
+
+    mockModals = {openNotifications: sinon.spy()};
+    mockEnums = {};
+
     makeController = () => {
-      return new VolunteerSearchController();
+      return $componentController(VolunteerSearchModule.name, {
+        '$scope': $rootScope,
+        'Requests': mockRequests,
+        'Modals': mockModals,
+        'Enums': mockEnums
+      })
     };
   }));
 
@@ -55,9 +75,6 @@ describe('VolunteerSearch', () => {
 
     it('sets all volunteers notify status to that of selectAll checkbox', () => {
       let ctrl = makeController();
-      _.forEach(ctrl.volunteers, (volunteer) => {
-        expect(volunteer.selectedToNotify).to.be.false;
-      });
 
       ctrl.willSelectAll = true;
       ctrl.selectAll();

@@ -1,9 +1,7 @@
 import _ from 'lodash';
-import NotificationsModalTemplate from './../../common/notificationsModal/notificationsModal.html';
-import NotificationsModalController from './../../common/notificationsModal/notificationsModal.controller.js';
 
 class VolunteerController {
-  constructor($http, Enums, User, Alert, Validate, $uibModal) {
+  constructor($http, Enums, User, Alert, Validate, Modals) {
     this.edit = false;
     this.userIsAdmin = User.isAdmin();
     this.enums = Enums;
@@ -35,25 +33,12 @@ class VolunteerController {
         Alert.add('danger', 'Error: Could not update Volunteer');
         console.log(error);
       });
-    }
-
-    // modal stuff
-    this.openNotificationsModal = function(volunteer) {
-      var modalInstance = $uibModal.open({
-        animation: true,
-        template: NotificationsModalTemplate,
-        controller: NotificationsModalController,
-        size: 'md',
-        resolve: {
-          volunteerList: function() {
-            return [volunteer];
-          }
-        }
-      });
     };
-  };
-};
 
-VolunteerController.$inject = ["$http", "Enums", "User", "Alert", "Validate", "$uibModal"];
+    this.openNotificationsModal = Modals.openNotifications;
+  };
+}
+
+VolunteerController.$inject = ["$http", "Enums", "User", "Alert", "Validate", "Modals"];;
 
 export default VolunteerController;
