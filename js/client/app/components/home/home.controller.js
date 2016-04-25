@@ -7,7 +7,6 @@ class HomeController {
     this.user = User;
     Assignments.getMyAssignments().then((res) => {
       this.assignments = res.data;
-      console.log(this.assignments);
     });
   }
 }

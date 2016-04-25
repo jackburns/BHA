@@ -10,8 +10,6 @@ class VolunteerController {
 
     Assignments.getUserAssignments(this.volunteer.id).then((res) => {
       this.assignments = res.data;
-    }).catch((err) => {
-      console.error(err);
     });
 
     if(this.volunteer.id == User.getUser().id) {

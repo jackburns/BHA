@@ -1,10 +1,10 @@
 let AssignmentsService = function ($http, $state, $localStorage, Alert) {
 
-  let getMyAssignments = (callback) => {
+  let getMyAssignments = () => {
     return $http.get(api + '/assignments/me/');
   }
 
-  let getUserAssignments = (user_id, callback) => {
+  let getUserAssignments = (user_id) => {
     return $http.get(api + '/volunteers/' + user_id + '/assignments/');
   }
 
