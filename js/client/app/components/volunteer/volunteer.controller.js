@@ -3,10 +3,16 @@ import NotificationsModalTemplate from './../../common/notificationsModal/notifi
 import NotificationsModalController from './../../common/notificationsModal/notificationsModal.controller.js';
 
 class VolunteerController {
-  constructor($http, Enums, User, Alert, Validate, $uibModal) {
+  constructor($http, Enums, User, Alert, Validate, Assignments, $uibModal) {
     this.edit = false;
     this.userIsAdmin = User.isAdmin();
     this.enums = Enums;
+
+    Assignments.getUserAssignments(this.volunteer.id).then((res) => {
+      this.assignments = res.data;
+    }).catch((err) => {
+      console.error(err);
+    });
 
     if(this.volunteer.id == User.getUser().id) {
       this.edit = true;
@@ -54,6 +60,6 @@ class VolunteerController {
   };
 };
 
-VolunteerController.$inject = ["$http", "Enums", "User", "Alert", "Validate", "$uibModal"];
+VolunteerController.$inject = ["$http", "Enums", "User", "Alert", "Validate", "Assignments", "$uibModal"];
 
 export default VolunteerController;

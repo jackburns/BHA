@@ -1,17 +1,15 @@
 let AssignmentsService = function ($http, $state, $localStorage, Alert) {
 
   let getMyAssignments = (callback) => {
-    $http.get(api + '/assignments/me/', {
-    }).then(function(res) {
-      console.log(res);
-      if(callback) {
-        callback();
-      }
-    }, function(error) {
-    });
+    return $http.get(api + '/assignments/me/');
   }
 
-  return { getMyAssignments };
+  let getUserAssignments = (user_id, callback) => {
+    return $http.get(api + '/volunteers/' + user_id + '/assignments/');
+  }
+
+
+  return { getMyAssignments, getUserAssignments };
 };
 
 AssignmentsService.$inject = ['$http', '$state', '$localStorage', 'Alert'];
