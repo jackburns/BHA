@@ -47,7 +47,7 @@ class VolunteerViewSet(viewsets.ModelViewSet):
 
     @detail_route(methods=['get'])
     def assignments(self, request, *args, **kwargs):
-        volunteer = get_object_or_404(Volunteer, user_id=(1 + int(kwargs['pk'])))
+        volunteer = get_object_or_404(Volunteer, id=int(kwargs['pk']))
         assignments = Assignment.objects.filter(volunteers=volunteer)
         serializer = AssignmentSerializer(assignments, context={'request': request}, many=True)
         return Response(serializer.data)
