@@ -201,6 +201,18 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
         return assignment
 
+    def update(self, instance, data):
+        posted_by_id = data.pop('posted_by_id', None)
+        posted_by = get_object_or_404(Volunteer, id=posted_by_id)
+
+        updateAttrs(instance, data)
+
+        if posted_by is not None:
+            instance(posted_by=posted_by)
+
+        instance.save()
+        return instance
+
 class AdminAssignmentSerializer(AssignmentSerializer):
     class Meta:
         model = Assignment
