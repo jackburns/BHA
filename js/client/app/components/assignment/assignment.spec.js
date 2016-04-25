@@ -4,56 +4,34 @@ import AssignmentComponent from './assignment.component';
 import AssignmentTemplate from './assignment.html';
 
 describe('Assignment', () => {
-  let $rootScope, $componentController, makeController, mockModals, mockRequests;
+  let $rootScope, makeController;
 
   beforeEach(window.module(AssignmentModule.name));
-
-  beforeEach(() => {
-    mockRequests = {
-      getAssignments: sinon.stub(),
-      getVolunteers: sinon.stub()
-    };
-
-    mockModals = {
-      openNotifications: sinon.stub()
-    };
-  });
-
-  beforeEach(inject((_$rootScope_, _$componentController_) => {
+  beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
-    $componentController = _$componentController_;
-
     makeController = () => {
-      return $componentController(AssignmentModule.name, {
-        '$scope': $rootScope,
-        'Modals': mockModals,
-        'Requests': mockRequests
-      })
+      return new AssignmentController();
     };
   }));
-  
+
   describe('Module', () => {
     // top-level specs: i.e., routes, injection, naming
   });
 
   describe('Controller', () => {
-    it('initializes with futureAssignments fetched from the API', () => {
-      mockRequests.getAssignments.callsArgWith(0, [0, 1]);
+    // controller specs
+    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
       let controller = makeController();
-
-      expect(controller).to.have.property('futureAssignments');
-      expect(controller.futureAssignments).to.have.length(2);
+      expect(controller).to.have.property('name');
     });
+  });
 
-    it('opens the notifications modal after fetching all volunteers', () => {
-      mockRequests.getVolunteers.callsArgWith(1, [55, 82]);
-      let controller = makeController();
-      controller.openNotificationsModal('es');
-
-      expect(mockRequests.getVolunteers.calledOnce).to.be.true;
-      expect(mockModals.openNotifications.calledOnce).to.be.true;
-      expect(mockModals.openNotifications.calledWith([55, 82])).to.be.true;
-    })
+  describe('Template', () => {
+    // template specs
+    // tip: use regex to ensure correct bindings are used e.g., {{  }}
+    it('has name in template [REMOVE]', () => {
+      expect(AssignmentTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+    });
   });
 
   describe('Component', () => {

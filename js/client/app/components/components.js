@@ -4,7 +4,7 @@ import VolunteerSearch from './volunteerSearch/volunteerSearch';
 import Volunteer from './volunteer/volunteer';
 import Login from './login/login';
 import VolunteerForm from './volunteerForm/volunteerForm';
-import Assignment from './assignment/assignment';
+import Assignments from './assignments/assignments';
 import ResetPassword from './resetPassword/resetPassword'
 import AddAssignment from './addAssignment/addAssignment'
 
@@ -14,7 +14,7 @@ let componentModule = angular.module('app.components', [
   VolunteerForm.name,
   Volunteer.name,
   VolunteerSearch.name,
-  Assignment.name,
+  Assignments.name,
   ResetPassword.name,
   AddAssignment.name
 ]);
