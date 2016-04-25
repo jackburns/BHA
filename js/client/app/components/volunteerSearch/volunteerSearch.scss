@@ -1,22 +1,21 @@
+.sortorder {
+  cursor: pointer;
+  &:after {
+    content: '\25b2';
+  }
+  &.isReverseOrder:after {
+    content: '\25bc';
+  }
+}
+
 .volunteer-search {
   margin: 10px 0 30px;
   
-  .sortorder:after {
-    content: '\25b2';
-  }
-
-  .sortorder.isReverseOrder:after {
-    content: '\25bc';
-  }
-
   label {
     font-weight: normal;
   }
 
   .volunteers-table {
-    th {
-      cursor: pointer;
-    }
 
     .notify-column {
       text-align: center;
