@@ -75,18 +75,17 @@ class AssignmentViewSet(viewsets.ModelViewSet):
     @detail_route(methods=['post'])
     def add_volunteer(self, request, pk=None):
         assignment = get_object_or_404(Assignment, id=pk)
-        volunteer = get_object_or_404(Volunteer, id=request.data.volunteer_id)
+        volunteer = get_object_or_404(Volunteer, id=request.data['volunteer_id'])
         assignment.volunteers.add(volunteer)
         assignment.save()
 
-        return({'response': 'volunteer added to assignment'})
-
+        return Response({'success': 'volunteer added to assignment'})
 
     @detail_route(methods=['post'])
     def remove_volunteer(self, request, pk=None):
         assignment = get_object_or_404(Assignment, id=pk)
-        volunteer = get_object_or_404(Volunteer, id=request.data.volunteer_id)
+        volunteer = get_object_or_404(Volunteer, id=request.data['volunteer_id'])
         assignment.volunteers.delete(volunteer)
         assignment.save()
 
-        return({'response': 'volunteer removed from assignment'})
+        return Response({'success': 'volunteer removed from assignment'})
