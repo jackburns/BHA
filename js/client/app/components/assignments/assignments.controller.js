@@ -1,4 +1,4 @@
-class AssignmentController {
+class AssignmentsController {
   constructor(Modals, Requests) {
 
     let getAssignments = () => {
@@ -15,5 +15,5 @@ class AssignmentController {
   }
 }
 
-AssignmentController.$inject = ['Modals', 'Requests'];
-export default AssignmentController;
+AssignmentsController.$inject = ['Modals', 'Requests'];
+export default AssignmentsController;

@@ -1,8 +1,8 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
-import assignmentComponent from './assignment.component';
+import assignmentsComponent from './assignments.component';
 
-let assignmentModule = angular.module('assignment', [
+let assignmentsModule = angular.module('assignments', [
   uiRouter
 ])
 
@@ -10,10 +10,10 @@ let assignmentModule = angular.module('assignment', [
   $stateProvider
     .state('assignments', {
       url: '/assignments',
-      template: '<assignment></assignment>'
+      template: '<assignments></assignment>'
     });
 }])
-  
-.component('assignment', assignmentComponent);
 
-export default assignmentModule;
+.component('assignments', assignmentsComponent);
+
+export default assignmentsModule;

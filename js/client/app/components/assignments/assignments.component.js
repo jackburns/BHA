@@ -1,8 +1,8 @@
-import template from './assignment.html';
-import controller from './assignment.controller';
-import './assignment.scss';
+import template from './assignments.html';
+import controller from './assignments.controller';
+import './assignments.scss';
 
-let assignmentComponent = {
+let assignmentsComponent = {
   restrict: 'E',
   bindings: {},
   template,
@@ -10,4 +10,4 @@ let assignmentComponent = {
   controllerAs: 'vm'
 };
 
-export default assignmentComponent;
+export default assignmentsComponent;

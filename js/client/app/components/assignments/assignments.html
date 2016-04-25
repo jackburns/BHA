@@ -1,12 +1,12 @@
-<div class="assignment">
+<div class="assignments">
   <h1>Upcoming Assignments</h1>
-  <form class="form-inline assignment__filter">
+  <form class="form-inline assignments__filter">
     <div class="form-group">
       <label for="assignment-name" class="input-label">Assignment Name:</label>
       <input class="form-control" id="assignment-name" type="text" ng-model="vm.search.name">
     </div>
   </form>
-  <div class="assignment__filter">
+  <div class="assignments__filter">
     <label class="input-label">Language:</label>
     <language-select selected-language="vm.search.language_name"></language-select>
   </div>
@@ -29,7 +29,7 @@
       <td>
         <span ng-if="!assignment.volunteers.length">
           None assigned.
-          <span class="assignment__warning" ng-click="vm.openNotificationsModal(assignment.language)">
+          <span class="assignments__warning" ng-click="vm.openNotificationsModal(assignment.language)">
             Find volunteer
           </span>
         </span>

@@ -1,12 +1,12 @@
-import AssignmentModule from './assignment'
-import AssignmentController from './assignment.controller';
-import AssignmentComponent from './assignment.component';
-import AssignmentTemplate from './assignment.html';
+import AssignmentsModule from './assignments'
+import AssignmentsController from './assignments.controller';
+import AssignmentsComponent from './assignments.component';
+import AssignmentsTemplate from './assignments.html';
 
-describe('Assignment', () => {
+describe('Assignments', () => {
   let $rootScope, $componentController, makeController, mockModals, mockRequests;
 
-  beforeEach(window.module(AssignmentModule.name));
+  beforeEach(window.module(AssignmentsModule.name));
 
   beforeEach(() => {
     mockRequests = {
@@ -24,14 +24,14 @@ describe('Assignment', () => {
     $componentController = _$componentController_;
 
     makeController = () => {
-      return $componentController(AssignmentModule.name, {
+      return $componentController(AssignmentsModule.name, {
         '$scope': $rootScope,
         'Modals': mockModals,
         'Requests': mockRequests
       })
     };
   }));
-  
+
   describe('Module', () => {
     // top-level specs: i.e., routes, injection, naming
   });
@@ -58,10 +58,10 @@ describe('Assignment', () => {
 
   describe('Component', () => {
       // component/directive specs
-      let component = AssignmentComponent;
+      let component = AssignmentsComponent;
 
       it('includes the intended template',() => {
-        expect(component.template).to.equal(AssignmentTemplate);
+        expect(component.template).to.equal(AssignmentsTemplate);
       });
 
       it('uses `controllerAs` syntax', () => {
@@ -69,7 +69,7 @@ describe('Assignment', () => {
       });
 
       it('invokes the right controller', () => {
-        expect(component.controller).to.equal(AssignmentController);
+        expect(component.controller).to.equal(AssignmentsController);
       });
   });
 });
