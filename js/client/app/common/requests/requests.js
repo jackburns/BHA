@@ -1,8 +1,8 @@
 import angular from 'angular';
 import RequestsService from './requests.service';
 
-let userModule = angular.module('requests', [])
+let requestModule = angular.module('requests', [])
 
   .service('Requests', RequestsService);
 
-export default userModule;
+export default requestModule;

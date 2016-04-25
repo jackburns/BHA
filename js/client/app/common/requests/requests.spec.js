@@ -1,8 +1,10 @@
 import RequestsModule from './requests';
+import AlertsModule from '../alert/alert';
 
 describe('Requests service', function() {
   var $httpBackend, Requests;
 
+  beforeEach(angular.mock.module(AlertsModule.name))
   beforeEach(angular.mock.module(RequestsModule.name));
 
   beforeEach(inject(function(_$httpBackend_, _Requests_) {
@@ -14,12 +16,12 @@ describe('Requests service', function() {
 
   describe('getAssignments', () => {
     it('should get assignments', () => {
-      let callback = sinon.spy();
+      let successCallback = sinon.spy();
       $httpBackend.expectGET(api + '/assignments/').respond(mockResults);
-      Requests.getAssignments(callback);
+      Requests.getAssignments(successCallback);
       $httpBackend.flush();
-      expect(callback.calledWith(mockResults.results)).to.be.true;
-      expect(callback.calledOnce).to.be.true;
+      expect(successCallback.calledWith(mockResults.results)).to.be.true;
+      expect(successCallback.calledOnce).to.be.true;
     });
   });
 

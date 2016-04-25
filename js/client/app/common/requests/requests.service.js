@@ -1,22 +1,23 @@
-let RequestsService = function($http) {
-  
-  let getAssignments = (callback) => {
-    $http.get(api + '/assignments/').then((res) => {
-      callback(res.data.results);
-    }, (error) => {
-      console.log(error);
-      return error;
-    });
+let RequestsService = function($http, Alert) {
+
+  let defaultErrorAlert = (error) => {
+    Alert.add('danger', 'An error has occurred');
   };
   
-  let getVolunteers = (config, callback) => {
+  let getAssignments = (successCallback, errorCallback=defaultErrorAlert) => {
+    $http.get(api + '/assignments/').then((res) => {
+      successCallback(res.data.results);
+    }, errorCallback);
+  };
+  
+  let getVolunteers = (config, successCallback, errorCallback=defaultErrorAlert) => {
     $http.get(api + '/volunteers/', config).then((res) => {
-      callback(res.data.results);
-    });
+      successCallback(res.data.results);
+    }, errorCallback);
   };
   
   return { getAssignments , getVolunteers };
 };
 
-RequestsService.$inject = ['$http'];
+RequestsService.$inject = ['$http', 'Alert'];
 export default RequestsService;
