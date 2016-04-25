@@ -27,7 +27,7 @@ def create_contact(contact_fields):
                                      phone_number=contact_fields['Phone'],
                                      email=contact_fields['Email'],
                                      carrier=0,
-                                     preferred_contact=2)
+                                     preferred_contact=0)
 
     return contact
 
