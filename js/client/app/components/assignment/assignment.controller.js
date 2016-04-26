@@ -12,20 +12,27 @@ class AssignmentController {
       showWeeks: false
     };
 
-    if(this.assignment.posted_by.id == User.getUser().id) {
+    this.allVolunteers = [];
+    Requests.getVolunteers({}, (volunteers) => {
+      _.each(volunteers, (volunteer) => { volunteer.full_name = volunteer.first_name + ' ' + volunteer.last_name});
+      this.allVolunteers = volunteers
+    });
+
+    console.log(this.assignment.posted_by);
+    if (this.assignment.posted_by && this.assignment.posted_by.id == User.getUser().id) {
       this.edit = false;
     }
 
     this.displayDate = function(date) {
       return date.getMonth() + 1 + '/' + date.getDay() + '/' + date.getFullYear();
-    }
+    };
 
     this.viewProfile = function(volunteer) {
       $state.go('volunteer', {
         volunteerId: volunteer.id,
         volunteer: volunteer
       });
-    }
+    };
 
     this.displayTime = function(date) {
       let hours = date.getHours();
@@ -37,7 +44,7 @@ class AssignmentController {
 
     this.submit = () => {
       updateAssignment(this.assignment);
-    }
+    };
 
     let updateAssignment = (assignment) => {
       Requests.updateAssignment(assignment).then(() => {
