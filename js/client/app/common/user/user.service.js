@@ -51,7 +51,7 @@ let UserService = function ($http, $state, $localStorage, Alert) {
 
   let getLevel = () => {
     if(user) {
-      if(user.isAdmin) {
+      if(isAdmin()) {
         return 6;
       } else {
         return user.volunteer_level;
