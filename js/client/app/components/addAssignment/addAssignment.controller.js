@@ -1,5 +1,5 @@
 class AddAssignmentController {
-  constructor($http, $filter, Enums, Alert, User) {
+  constructor($http, $filter, Enums, Alert, User, $state) {
     this.name = 'New Assignment';
     this.selectOptions = Enums;
     this.error = false;
@@ -40,7 +40,10 @@ class AddAssignmentController {
         this.error = false;
         $http.post(api + '/assignments/', this.info).then((res) => {
             Alert.add('success', 'Success: Assignment Created');
-            $state.go('assignment');
+            $state.go('assignment', {
+              assignmentId: res.data.id,
+              assignment: res.data
+            });
           }, (error) => {
             Alert.add('danger', 'Error: Assignment Not Created');
           });
@@ -51,5 +54,5 @@ class AddAssignmentController {
   }
 }
 
-AddAssignmentController.$inject = ['$http', '$filter', 'Enums', 'Alert', 'User'];
+AddAssignmentController.$inject = ['$http', '$filter', 'Enums', 'Alert', 'User', '$state'];
 export default AddAssignmentController;
