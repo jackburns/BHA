@@ -50,7 +50,15 @@ let UserService = function ($http, $state, $localStorage, Alert) {
   }
 
   let getLevel = () => {
-    return user && user.volunteer_level;
+    if(user) {
+      if(user.isAdmin) {
+        return 6;
+      } else {
+        return user.volunteer_level;
+      }
+    } else {
+      return 0;
+    }
   }
 
   let viewProfile = () => {

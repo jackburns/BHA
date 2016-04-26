@@ -19,7 +19,7 @@ class VolunteerController {
       this.zipValid = Validate.zip(this.volunteer.contact.zip);
       this.phoneValid = Validate.phoneNumber(this.volunteer.contact.phone_number);
       this.carrierValid = Validate.carrier(this.volunteer.contact.preferred_contact, this.volunteer.contact.carrier);
-      this.ageValid = _.isInteger(this.volunteer.age) && this.volunteer.age > 0;
+      this.ageValid = Validate.age(this.volunteer.age);
       this.allValid = ang_valid
                       && this.zipValid
                       && this.phoneValid

@@ -59,7 +59,7 @@ class VolunteerFormController {
       this.validAvailabilities = _.every(this.info.availability, 'isValid');
       this.passwordError = Validate.password(this.info.password);
       this.carrierValid = Validate.carrier(this.info.contact.preferred_contact, this.info.contact.carrier);
-      this.ageValid = _.isInteger(this.info.age);
+      this.ageValid = Validate.age(this.info.age);
       this.validateForm(ang_valid);
 
       if (this.allValid) {

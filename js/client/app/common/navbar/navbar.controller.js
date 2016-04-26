@@ -1,17 +1,11 @@
 class NavbarController {
-  constructor(User, $state) {
+  constructor(User) {
     "ngInject";
     this.name = 'navbar';
     this.user = User;
     this.navCollapsed = true;
-    this.viewProfile = () => {
-      let volunteer = this.user.getUser();
-      $state.go('volunteer', {
-        volunteerId: volunteer.id,
-        volunteer: volunteer});
-    }
   }
 }
 
-NavbarController.$inject = ['User', '$state'];
+NavbarController.$inject = ['User'];
 export default NavbarController;
