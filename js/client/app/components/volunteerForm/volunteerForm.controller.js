@@ -21,7 +21,7 @@ class VolunteerFormController {
       last_name: "",
       middle_name: "",
       organization: "",
-      age: 0,
+      age: "",
       contact: {
         street: "",
         city: "",
