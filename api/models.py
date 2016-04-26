@@ -206,4 +206,6 @@ class Assignment(models.Model):
     duration = models.DecimalField(default=0, max_digits=4, decimal_places=2)
 
     def __str__(self):
-        return self.name
+        return "{} in {} on {}".format(self.name, self.language_name, self.start_date)
+
+

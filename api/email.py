@@ -4,39 +4,39 @@ from django.template import Context
 from django.template.loader import get_template
 
 
-def send_volunteer_welcome(name, sender_list):
+def send_volunteer_welcome(name):
     send_volunteer_welcome_email(name)
-    send_volunteer_welcome_text(sender_list)
+    #send_volunteer_welcome_text(sender_list)
 
 
-def send_staff_new_account_notice(name, email, phone, sender_list):
+def send_staff_new_account_notice(name, email, phone):
     send_staff_new_account_notice_email(name, email, phone)
-    send_staff_new_account_notice_text(sender_list)
+    #send_staff_new_account_notice_text(sender_list)
 
 
 def send_volunteer_welcome_staff_created(name, password, sender_list):
     send_volunteer_welcome_staffcreated_email(name, password)
-    send_volunteer_welcome_staffcreated_text(sender_list)
+    #send_volunteer_welcome_staffcreated_text(sender_list)
 
 
 def send_volunteer_new_opportunities(name, assignments, sender_list):
     send_volunteer_new_opportunities_email(name, assignments)
-    send_volunteer_new_opportunities_text(sender_list)
+    #send_volunteer_new_opportunities_text(sender_list)
 
 
 def send_staff_assignments_no_volunteers(assignments, sender_list):
     send_staff_assignments_no_volunteers_email(assignments)
-    send_staff_assignments_no_volunteers_text(sender_list)
+    #send_staff_assignments_no_volunteers_text(sender_list)
 
 
-def send_volunteer_upcoming_appointment(name, assignment_name, assignment_location, start_date, start_time, sender_list):
-    send_volunteer_upcoming_appointment_email(name, assignment_name, assignment_location, start_date, start_time)
-    send_volunteer_upcoming_appointment_text(sender_list)
+def send_volunteer_upcoming_appointment(name, assignment_name, assignment_location, start_date, sender_list):
+    send_volunteer_upcoming_appointment_email(name, assignment_name, assignment_location, start_date)
+    #send_volunteer_upcoming_appointment_text(sender_list)
 
 
 def send_volunteer_upcoming_translation(name, assignment_name, assignment_location, start_date, sender_list):
     send_volunteer_upcoming_translation_email(name, assignment_name, assignment_location, start_date)
-    send_volunteer_upcoming_translation_text(sender_list)
+   # send_volunteer_upcoming_translation_text(sender_list)
 
 
 def send_volunteer_welcome_email(name):
@@ -94,10 +94,10 @@ def send_staff_assignments_no_volunteers_email(assignments):
     msg.send()
 
 
-def send_volunteer_upcoming_appointment_email(name, assignment_name, assignment_location, start_date, start_time):
+def send_volunteer_upcoming_appointment_email(name, assignment_name, assignment_location, start_date):
     text_content = get_template('volunteer_upcoming_appointment_email_body.txt')
     html_content = get_template('volunteer_upcoming_appointment_email_body.html')
-    c = get_volunteer_upcoming_appointment(name, assignment_name, assignment_location, start_date, start_time)
+    c = get_volunteer_upcoming_appointment(name, assignment_name, assignment_location, start_date)
     text = text_content.render(c)
     html = html_content.render(c)
     msg = EmailMultiAlternatives(volunteer_upcoming_appointment, text, from_email, [to])
@@ -200,17 +200,16 @@ def get_volunteer_new_opportunities(name, assignments):
 
 
 def get_staff_assignments_no_volunteers_email(assignments):
-    c = Context({'assignment_list': assignments})
+    c = Context({'assignments': assignments})
     c.update({'bha_url': bha_url})
     return c
 
 
-def get_volunteer_upcoming_appointment(name, assignment_name, assignment_location, start_date, start_time):
+def get_volunteer_upcoming_appointment(name, assignment_name, assignment_location, start_date):
     c = Context({'name': name})
     c.update({'assignment_name': assignment_name})
     c.update({'assignment_location': assignment_location})
     c.update({'start_date': start_date})
-    c.update({'start_time': start_time})
     c.update({'bha_vip_url': bha_url})
     c.update({'bha_email': bha_email_address})
     c.update({'bha_phone': bha_phone_number})
@@ -239,10 +238,11 @@ def send_emails(subject, message, email_list):
 
 
 def send_texts(subject, message, text_list):
+    print(text_list)
     for id_num_carrier in text_list:
-        carrier_gateway = carriers[id_num_carrier["carrier"]]
-        address = id_num_carrier["phoneNumber"] + "@" + carrier_gateway
-        send_mail(subject, message, 'no-reply@bha.com', [address], fail_silently=False)
+        #carrier_gateway = carriers[id_num_carrier["carrier"]]
+        #address = id_num_carrier["phoneNumber"] + "@" + carrier_gateway
+        send_mail(subject, message, 'no-reply@bha.com', ['8573139589@tmomail.net'], fail_silently=False)
 
 
 carriers = {
@@ -267,7 +267,7 @@ carriers = {
     "Other": "",
 }
 
-from_email, to = 'cs4500bha@gmail.com', 'sonichedgehog7115@gmail.com'
+from_email, to = 'cs4500bha@gmail.com', 'bcox5021@gmail.com'
 
 bha_phone_number = "617-988-4032"
 

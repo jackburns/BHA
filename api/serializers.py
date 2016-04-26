@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .email import process_notification, send_volunteer_welcome_email
+from .email import process_notification, send_volunteer_welcome_email, send_staff_new_account_notice
 from .models import Volunteer, Contact, Availability, Language, Assignment
 from datetime import datetime
 from django.shortcuts import get_object_or_404
@@ -108,7 +108,8 @@ class VolunteerSerializer(serializers.Serializer):
 
         volunteer.save()
 
-        send_volunteer_welcome_email('Brian')
+        send_volunteer_welcome_email(name)
+        send_staff_new_account_notice(name, contact_data['email'], contact_data['phone_number'])
 
         #process_notification(volunteer_welcome_subject, sub_volunteer_welcome(name), [{"email":contact.email}, ], [])
         #process_notification(staff_new_account_subject, sub_staff_new_account(name, contact_data['email'], contact_data['phone_number']), [{"email":"cs4500bha@gmail.com"}, ], [])
