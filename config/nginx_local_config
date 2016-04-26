@@ -19,7 +19,7 @@ server {
         }
 
         location /static {
-          alias /vagrant/static
+          alias /vagrant/static;
         }
 
         location /api {
