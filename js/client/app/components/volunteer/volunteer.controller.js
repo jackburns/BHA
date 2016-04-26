@@ -1,10 +1,14 @@
 import _ from 'lodash';
 
 class VolunteerController {
-  constructor($http, Enums, User, Alert, Validate, Modals) {
+  constructor($http, Enums, User, Alert, Validate, AssignmentsAPI, $uibModal, Modals) {
     this.edit = false;
     this.userIsAdmin = User.isAdmin();
     this.enums = Enums;
+
+    AssignmentsAPI.getUserAssignments(this.volunteer.id).then((res) => {
+      this.assignments = res.data;
+    });
 
     if(this.volunteer.id == User.getUser().id) {
       this.edit = true;
@@ -39,6 +43,6 @@ class VolunteerController {
   };
 }
 
-VolunteerController.$inject = ["$http", "Enums", "User", "Alert", "Validate", "Modals"];;
+VolunteerController.$inject = ["$http", "Enums", "User", "Alert", "Validate", "AssignmentsAPI", "$uibModal", "Modals"];
 
 export default VolunteerController;

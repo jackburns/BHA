@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 class AssignmentController {
   constructor(Enums, User, Alert) {
     this.name = 'assignment';
@@ -17,7 +19,7 @@ class AssignmentController {
         console.log(error);
       });
     };
-    
+
   }
 }
 AssignmentController.$inject = ['Enums', 'User', 'Alert']

@@ -45,6 +45,13 @@ class VolunteerViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(volunteer, context={'request': request})
         return Response(serializer.data)
 
+    @detail_route(methods=['get'])
+    def assignments(self, request, *args, **kwargs):
+        volunteer = get_object_or_404(Volunteer, id=int(kwargs['pk']))
+        assignments = Assignment.objects.filter(volunteers=volunteer)
+        serializer = AssignmentSerializer(assignments, context={'request': request}, many=True)
+        return Response(serializer.data)
+
     def get_permissions(self):
         # allow non-authenticated user to create via POST
         return (AllowAny() if self.request.method == 'POST'
@@ -66,6 +73,9 @@ class AssignmentViewSet(viewsets.ModelViewSet):
             return Assignment.objects.filter(type=2)
         else:
             return Assignment.objects.exclude(type=2)
+
+    def get_permissions(self):
+        return (IsAuthenticated()),
 
     def get_serializer_class(self):
         if (self.request.user.is_staff):
