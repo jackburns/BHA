@@ -21,7 +21,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="assignment in vm.futureAssignments | filter:vm.search | orderBy:'date'">
+    <tr ng-click="vm.viewAssignment(assignment)" ng-repeat="assignment in vm.futureAssignments | filter:vm.search | orderBy:'date'">
       <td ng-bind="assignment.start_date | date:'shortDate'"></td>
       <td ng-bind="assignment.start_date | date:'shortTime'"></td>
       <td ng-bind="assignment.name"></td>
