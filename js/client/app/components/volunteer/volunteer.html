@@ -232,12 +232,12 @@
       <div class="row">
         <div class="col-md-4">
           <div class="left-column__section">
-            <p class="left-column__header">Gender:</p>
-            <span ng-bind="vm.volunteer.gender || 'Unknown'"></span>
-          </div>
-          <div class="left-column__section">
             <p class="left-column__header">Age:</p>
             <span ng-bind="vm.volunteer.age || 'Unknown'"></span>
+          </div>
+          <div class="left-column__section">
+            <p class="left-column__header">Gender:</p>
+            <span ng-bind="vm.volunteer.sex || 'Unknown'"></span>
           </div>
           <div class="left-column__section">
             <p class="left-column__header">Organization:</p>
@@ -246,8 +246,8 @@
           <div class="left-column__section">
             <p class="left-column__header">Languages:</p>
             <div ng-repeat="language in vm.volunteer.languages">
-              <span ng-bind="vm.languages[language.language_name]"></span>
-              <span class="glyphicon" ng-class="{language.can_written_translate: glyphicon-edit, !language.can_written_translate: glypicon-user}"></span>
+              <span ng-bind="language.language_name | languageKeyToName"></span>
+              <span class="glyphicon" ng-class="{'glyphicon-edit': language.can_written_translate, 'glypicon-user': !language.can_written_translate}"></span>
             </div>
           </div>
 
@@ -318,7 +318,13 @@
             <p class="panel-body" ng-show="vm.volunteer.admin_notes" ng-bind="vm.volunteer.admin_notes"></p>
             <p class="panel-body" ng-show="!vm.volunteer.admin_notes">No notes found</p>
           </div>
-          <assignment-list assignments="vm.assignments"></assignment-list>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Assignments</h3>
+            </div>
+            <p ng-show="vm.assignments.length === 0" class="panel-body">No assignments found</p>
+            <assignment-list ng-if="vm.assignments.length > 0" assignments="vm.assignments"></assignment-list>
+          </div>
         </div>
       </div>
       <button type="button" ng-click="vm.openNotificationsModal([vm.volunteer])" class="btn btn-lg btn-primary">Contact</button>

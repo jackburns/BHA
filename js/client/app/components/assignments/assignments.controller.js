@@ -30,6 +30,12 @@ class AssignmentsController {
       return _.map(volunteers, volunteer => volunteer.first_name + ' ' + volunteer.last_name).join(', ');
     };
 
+    this.viewAssignment = (assignment) => {
+      $state.go('assignment', {
+        assignmentId: assignment.id,
+        assignment: assignment
+      });
+    }
   }
 }
 

@@ -1,13 +1,12 @@
 import _ from 'lodash';
 
 class AssignmentController {
-  constructor(Enums, User, Alert, Requests) {
+  constructor(Enums, User, Alert, Requests, $state, Modals) {
     this.name = 'assignment';
     this.edit = false;
     this.userIsAdmin = User.isAdmin();
     this.enums = Enums;
     this.assignment.start_date = new Date(this.assignment.start_date);
-    console.log(this.assignment);
 
     this.dateOptions = {
       showWeeks: false
@@ -19,6 +18,13 @@ class AssignmentController {
 
     this.displayDate = function(date) {
       return date.getMonth() + 1 + '/' + date.getDay() + '/' + date.getFullYear();
+    }
+
+    this.viewProfile = function(volunteer) {
+      $state.go('volunteer', {
+        volunteerId: volunteer.id,
+        volunteer: volunteer
+      });
     }
 
     this.displayTime = function(date) {
@@ -41,8 +47,8 @@ class AssignmentController {
         console.log(error);
       });
     };
-
+    this.openNotificationsModal = Modals.openNotifications;
   }
 }
-AssignmentController.$inject = ['Enums', 'User', 'Alert', 'Requests']
+AssignmentController.$inject = ['Enums', 'User', 'Alert', 'Requests', '$state', 'Modals']
 export default AssignmentController;
