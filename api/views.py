@@ -19,9 +19,16 @@ class VolunteerFilter(filters.FilterSet):
         fields = ('first_name', 'last_name', 'language', 'can_write', 'volunteer_level')
 
 class AssignmentFilter(filters.FilterSet):
+    unassigned = django_filters.MethodFilter()
+
     class Meta:
         model = Assignment
-        fields = ('name', 'type', 'status')
+        fields = ('name', 'type', 'status', 'language_name', 'unassigned')
+
+    def filter_unassigned(self, queryset, value):
+        if value:
+            return queryset.filter(volunteers=None)
+        return queryset
 
 class NotificationView(views.APIView):
     permission_classes = [IsAuthenticated]
@@ -69,10 +76,10 @@ class AssignmentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         me = get_object_or_404(Volunteer, user_id=self.request.user.id)
         # If volunteers are verified but not trained, only return training assignments
-        if me.volunteer_level < 2:
+        if not self.request.user.is_staff and me.volunteer_level < 2:
             return Assignment.objects.filter(type=2)
         else:
-            return Assignment.objects.exclude(type=2)
+            return Assignment.objects.all()
 
     def get_permissions(self):
         return (IsAuthenticated()),

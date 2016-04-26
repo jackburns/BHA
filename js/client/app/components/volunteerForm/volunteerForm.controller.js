@@ -21,7 +21,6 @@ class VolunteerFormController {
       last_name: "",
       middle_name: "",
       organization: "",
-      age: "",
       contact: {
         street: "",
         city: "",
@@ -43,7 +42,6 @@ class VolunteerFormController {
       && this.zip_valid
       && this.phone_valid
       && this.validAvailabilities
-      && this.ageValid
       && this.carrierValid
       && this.passwordError.length == 0;
     };
@@ -59,7 +57,6 @@ class VolunteerFormController {
       this.validAvailabilities = _.every(this.info.availability, 'isValid');
       this.passwordError = Validate.password(this.info.password);
       this.carrierValid = Validate.carrier(this.info.contact.preferred_contact, this.info.contact.carrier);
-      this.ageValid = _.isInteger(this.info.age) && this.info.age > 0;
       this.validateForm(ang_valid);
 
       if (this.allValid) {

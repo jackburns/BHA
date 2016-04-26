@@ -81,7 +81,6 @@ class NotificationsModalController {
 
       $http.post(api + '/notify/', postObject).then(
         function(response) {
-          console.log(response);
           $uibModalInstance.close();
           $scope.notificationsSent = true;
         },

@@ -2,25 +2,9 @@ import _ from 'lodash';
 
 class VolunteerSearchController {
   constructor($state, Requests, Modals, Enums) {
-    let getSearchConfig = () => {
-      let paramsObj = {};
-
-      // only add queries if we need to
-       _.forOwn(this.search, (value, key) => {
-        if(value) {
-          paramsObj[key] = value;
-        }
-      });
-
-      let config = {
-        params: paramsObj
-      };
-
-      return config;
-    };
 
     this.getVolunteers = () => {
-      Requests.getVolunteers(getSearchConfig(), (volunteers) => {
+      Requests.getVolunteers(this.search, (volunteers) => {
         this.volunteers = volunteers;
       });
     };

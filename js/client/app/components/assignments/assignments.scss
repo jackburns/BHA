@@ -4,18 +4,18 @@
     width: 200px;
   }
 
-  .assignments__filter {
-    margin-left: 2em;
+  .assignment__filter {
+    margin-left: .1em;
+    margin-right: 2em;
     display: inline-block;
+    margin-bottom: 1em;
+  }
+
+  .assignment__filter_type {
+    min-width: 200px;
   }
 
   label {
     margin-right: .5em;
   }
-}
-
-.assignments__warning {
-  color: blue;
-  font-weight: bold;
-  cursor: pointer;
 }

@@ -12,6 +12,7 @@ import Alert from './alert/alert';
 import Validate from './validate/validate';
 import Requests from './requests/requests';
 import Modals from './modals/modals';
+import AssignmentList from './assignmentList/assignmentList';
 
 let commonModule = angular.module('app.common', [
   Navbar.name,
@@ -26,7 +27,8 @@ let commonModule = angular.module('app.common', [
   LanguageEdit.name,
   Validate.name,
   Requests.name,
-  Modals.name
+  Modals.name,
+  AssignmentList.name,
 ]);
 
 export default commonModule;

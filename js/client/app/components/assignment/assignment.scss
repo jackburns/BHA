@@ -1,17 +1,8 @@
 .assignment {
-  .language-select-group {
-    display: inline-block;
-    width: 200px;
-  }
+  margin-bottom: 30px;
 
-  .assignment__filter {
-    margin-left: .1em;
-    margin-right: 2em;
-    display: inline-block;
-    margin-bottom: 1em;
-  }
-
-  label {
-    margin-right: .5em;
+  .form-group {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
