@@ -145,7 +145,9 @@
           <div class="panel-heading">
             <h3 class="panel-title">Volunteers</h3>
           </div>
-          <p class="panel-body" ng-show="vm.assignment.volunteers.length === 0">No Volunteers Assigned</p>
+          <p class="panel-body" ng-show="vm.assignment.volunteers.length === 0">
+            No Volunteers Assigned. <a ng-if="!vm.userIsAdmin" ng-click="vm.assignSelf()">Assign Myself</a>
+          </p>
           <table ng-show="vm.assignment.volunteers.length > 0" class="table table-striped table-hover">
             <thead>
               <tr >
