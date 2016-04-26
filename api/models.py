@@ -196,7 +196,6 @@ class Assignment(models.Model):
     posted_by = models.ForeignKey(Volunteer, on_delete=models.SET_NULL, related_name='posted_assignments', null=True, blank=True)
     volunteers = models.ManyToManyField(Volunteer, related_name='assignments', blank=True)
     language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM, blank=True)
-    is_translation = models.BooleanField(default=False)
     start_date = models.DateTimeField()
     contact = models.OneToOneField(Contact, null=True, blank=True)
     type = models.IntegerField(default=0, choices=ASSIGNMENT_TYPE_ENUM)
