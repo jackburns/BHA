@@ -105,7 +105,7 @@ class AssignmentViewSet(viewsets.ModelViewSet):
     def remove_volunteer(self, request, pk=None):
         assignment = get_object_or_404(Assignment, id=pk)
         volunteer = get_object_or_404(Volunteer, id=request.data['volunteer_id'])
-        assignment.volunteers.delete(volunteer)
+        assignment.volunteers.remove(volunteer)
         assignment.save()
 
         return Response({'success': 'volunteer removed from assignment'})

@@ -1,0 +1,33 @@
+<div class="availability-edit">
+  <table class="table table-bordered tab">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Volunteer Level</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="selectedVolunteer in vm.selectedVolunteers">
+      <td class="col-sm-6">
+        <ui-select ng-model="vm.selectedVolunteers[$index]" class="language-select">
+          <ui-select-match>
+            {{$select.selected.full_name}}
+          </ui-select-match>
+          <ui-select-choices repeat="v as v in vm.allVolunteers | filter:{full_name: $select.search}:vm.startsWithComparator">
+            {{ v.full_name }}
+          </ui-select-choices>
+        </ui-select>
+      </td>
+      <td class="col-sm-6">
+        {{ selectedVolunteer.volunteer_level }}
+      </td>
+    </tr>
+  </table>
+  <div class="list-buttons">
+    <button type="button" ng-show="vm.selectedVolunteers.length > 1" ng-click="vm.removeLastVolunteer()" class="btn" aria-label="Remove last volunteer">
+      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+    </button>
+    <button type="button" ng-click="vm.addNewVolunteer()" class="btn" aria-label="Add volunteer">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
