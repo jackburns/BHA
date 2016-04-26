@@ -1,78 +1,70 @@
 <div class="assignment">
   <div ng-if="vm.edit">
     <div class="assignment-edit container-fluid">
-      <h1>Edit Profile</h1>
+      <h1>Edit Assignment</h1>
       <form name="assignmentEdit" novalidate role="form" ng-submit="vm.submit(assignmentEdit.$valid)" class="form-horizontal">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-                <label for="assignmentName">Name</label>
-                <input required type="text" class="form-control" id="assignmentName" ng-model="vm.assignment.name" placeholder="Name*">
-            </div>
-            <div class="form-group">
-              <label for="assignmentLanguage">Language</label>
-              <language-select required selected-language="vm.assignment.language_name" id="assignmentLanguage"></language-select>
-            </div>
-            <div class="form-group">
-              <label for="assignmentDate">Date</label>
-              <input required ng-required="true" type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" is-open="vm.datePickerOpen" show-button-bar="false" ng-model="vm.assignment.start_date" ng-click="vm.datePickerOpen = true" datepicker-options="vm.dateOptions" id="assignmentDate">
-            </div>
-            <div class="form-group">
-              <label for="assignmentTime">Start Time</label>
-              <uib-timepicker ng-model="vm.assignment.start_date" show-spinners="false" id="assignmentTime"></uib-timepicker>
-            </div>
-            <div class="form-group">
-              <label for="assignmentTime">Start Time</label>
-              <select class="form-control" ng-options="key as name for (key, name) in vm.selectOptions.assignment_type" ng-model="vm.info.type"></select>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-12">
-                <h4>Contact</h4>
+        <div class="col-md-4">
+          <div class="form-group">
+              <label for="assignmentName">Name</label>
+              <input required type="text" class="form-control" id="assignmentName" ng-model="vm.assignment.name" placeholder="Name*">
+          </div>
+          <div class="form-group">
+            <label for="assignmentLanguage">Language</label>
+            <language-select required selected-language="vm.assignment.language_name" id="assignmentLanguage"></language-select>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="assignmentDate">Date</label>
+                <input required type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" is-open="vm.datePickerOpen" show-button-bar="false" ng-model="vm.assignment.start_date" ng-click="vm.datePickerOpen = true" datepicker-options="vm.dateOptions" id="assignmentDate">
               </div>
-              <div class="col-sm-4">
-                <h6>Street</h6>
-              </div>
-              <div class="col-sm-8">
-                <input required type="text" class="form-control" ng-model="vm.assignment.contact.street" id="street" placeholder="Street Address*">
-              </div>
-              <div class="col-sm-4">
-                <h6>City</h6>
-              </div>
-              <div class="col-sm-8">
-                <input required type="text" class="form-control" ng-model="vm.assignment.contact.city" id="city" placeholder="City*">
-              </div>
-              <div class="col-sm-4">
-                <h6>State</h6>
-              </div>
-              <div class="col-sm-8">
-                <input required type="text" class="form-control" ng-model="vm.assignment.contact.state" id="state" maxlength="2" placeholder="State*">
-              </div>
-              <div class="col-sm-4">
-                <h6>Email</h6>
-              </div>
-              <div class="col-sm-8">
-                <input name="email" required type="email" class="form-control" ng-model="vm.assignment.contact.email" id="email" placeholder="E-mail Address*">
-                <h6 ng-show="!assignmentEdit.email.$valid" class="err">Please enter a valid Email address.</h6>
-              </div>
-              <div class="col-sm-4">
-                <h6>ZIP Code</h6>
-              </div>
-              <div class="col-sm-8">
-                <input required ng-class="{invalid: !vm.zipValid}" type="text" class="form-control" ng-model="vm.assignment.contact.zip" id="zip" maxlength="10" placeholder="ZIP Code*">
-                <h6 ng-show="!vm.zipValid" class="err">Please enter a valid ZIP code.</h6>
-              </div>
-              <br>
-              <div class="col-sm-4">
-                <h6>Phone Number</h6>
-              </div>
-              <div class="col-sm-8">
-                <input name="phone" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required ng-class="{invalid: !vm.phoneValid}" type="tel" maxlength="10" class="form-control" ng-model="vm.assignment.contact.phone_number"
-                  placeholder="Phone Number*">
-                <h6 ng-show="!vm.phoneValid" class="err">Please enter a valid 10-digit Phone number.</h6>
+              <div class="col-sm-6">
+                <label for="assignmentTime">Start Time</label>
+                <uib-timepicker ng-model="vm.assignment.start_date" show-spinners="false" id="assignmentTime"></uib-timepicker>
               </div>
             </div>
           </div>
-          <div class="col-md-8">
+          <div class="form-group">
+            <label for="assignmentType">Type</label>
+            <ui-select required ng-model="vm.assignment.type">
+              <ui-select-match>
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="assignment.key as assignment in vm.enums.arrays.assignment_type | filter:{name: $select.search}">
+                {{assignment.name}}
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <h4>Contact Info</h4>
+          <div class="form-group">
+            <label for="assignmentStreet">Street</label>
+            <input type="text" class="form-control" ng-model="vm.assignment.contact.street" id="assignmentStreet" placeholder="Street Address">
+          </div>
+          <div class="form-group">
+            <label for="assignmentCity">City</label>
+            <input type="text" class="form-control" ng-model="vm.assignment.contact.city" id="city" placeholder="City">
+          </div>
+          <div class="form-group">
+            <label for="assignmentState">State</label>
+            <input type="text" class="form-control" ng-model="vm.assignment.contact.state" id="state" maxlength="2" placeholder="State">
+          </div>
+          <div class="form-group">
+            <label for="assignmentEmail">Email</label>
+            <input name="email" type="email" class="form-control" ng-model="vm.assignment.contact.email" id="assignmentEmail" placeholder="E-mail Address">
+          </div>
+          <div class="form-group">
+            <label for="assignmentZip">ZIP Code</label>
+            <input type="text" class="form-control" ng-model="vm.assignment.contact.zip" id="assignmentZip" maxlength="10" placeholder="ZIP Code">
+          </div>
+          <div class="form-group">
+            <label for="assignmentPhone">Phone Number</label>
+            <input id="assignmentPhone" name="phone" onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="tel" maxlength="10" class="form-control" ng-model="vm.assignment.contact.phone_number"
+              placeholder="Phone Number*">
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+
             <div class="form-group">
               <div class="col-sm-12">
                 <h4>Assigned Volunteers</h4>
@@ -111,11 +103,11 @@
         <div class="col-md-4">
           <div class="left-column__section">
             <p class="left-column__header">Date</p>
-            <span>{{vm.assignment.start_time.getMonth() + 1}} / {{vm.assignment.start_time.getDay()}} / {{vm.assignment.start_time.getYear()}}</span>
+            <span ng-bind="vm.displayDate(vm.assignment.start_date)"></span>
           </div>
           <div class="left-column__section">
             <p class="left-column__header">Start Time</p>
-            <span>{{vm.assignment.start_time.getHours()}} : {{vm.assignment.start_time.getMinutes()}}</span>
+            <span ng-bind="vm.displayTime(vm.assignment.start_date)"></span>
           </div>
           <div class="left-column__section">
             <p class="left-column__header">Language</p>
@@ -151,7 +143,7 @@
           </div>
         </div>
       </div>
-      <button type="button" ng-click="vm.openNotificationsModal([vm.assignment])" class="btn btn-lg btn-primary">Contact</button>
+      <button ng-show="vm.assignment.volunteers" type="button" ng-click="vm.openNotificationsModal([vm.assignment.volunteers])" class="btn btn-lg btn-primary">Contact</button>
       <button type="button" ng-if="vm.userIsAdmin" ng-click="vm.edit = true" class="btn btn-lg btn-info">Edit</button>
     </div>
   </div>

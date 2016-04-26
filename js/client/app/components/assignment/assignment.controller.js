@@ -1,18 +1,40 @@
 import _ from 'lodash';
 
 class AssignmentController {
-  constructor(Enums, User, Alert) {
+  constructor(Enums, User, Alert, Requests) {
     this.name = 'assignment';
     this.edit = false;
     this.userIsAdmin = User.isAdmin();
     this.enums = Enums;
+    this.assignment.start_date = new Date(this.assignment.start_date);
+    console.log(this.assignment.start_date);
+
+    this.dateOptions = {
+      showWeeks: false
+    };
 
     if(this.assignment.posted_by.id == User.getUser().id) {
-      this.edit = true;
+      this.edit = false;
+    }
+
+    this.displayDate = function(date) {
+      return date.getMonth() + 1 + '/' + date.getDay() + '/' + date.getFullYear();
+    }
+
+    this.displayTime = function(date) {
+      let hours = date.getHours();
+      let ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      return ('0' + hours).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) + ampm;
+    }
+
+    this.submit = () => {
+      updateAssignment(this.assignment);
     }
 
     let updateAssignment = (assignment) => {
-      $http.patch(api + '/assignments/' + this.assignment.id + '/', this.assignment).then((res) => {
+      Requests.updateAssignment(assignment).then(() => {
         Alert.add('success', 'Assignment successfully updated');
       }, (error) => {
         Alert.add('danger', 'Error: Could not update Assignment');
@@ -22,5 +44,5 @@ class AssignmentController {
 
   }
 }
-AssignmentController.$inject = ['Enums', 'User', 'Alert']
+AssignmentController.$inject = ['Enums', 'User', 'Alert', 'Requests']
 export default AssignmentController;

@@ -7,7 +7,7 @@ let assignmentComponent = {
   bindings: {},
   template,
   controller,
-  controllerAs: 'vm'
+  controllerAs: 'vm',
   bindings: {
     assignment: '='
   },
