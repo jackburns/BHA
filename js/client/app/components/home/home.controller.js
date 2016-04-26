@@ -1,7 +1,7 @@
 class HomeController {
   constructor($state, $uibModal, $http, User, Requests) {
-    this.user = User.getUser();
-    Requests.getUserAssignments(this.user.id).then((res) => {
+    this.userService = User;
+    Requests.getUserAssignments(this.userService.getUser().id).then((res) => {
       this.assignments = res.data;
     });
   }
