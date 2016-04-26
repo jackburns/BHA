@@ -11,7 +11,7 @@ class AssignmentController {
     getAssignments();
 
     this.search = {status: 1};
-    this.isAdmin = User.isAdmin;
+    this.isAdmin = User.isAdmin();
     this.isReverseOrder = false;
 
     this.openNotificationsModal = (languageKey) => {
