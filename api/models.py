@@ -167,6 +167,7 @@ class Volunteer(models.Model):
     last_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
     sex = models.IntegerField(choices=SEX_ENUM, null=True, blank=True)
+    age = models.IntegerField(default=0)
     volunteer_level = models.IntegerField(choices=VOLUNTEER_LEVEL_ENUM, default=0)
     created_at = models.DateTimeField()
     deleted_at = models.DateTimeField(null=True, blank=True)

@@ -71,6 +71,7 @@ class VolunteerSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
     sex = serializers.IntegerField(allow_null=True, required=False)
+    age = serializers.IntegerField(allow_null=True, required=False)
     volunteer_level = serializers.IntegerField(allow_null=True, required=False)
     inactive = serializers.BooleanField(default=False, required=False)
     hours = serializers.IntegerField(allow_null=True, required=False)
