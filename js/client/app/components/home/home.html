@@ -12,6 +12,12 @@
         <a ui-sref="assignments" ng-show="vm.userService.getLevel() != 0">Search for assignments</a>
       </div>
       <div class="row">
+        <a ui-sref="addAssignment" ng-show="vm.userService.isAdmin()">Add a new assignment</a>
+      </div>
+      <div class="row">
+        <a ui-sref="volunteerApplication" ng-show="vm.userService.isAdmin()">Register a new volunteer</a>
+      </div>
+      <div class="row">
         <a href="#" ng-click="vm.userService.viewProfile()">View your profile</a>
       </div>
 
