@@ -1,0 +1,2 @@
+	[BHA] You have a written translation assignment due! Let us know how it's going.
+Go to your volunteer profile to view more information: {{bha_url}}

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .email import process_notification, volunteer_welcome_subject, sub_volunteer_welcome, sub_staff_new_account, staff_new_account_subject
+from .email import process_notification, send_volunteer_welcome_email
 from .models import Volunteer, Contact, Availability, Language, Assignment
 from datetime import datetime
 from django.shortcuts import get_object_or_404
@@ -108,8 +108,10 @@ class VolunteerSerializer(serializers.Serializer):
 
         volunteer.save()
 
-        process_notification(volunteer_welcome_subject, sub_volunteer_welcome(name), [{"email":contact.email}, ], [])
-        process_notification(staff_new_account_subject, sub_staff_new_account(name, contact_data['email'], contact_data['phone_number']), [{"email":"cs4500bha@gmail.com"}, ], [])
+        send_volunteer_welcome_email('Brian')
+
+        #process_notification(volunteer_welcome_subject, sub_volunteer_welcome(name), [{"email":contact.email}, ], [])
+        #process_notification(staff_new_account_subject, sub_staff_new_account(name, contact_data['email'], contact_data['phone_number']), [{"email":"cs4500bha@gmail.com"}, ], [])
 
         #process_notification("Welcome to VIP!", "Thank you for signing up to volunteer for the Boston Housing Authority Volunteers Interpreters Program! We appreciate your help!", [{"email":contact.email},], [])
         #process_notification("New Volunteer Signup", "A new volunteer has signed up for the VIP!", [{"email":"cs4500bha@gmail.com"},], [])

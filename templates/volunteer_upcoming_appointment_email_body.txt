@@ -1,0 +1,12 @@
+Dear {{name}},
+
+This is a reminder that you are signed up to help with the following assignment:
+
+{{assignment_name}} at {{assignment_location}} on {{start_date}} at {{start_time}}.
+
+Please confirm whether or not you're able to assist by replying to this email or calling us at {{bha_phone}}.
+If for any reason you are no longer able to assist with this assignment, please email {{bha_email}} or call us at {{bha_phone}}.
+
+For more information or to update your availability, please log in to your volunteer profile at {{bha_vip_url}}.
+
+On behalf of the BHA, thank you for your service!
