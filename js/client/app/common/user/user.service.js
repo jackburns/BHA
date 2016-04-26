@@ -1,3 +1,4 @@
+
 let UserService = function ($http, $state, $localStorage, Alert) {
   let user = null;
   const maxFailAttempts = 3;
@@ -15,6 +16,10 @@ let UserService = function ($http, $state, $localStorage, Alert) {
         }
       }).then(function(res) {
         failAttempts = 0;
+
+        document.cookie = 'csrftoken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.cookie = 'sessionid=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
         $http.defaults.headers.common.Authorization = 'Token ' + $localStorage.djangotoken;
         user = res.data;
         if(callback) {
