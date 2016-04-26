@@ -3,6 +3,7 @@
 .vagrant
 .idea*
 tags
+static
 
 # Installer logs
 pip-log.txt

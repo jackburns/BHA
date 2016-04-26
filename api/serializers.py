@@ -180,7 +180,7 @@ class AdminVolunteerSerializer(VolunteerSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     contact = ContactSerializer()
     posted_by = VolunteerSerializer(required=False)
-    volunteers = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    volunteers = VolunteerSerializer(read_only=True, many=True)
     posted_by_id = serializers.IntegerField(allow_null=True, required=False)
 
     class Meta:
@@ -203,14 +203,19 @@ class AssignmentSerializer(serializers.ModelSerializer):
         return assignment
 
     def update(self, instance, data):
+        contact_data = data.pop('contact', None)
+        contact = instance.contact
         posted_by_id = data.pop('posted_by_id', None)
-        posted_by = get_object_or_404(Volunteer, id=posted_by_id)
+        posted_by = data.pop('posted_by', None)
+
+        if posted_by_id is not None:
+            new_posted_by = get_object_or_404(Volunteer, id=posted_by_id)
+            data['posted_by'] = new_posted_by
+
+        updateAttrs(contact, contact_data)
+        contact.save
 
         updateAttrs(instance, data)
-
-        if posted_by is not None:
-            instance(posted_by=posted_by)
-
         instance.save()
         return instance
 

@@ -311,38 +311,14 @@
             <p class="panel-body" ng-show="vm.volunteer.notes" ng-bind="vm.volunteer.notes"></p>
             <p class="panel-body" ng-show="!vm.volunteer.notes">No notes found</p>
           </div>
-  <table class=" table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Assignment Name</th>
-        <th>Language</th>
-        <th>Has assigned?</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="assignment in vm.assignments | orderBy:'date'">
-        <td ng-bind="assignment.start_date | date:'shortDate'"></td>
-        <td ng-bind="assignment.start_date | date:'shortTime'"></td>
-        <td ng-bind="assignment.name"></td>
-        <td ng-bind="assignment.language_name | languageKeyToName"></td>
-        <td>
-          <span ng-if="!assignment.volunteers.length">
-            None assigned.
-            <span class="assignment__warning" ng-click="vm.openNotificationsModal(assignment.language)">
-              Find volunteer
-            </span>
-          </span>
-          <span ng-if="assignment.volunteers.length">
-            <span ng-repeat="v in assignment.volunteers">
-              {{ v.first_name }} {{ v.last_name }}
-            </span>
-          </span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <div ng-if="vm.userIsAdmin" class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Admin Notes</h3>
+            </div>
+            <p class="panel-body" ng-show="vm.volunteer.admin_notes" ng-bind="vm.volunteer.admin_notes"></p>
+            <p class="panel-body" ng-show="!vm.volunteer.admin_notes">No notes found</p>
+          </div>
+          <assignment-list assignments="vm.assignments"></assignment-list>
         </div>
       </div>
       <button type="button" ng-click="vm.openNotificationsModal([vm.volunteer])" class="btn btn-lg btn-primary">Contact</button>

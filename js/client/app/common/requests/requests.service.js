@@ -1,22 +1,46 @@
 let RequestsService = function($http, Alert) {
+  let getSearchConfig = (config) => {
+    let paramsObj = {};
+
+    // only add queries if we need to
+     _.forOwn(config, (value, key) => {
+      if(value !== '' && value !== null && value !== undefined) {
+        paramsObj[key] = value;
+      }
+    });
+
+    let parsedConfig = {
+      params: paramsObj
+    };
+
+    return parsedConfig;
+  };
 
   let defaultErrorAlert = (error) => {
     Alert.add('danger', 'An error has occurred');
   };
-  
-  let getAssignments = (successCallback, errorCallback=defaultErrorAlert) => {
-    $http.get(api + '/assignments/').then((res) => {
+
+  let getAssignments = (config, successCallback, errorCallback=defaultErrorAlert) => {
+    $http.get(api + '/assignments/', getSearchConfig(config)).then((res) => {
       successCallback(res.data.results);
     }, errorCallback);
   };
-  
+
+  let updateAssignment = (assignment) => {
+    return $http.patch(api + '/assignments/' + assignment.id + '/', assignment)
+  }
+
   let getVolunteers = (config, successCallback, errorCallback=defaultErrorAlert) => {
-    $http.get(api + '/volunteers/', config).then((res) => {
+    $http.get(api + '/volunteers/', getSearchConfig(config)).then((res) => {
       successCallback(res.data.results);
     }, errorCallback);
   };
-  
-  return { getAssignments , getVolunteers };
+
+  let getUserAssignments = (user_id) => {
+    return $http.get(api + '/volunteers/' + user_id + '/assignments/');
+  };
+
+  return { getAssignments , getVolunteers, updateAssignment, getUserAssignments };
 };
 
 RequestsService.$inject = ['$http', 'Alert'];
