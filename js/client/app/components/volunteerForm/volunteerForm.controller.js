@@ -21,6 +21,7 @@ class VolunteerFormController {
       last_name: "",
       middle_name: "",
       organization: "",
+      age: "",
       contact: {
         street: "",
         city: "",
@@ -52,6 +53,7 @@ class VolunteerFormController {
       this.validAvailabilities = _.every(this.info.availability, 'isValid');
       this.passwordError = Validate.password(this.info.password);
       this.carrierValid = Validate.carrier(this.info.contact.preferred_contact, this.info.contact.carrier);
+      this.ageValid = _.isInteger(this.info.ago);
       this.validateForm(ang_valid);
 
       if (this.allValid) {
