@@ -48,6 +48,8 @@
     "raw-loader": "*",
     "run-sequence": "*",
     "sass-loader": "*",
+    "url-loader": "*",
+    "file-loader": "*",
     "sinon": "^1.17.3",
     "style-loader": "*",
     "supports-color": "*",
