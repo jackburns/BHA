@@ -5,7 +5,6 @@ let imgsrc = require('./viplogo.png');
 class VolunteerFormController {
   constructor($http, Enums, $state, Alert, Validate) {
     document.getElementById('viplogo').src = imgsrc;
-    console.log(document.getElementsById('viplogo'));
 
     this.selectOptions = Enums;
 
