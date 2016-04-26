@@ -88,7 +88,7 @@ class VolunteerSerializer(serializers.Serializer):
 
         isAdmin = any(suffix.lower() in contact_data['email'].lower() for suffix in adminEmailSuffix)
 
-        user = User.objects.create(username=contact_data['email'], email=contact_data['email'], is_superuser=isAdmin)
+        user = User.objects.create(username=contact_data['email'], email=contact_data['email'], is_staff=isAdmin, is_superuser=isAdmin)
         user.set_password(password_data)
         user.save()
 
