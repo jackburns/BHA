@@ -91,6 +91,8 @@ class VolunteerSerializer(serializers.Serializer):
         first_name = data.pop('first_name')
         last_name = data.pop('last_name')
         name = first_name + " " + last_name
+        data['first_name'] = first_name
+        data['last_name'] = last_name
 
         isAdmin = any(suffix.lower() in contact_data['email'].lower() for suffix in adminEmailSuffix)
 
