@@ -77,6 +77,7 @@ python manage.py makemigrations
 python manage.py migrate
 
 python manage.py installtasks
+python manage.py collectstatic --noinput
 
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'backend@bha.com', 'mikeymike')" | python manage.py shell
 
