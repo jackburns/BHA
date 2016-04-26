@@ -180,7 +180,7 @@ class AdminVolunteerSerializer(VolunteerSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     contact = ContactSerializer()
     posted_by = VolunteerSerializer(required=False)
-    volunteers = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    volunteers = VolunteerSerializer(read_only=True, many=True)
     posted_by_id = serializers.IntegerField(allow_null=True, required=False)
 
     class Meta:

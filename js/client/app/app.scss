@@ -7,6 +7,14 @@
     padding: 0;
   }
 
+  .left-column__section {
+    margin-bottom: 10px;
+    .left-column__header {
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+  }
+
   .alert {
     z-index: 100;
     text-align: center;
@@ -69,20 +77,20 @@ form {
   h4 {
     text-align: center;
   }
-  
+
   textarea {
     margin-bottom: 20px;
   }
-  
+
   table.notifications-table {
     th, td {
       text-align: center;
     }
-    
+
     td {
       vertical-align: middle;
     }
-    
+
     background-color: #fafafa;
   }
 }
@@ -90,15 +98,15 @@ form {
 #add-assignment-container {
   max-width: 800px;
   margin: 0 auto;
-  
+
   h2, h4.error {
     text-align: center;
   }
-  
+
   h5, h4 {
     margin-bottom: 2px;
   }
-  
+
   h4.error {
     color: #d00;
   }

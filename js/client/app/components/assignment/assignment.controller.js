@@ -7,7 +7,7 @@ class AssignmentController {
     this.userIsAdmin = User.isAdmin();
     this.enums = Enums;
     this.assignment.start_date = new Date(this.assignment.start_date);
-    console.log(this.assignment.start_date);
+    console.log(this.assignment);
 
     this.dateOptions = {
       showWeeks: false
@@ -23,10 +23,10 @@ class AssignmentController {
 
     this.displayTime = function(date) {
       let hours = date.getHours();
-      let ampm = hours >= 12 ? 'pm' : 'am';
+      let ampm = hours >= 12 ? ' pm' : ' am';
       hours = hours % 12;
       hours = hours ? hours : 12;
-      return ('0' + hours).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) + ampm;
+      return hours + ':' + ('0' + date.getMinutes()).slice(-2) + ampm;
     }
 
     this.submit = () => {

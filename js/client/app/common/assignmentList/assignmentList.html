@@ -1,10 +1,35 @@
-<div class="language-select-group">
-  <ui-select ng-model="vm.selectedLanguage" class="language-select">
-    <ui-select-match allow-clear="true">
-      {{$select.selected.name}}
-    </ui-select-match>
-    <ui-select-choices repeat="languageObj.key as languageObj in vm.allLanguages | filter:{name: $select.search}:vm.startsWithComparator">
-      {{languageObj.name}}
-    </ui-select-choices>
-  </ui-select>
+<div class="assignment-list">
+  <span ng-show="vm.assignments.length === 0">There are no assignments to show.</span>
+  <table ng-show="vm.assignments.length > 0" class=" table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Assignment Name</th>
+        <th>Language</th>
+        <th>Has assigned?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-click="vm.viewAssignment(assignment)" ng-repeat="assignment in vm.assignments | orderBy:'date'">
+        <td ng-bind="assignment.start_date | date:'shortDate'"></td>
+        <td ng-bind="assignment.start_date | date:'shortTime'"></td>
+        <td ng-bind="assignment.name"></td>
+        <td ng-bind="assignment.language_name | languageKeyToName"></td>
+        <td>
+          <span ng-if="!assignment.volunteers.length">
+            None assigned.
+            <span class="assignment__warning" ng-click="vm.openNotificationsModal(assignment.language)">
+              Find volunteer
+            </span>
+          </span>
+          <span ng-if="assignment.volunteers.length">
+            <span ng-repeat="v in assignment.volunteers">
+              {{ v.first_name }} {{ v.last_name }}
+            </span>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

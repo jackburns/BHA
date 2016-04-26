@@ -56,7 +56,7 @@ echo -e "\n--- Setup and install MYSQL ---\n"
 sudo apt-get -y install debconf-utils
 
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password password"
-    
+
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password password"
 
 sudo apt-get install mysql-server -y

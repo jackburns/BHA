@@ -1,15 +1,20 @@
 class AssignmentsController {
   constructor(Modals, Requests, $state, User) {
     let getAssignments = () => {
-      Requests.getAssignments((results) => { console.log(results); this.assignments = results;  })
+      Requests.getAssignments((this.search), (results) => {
+        console.log(results); this.assignments = results;
+      });
     };
 
     this.futureAssignments = [];
-    getAssignments();
 
-    this.search = {status: 0};
+    this.search = {
+      status: 2,
+      langauge_name: '',
+    };
     this.isAdmin = User.isAdmin();
     this.isReverseOrder = false;
+    getAssignments();
 
     this.openNotificationsModal = (languageKey) => {
       Requests.getVolunteers({params: {language: languageKey}}, Modals.openNotifications)
