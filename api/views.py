@@ -13,6 +13,8 @@ from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSeri
 class VolunteerFilter(filters.FilterSet):
     language = django_filters.CharFilter(name="languages__language_name")
     can_write = django_filters.CharFilter(name="languages__can_written_translate")
+    first_name = django_filters.CharFilter(name="first_name", lookup_type="icontains")
+    last_name = django_filters.CharFilter(name="last_name", lookup_type="icontains")
 
     class Meta:
         model = Volunteer
@@ -20,6 +22,7 @@ class VolunteerFilter(filters.FilterSet):
 
 class AssignmentFilter(filters.FilterSet):
     unassigned = django_filters.MethodFilter()
+    name = django_filters.CharFilter(name='name', lookup_type='icontains')
 
     class Meta:
         model = Assignment

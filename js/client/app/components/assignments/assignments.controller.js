@@ -10,8 +10,8 @@ class AssignmentsController {
     this.futureAssignments = [];
 
     this.search = {
-      status: 2,
-      langauge_name: '',
+      status: 1,
+      language_name: '',
       unassigned: false
     };
     this.isAdmin = User.isAdmin();
@@ -20,7 +20,7 @@ class AssignmentsController {
 
     this.updateAssignments = () => {
       getAssignments();
-    }
+    };
 
     this.openNotificationsModal = (languageKey) => {
       Requests.getVolunteers({params: {language: languageKey}}, Modals.openNotifications)
