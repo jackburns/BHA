@@ -3,7 +3,7 @@
   <div class="jumbotron">
     <h2>Home</h2>
     <h4>Welcome to the Volunteer Interpreter Online Portal!</h4>
-    <h5 ng-show="vm.userService.getLevel() === 0 && !vm.userService.isAdmin()">Your application is currently pending approval.</h5>
+    <h5 ng-show="vm.userService.getLevel() === 0">Your application is currently pending approval.</h5>
     <div class="container">
       <div class="row">
         <a ui-sref="volunteerSearch" ng-show="vm.userService.isAdmin()">Search for volunteers</a>
