@@ -1,8 +1,9 @@
 class AssignmentsController {
-  constructor(Modals, Requests, $state, User) {
+  constructor(Modals, Requests, $state, User, Enums) {
+    this.enums = Enums;
     let getAssignments = () => {
       Requests.getAssignments((this.search), (results) => {
-        console.log(results); this.assignments = results;
+        this.assignments = results;
       });
     };
 
@@ -11,10 +12,15 @@ class AssignmentsController {
     this.search = {
       status: 2,
       langauge_name: '',
+      unassigned: false
     };
     this.isAdmin = User.isAdmin();
     this.isReverseOrder = false;
     getAssignments();
+
+    this.updateAssignments = () => {
+      getAssignments();
+    }
 
     this.openNotificationsModal = (languageKey) => {
       Requests.getVolunteers({params: {language: languageKey}}, Modals.openNotifications)
@@ -27,5 +33,5 @@ class AssignmentsController {
   }
 }
 
-AssignmentsController.$inject = ['Modals', 'Requests', '$state', 'User'];
+AssignmentsController.$inject = ['Modals', 'Requests', '$state', 'User', 'Enums'];
 export default AssignmentsController;

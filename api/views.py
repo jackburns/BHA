@@ -19,9 +19,16 @@ class VolunteerFilter(filters.FilterSet):
         fields = ('first_name', 'last_name', 'language', 'can_write', 'volunteer_level')
 
 class AssignmentFilter(filters.FilterSet):
+    unassigned = django_filters.MethodFilter()
+
     class Meta:
         model = Assignment
-        fields = ('name', 'type', 'status', 'language_name')
+        fields = ('name', 'type', 'status', 'language_name', 'unassigned')
+
+    def filter_unassigned(self, queryset, value):
+        if value:
+            return queryset.filter(volunteers=None)
+        return queryset
 
 class NotificationView(views.APIView):
     permission_classes = [IsAuthenticated]

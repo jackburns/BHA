@@ -4,7 +4,7 @@ let RequestsService = function($http, Alert) {
 
     // only add queries if we need to
      _.forOwn(config, (value, key) => {
-      if(value) {
+      if(value !== '' && value !== null && value !== undefined) {
         paramsObj[key] = value;
       }
     });
