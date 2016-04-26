@@ -155,7 +155,7 @@
             </thead>
             <tbody>
               <tr ng-click="vm.viewProfile(volunteer)" ng-repeat="volunteer in vm.assignment.volunteers">
-                <td ng-bind="volunteer.first_name + volunteer.last_name"></td>
+                <td ng-bind="volunteer.full_name"></td>
                 <td ng-bind="volunteer.volunteer_level"></td>
               </tr>
             </tbody>
