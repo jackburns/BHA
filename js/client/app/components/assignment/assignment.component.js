@@ -8,6 +8,10 @@ let assignmentComponent = {
   template,
   controller,
   controllerAs: 'vm'
+  bindings: {
+    assignment: '='
+  },
+  bindToController: true
 };
 
 export default assignmentComponent;

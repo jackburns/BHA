@@ -266,6 +266,13 @@
             <p class="panel-body" ng-show="vm.volunteer.notes" ng-bind="vm.volunteer.notes"></p>
             <p class="panel-body" ng-show="!vm.volunteer.notes">No notes found</p>
           </div>
+          <div ng-if="vm.userIsAdmin" class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Admin Notes</h3>
+            </div>
+            <p class="panel-body" ng-show="vm.volunteer.admin_notes" ng-bind="vm.volunteer.admin_notes"></p>
+            <p class="panel-body" ng-show="!vm.volunteer.admin_notes">No notes found</p>
+          </div>
         </div>
       </div>
       <button type="button" ng-click="vm.openNotificationsModal([vm.volunteer])" class="btn btn-lg btn-primary">Contact</button>
