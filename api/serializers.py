@@ -184,7 +184,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Assignment
-        fields = ('id', 'contact', 'language_name', 'posted_by', 'posted_by_id', 'start_date', 'name', 'volunteers', 'notes', 'type')
+        fields = ('id', 'contact', 'language_name', 'posted_by', 'posted_by_id', 'start_date', 'name', 'volunteers', 'notes', 'type', 'status')
         read_only_fields = ('id', 'posted_by')
         write_only_fields = ('posted_by_id',)
 
@@ -216,6 +216,6 @@ class AssignmentSerializer(serializers.ModelSerializer):
 class AdminAssignmentSerializer(AssignmentSerializer):
     class Meta:
         model = Assignment
-        fields = ('id', 'contact', 'language_name', 'posted_by', 'posted_by_id', 'start_date', 'name', 'volunteers', 'notes', 'type', 'admin_notes')
+        fields = ('id', 'contact', 'language_name', 'posted_by', 'posted_by_id', 'start_date', 'name', 'volunteers', 'notes', 'type', 'admin_notes', 'status')
         read_only_fields = ('id', 'posted_by')
         write_only_fields = ('posted_by_id',)
