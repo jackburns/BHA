@@ -10,7 +10,8 @@ module.exports = {
        { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
        { test: /\.html$/, loader: 'raw' },
        { test: /\.scss$/, loader: 'style!css?sourceMap!sass?sourceMap' },
-       { test: /\.css$/, loader: 'style!css' }
+       { test: /\.css$/, loader: 'style!css' },
+       { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
     ]
   },
   plugins: [
@@ -33,4 +34,3 @@ module.exports = {
     })
   ]
 };
-
