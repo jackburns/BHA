@@ -17,7 +17,7 @@
         <li ng-show="!vm.user.isSignedIn()"><a ui-sref="login">Login</a></li>
         <li ng-show="vm.user.isSignedIn()"><a href="#" ng-click="vm.user.logout()">Logout</a></li>
         <li ng-show="!vm.user.isSignedIn()"><a ui-sref="volunteerApplication">Apply</a></li>
-        <li ng-show="vm.user.isSignedIn()"><a href="#" ng-click="vm.viewProfile()">Profile</a></li>
+        <li ng-show="vm.user.isSignedIn()"><a href="#" ng-click="vm.user.viewProfile()">Profile</a></li>
       </ul>
     </div>
   </div>

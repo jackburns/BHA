@@ -33,12 +33,17 @@ let ValidateService = function (Enums) {
     return !(parseInt(preferred_contact) > 0 && parseInt(carrier) <= 0)
   }
 
+  let age = function(age) {
+    return age > -1;
+  }
+  
   return {
     password: password,
     zip: zip,
     availability: availability,
     phoneNumber: phoneNumber,
-    carrier: carrier
+    carrier: carrier,
+    age: age
   };
 };
 ValidateService.$inject = ['Enums'];
