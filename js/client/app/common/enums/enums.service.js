@@ -133,14 +133,14 @@ let EnumsService = function () {
       15: "Virgin Mobile USA",
     },
     assignment_type: {
-      0: 'in-person',
-      1: 'written',
-      2: 'training'
+      0: 'In-person',
+      1: 'Written',
+      2: 'Training'
     },
     assignment_status: {
-      0: 'unapproved',
-      1: 'approved',
-      2: 'complete'
+      0: 'Unapproved',
+      1: 'Approved',
+      2: 'Complete'
     }
   };
   enums.arrays = {
@@ -282,9 +282,9 @@ let EnumsService = function () {
       {'key': 2, 'name': 'Training'}
     ],
     assignment_status: [
-      {'key': 0, 'name': 'unapproved'},
-      {'key': 1, 'name': 'approved'},
-      {'key': 2, 'name': 'complete'}
+      {'key': 0, 'name': 'Unapproved'},
+      {'key': 1, 'name': 'Approved'},
+      {'key': 2, 'name': 'Complete'}
     ],
     availability_times: [
       '08:00:00',

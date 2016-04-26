@@ -35,6 +35,17 @@
               </ui-select-choices>
             </ui-select>
           </div>
+          <div class="form-group">
+            <label for="assignmentType">Status</label>
+            <ui-select required ng-model="vm.assignment.status">
+              <ui-select-match>
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="status.key as status in vm.enums.arrays.assignment_status | filter:{name: $select.search}">
+                {{status.name}}
+              </ui-select-choices>
+            </ui-select>
+          </div>
           <h4>Contact Info</h4>
           <div class="form-group">
             <label for="assignmentStreet">Street</label>
@@ -111,6 +122,14 @@
         <div class="left-column__section">
           <p class="left-column__header">Language</p>
           <span ng-bind="vm.assignment.language_name | languageKeyToName"></span>
+        </div>
+        <div class="left-column__section">
+          <p class="left-column__header">Type</p>
+          <span ng-bind="vm.enums.assignment_type[vm.assignment.type]"></span>
+        </div>
+        <div class="left-column__section">
+          <p class="left-column__header">Status</p>
+          <span ng-bind="vm.enums.assignment_status[vm.assignment.status]"></span>
         </div>
 
         <div class="left-column__section">
