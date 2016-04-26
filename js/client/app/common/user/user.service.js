@@ -46,7 +46,7 @@ let UserService = function ($http, $state, $localStorage, Alert) {
   };
 
   let isAdmin = () => {
-    return user && user.user.is_staff;
+    return user && user.user.is_superuser;
   }
 
   let getLevel = () => {

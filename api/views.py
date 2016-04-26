@@ -65,7 +65,7 @@ class VolunteerViewSet(viewsets.ModelViewSet):
                 else IsAuthenticated()),
 
     def get_serializer_class(self):
-        if (self.request.user.is_staff):
+        if (self.request.user.is_superuser):
             return AdminVolunteerSerializer
         return VolunteerSerializer
 

@@ -42,7 +42,7 @@ volunteer_jean = {
             "user": {
                 "id": 2,
                 "username": "example@example.com",
-                "is_staff": True
+                "is_superuser": True
             }
 }
 
