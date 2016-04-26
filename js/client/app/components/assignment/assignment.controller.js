@@ -36,6 +36,11 @@ class AssignmentController {
       return hours + ':' + ('0' + date.getMinutes()).slice(-2) + ampm;
     };
 
+    this.assignSelf = () => {
+      this.assignment.volunteers = [User.getUser()];
+      this.submit();
+    };
+
     this.submit = () => {
       updateAssignment(this.assignment, oldVolunteerIds);
     };
