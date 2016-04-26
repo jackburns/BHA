@@ -1,0 +1,7 @@
+Dear {{ name }},
+
+You have successfully registered as a member of the Boston Housing Authority's Volunteer Interpreter Program. You can log in, sign up for opportunities, and manage your appointments and written translations at [BHA VOLUNTEER PORTAL URL].
+
+If you need assistance or have questions, please email us at [BHA EMAIL ADDRESS] or call us at [BHA PHONE NUMBER].
+
+On behalf of the BHA, thank you for your future service!

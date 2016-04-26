@@ -1,15 +1,20 @@
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 import re
-from django.core.mail import EmailMultiAlternatives
+from django.template import Context
+from django.template.loader import get_template
 
 
-def test_template():
+def test_template(name):
     subject, from_email, to = 'Test Template', 'cs4500bha@gmail.com', 'bcox5021@gmail.com'
-    text_content = 'This is an important message.'
-    html_content = '<p>This is an <strong>important</strong> message.</p>'
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    msg.attach_alternative(html_content, "text/html")
+    text_content = get_template('welcome_email_body.txt')
+    html_content = get_template('welcome_email_body.html')
+    d = Context({ 'name': name })
+    
+    text = text_content.render(d)
+    html = html_content.render(d)
+    msg = EmailMultiAlternatives(subject, text, from_email, [to])
+    msg.attach_alternative(html, "text/html")
     msg.send()
 
 def process_notification(subject, message, emailList, textList):
