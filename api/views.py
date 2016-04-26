@@ -30,8 +30,8 @@ class AssignmentFilter(filters.FilterSet):
 
     def filter_unassigned(self, queryset, value):
         if value:
-            return queryset.filter(volunteers=None)
-        return queryset
+            return queryset.filter(volunteers=None).distinct()
+        return queryset.distinct()
 
 class NotificationView(views.APIView):
     permission_classes = [IsAuthenticated]
@@ -45,9 +45,9 @@ class NotificationView(views.APIView):
         return Response({"success": True})
 
 class VolunteerViewSet(viewsets.ModelViewSet):
-    queryset = Volunteer.objects.all()
-    filter_backends = (filters.DjangoFilterBackend,)
-    filter_class = VolunteerFilter
+    queryset = Volunteer.objects.all().distinct()
+    #filter_backends = (filters.DjangoFilterBackend,)
+    #filter_class = VolunteerFilter
 
     @list_route(permission_classes=[IsAuthenticated])
     def me(self, request, *args, **kwargs):
