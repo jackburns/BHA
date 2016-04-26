@@ -1,0 +1,2 @@
+[BHA] A new volunteer has registered for the Volunteer Interpreter Program.
+To approve their account visit {{bha_url}}

@@ -15,6 +15,8 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+#SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -72,7 +74,7 @@ ROOT_URLCONF = 'bha.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,12 +89,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bha.wsgi.application'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_USE_TLS = True
+#EMAIL_HOST = 'ssrs.reachmail.net'
+#EMAIL_PORT = 587
+#EMAIL_HOST_USER = r'NORTHEAS10\bha'
+#EMAIL_HOST_PASSWORD = 'BHAmail3r!!'
+
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'ssrs.reachmail.net'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'cs4500BHA@gmail.com'
+EMAIL_HOST_PASSWORD = 'mikeymike'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = r'NORTHEAS10\bha'
-EMAIL_HOST_PASSWORD = 'BHAmail3r!!'
+
 
 
 CORS_ORIGIN_WHITELIST = (

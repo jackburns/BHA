@@ -1,0 +1,14 @@
+Dear {{name}},
+
+Please let us know if you can help with any of the following assignments:
+
+{{assignment_list}}
+
+[ASSIGNMENT NAME 1] on [START DATE 1] for [LANGUAGE 1]
+[ASSIGNMENT NAME 2] on [START DATE 2] for [LANGUAGE 2]
+[ASSIGNMENT NAME 3] on [START DATE 3] for [LANGUAGE 3]
+
+To sign up for any of these assignments, please visit {{bha_url}}.
+If you're unable to access the assignment sign up please email us at {{bha_email}} or call us at {{bha_phone}}.
+
+On behalf of the BHA, thank you for your service!

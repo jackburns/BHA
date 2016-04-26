@@ -1,0 +1,2 @@
+[BHA] An account has been created for you at the Boston Housing Authority's Volunteer Interpreter's Program.
+Please login at {{bha_url}} Your account information has been sent to you in an email

@@ -1,0 +1,1 @@
+[BHA] New Volunteers Opportunities Available! Go to the assignment sign up page for more information: {{bha_url}}
