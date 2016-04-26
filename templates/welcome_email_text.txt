@@ -1,0 +1,2 @@
+[BHA] You have registered an account with the Boston Housing Authority Volunteer Interpreter's Program.
+Please login at {{bha_url}}

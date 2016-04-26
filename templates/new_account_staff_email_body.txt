@@ -1,0 +1,9 @@
+Dear Language Access Team,
+
+A new volunteer has registered for the Volunteer Interpreter's Program.
+
+Name: {{name}}
+Email Address: {{volunteer_email}}
+Phone Number: {{volunteer_phone}}
+
+To approve their account, please log in at {{bha_vip_url}}.
