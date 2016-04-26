@@ -3,7 +3,7 @@
   <form class="form-inline assignment__filter">
     <div class="form-group">
       <label for="assignment-name" class="input-label">Assignment Name:</label>
-      <input class="form-control" id="assignment-name" type="text" ng-model="vm.search.name">
+      <input class="form-control" id="assignment-name" type="text" ng-model="vm.search.name" ng-change="vm.updateAssignments()">
     </div>
   </form>
   <div class="assignment__filter">
@@ -27,15 +27,15 @@
     </label>
   </div>
   <button class="btn btn-md" ng-click="vm.updateAssignments()">Search</button>
-  <div ng-click="vm.updateAssignments()" ng-if="vm.isAdmin" class="assignment__filter">
+  <div ng-if="vm.isAdmin" class="assignment__filter">
     <label class="radio-inline">
-      <input type="radio" name="assignmentStatus" ng-model="vm.search.status" ng-value="1"> Upcoming assignments
+      <input ng-change="vm.updateAssignments()" type="radio" name="assignmentStatus" ng-model="vm.search.status" ng-value="1"> Upcoming assignments
     </label>
     <label class="radio-inline">
-      <input type="radio" name="assignmentStatus" ng-model="vm.search.status" ng-value="2"> Completed assignments
+      <input ng-change="vm.updateAssignments()" type="radio" name="assignmentStatus" ng-model="vm.search.status" ng-value="2"> Completed assignments
     </label>
     <label class="radio-inline">
-      <input type="radio" name="assignmentStatus" ng-model="vm.search.status" ng-value="0"> Unverified assignments
+      <input ng-change="vm.updateAssignments()" type="radio" name="assignmentStatus" ng-model="vm.search.status" ng-value="0"> Unverified assignments
     </label>
   </div>
   <table class="table table-striped table-hover">
