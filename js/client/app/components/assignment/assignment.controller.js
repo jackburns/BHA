@@ -7,18 +7,12 @@ class AssignmentController {
     this.userIsAdmin = User.isAdmin();
     this.enums = Enums;
     this.assignment.start_date = new Date(this.assignment.start_date);
+    let oldVolunteerIds = _.map(this.assignment.volunteers, 'id');
 
     this.dateOptions = {
       showWeeks: false
     };
 
-    this.allVolunteers = [];
-    Requests.getVolunteers({}, (volunteers) => {
-      _.each(volunteers, (volunteer) => { volunteer.full_name = volunteer.first_name + ' ' + volunteer.last_name});
-      this.allVolunteers = volunteers
-    });
-
-    console.log(this.assignment.posted_by);
     if (this.assignment.posted_by && this.assignment.posted_by.id == User.getUser().id) {
       this.edit = false;
     }
@@ -40,14 +34,15 @@ class AssignmentController {
       hours = hours % 12;
       hours = hours ? hours : 12;
       return hours + ':' + ('0' + date.getMinutes()).slice(-2) + ampm;
-    }
-
-    this.submit = () => {
-      updateAssignment(this.assignment);
     };
 
-    let updateAssignment = (assignment) => {
-      Requests.updateAssignment(assignment).then(() => {
+    this.submit = () => {
+      updateAssignment(this.assignment, oldVolunteerIds);
+    };
+
+    let updateAssignment = (assignment, oldVolunteerIds) => {
+      Requests.updateAssignment(assignment, oldVolunteerIds).then(() => {
+        this.edit = false;
         Alert.add('success', 'Assignment successfully updated');
       }, (error) => {
         Alert.add('danger', 'Error: Could not update Assignment');

@@ -79,6 +79,10 @@ class VolunteerSerializer(serializers.Serializer):
     notes = serializers.CharField(allow_blank=True, allow_null=True, required=False)
     id = serializers.IntegerField(allow_null=True, required=False)
     password = serializers.CharField(allow_null=True, required=False)
+    full_name = serializers.SerializerMethodField()
+
+    def get_full_name(self, obj):
+        return obj.first_name + ' ' + obj.last_name
 
     def create(self, data):
         contact_data = data.pop('contact', None)
@@ -179,7 +183,7 @@ class AdminVolunteerSerializer(VolunteerSerializer):
 
 class AssignmentSerializer(serializers.ModelSerializer):
     contact = ContactSerializer()
-    posted_by = VolunteerSerializer(required=False)
+    posted_by = VolunteerSerializer(required=False, allow_null=True)
     volunteers = VolunteerSerializer(read_only=True, many=True)
     posted_by_id = serializers.IntegerField(allow_null=True, required=False)
 
@@ -208,12 +212,15 @@ class AssignmentSerializer(serializers.ModelSerializer):
         posted_by_id = data.pop('posted_by_id', None)
         posted_by = data.pop('posted_by', None)
 
+        if contact is None:
+            data['contact'] = Contact.objects.create(**contact_data)
+        else:
+            updateAttrs(contact, contact_data)
+            contact.save()
+
         if posted_by_id is not None:
             new_posted_by = get_object_or_404(Volunteer, id=posted_by_id)
             data['posted_by'] = new_posted_by
-
-        updateAttrs(contact, contact_data)
-        contact.save
 
         updateAttrs(instance, data)
         instance.save()
