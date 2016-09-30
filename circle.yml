@@ -1,0 +1,14 @@
+machine:
+  python:
+    version: 3.4.5
+  node:
+    version: 6
+
+dependencies:
+  override:
+    - (cd ./js && npm install)
+    - pip install -r requirements.txt
+
+test:
+  override:
+    - (cd ./js && npm test)
