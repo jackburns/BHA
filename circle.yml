@@ -12,3 +12,4 @@ dependencies:
 test:
   override:
     - (cd ./js && npm test)
+    - python manage.py test
