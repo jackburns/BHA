@@ -4,6 +4,10 @@ machine:
   node:
     version: 6
 
+database:
+  override: 
+    - mysql -u ubuntu circle_test < mysqlSetup.sql
+
 dependencies:
   override:
     - (cd ./js && npm install)
