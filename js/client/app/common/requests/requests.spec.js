@@ -18,7 +18,7 @@ describe('Requests service', function() {
     it('should get assignments', () => {
       let successCallback = sinon.spy();
       $httpBackend.expectGET(api + '/assignments/').respond(mockResults);
-      Requests.getAssignments(successCallback);
+      Requests.getAssignments({}, successCallback);
       $httpBackend.flush();
       expect(successCallback.calledWith(mockResults.results)).to.be.true;
       expect(successCallback.calledOnce).to.be.true;
@@ -39,12 +39,10 @@ describe('Requests service', function() {
     it('should send filters up to the volunteers endpoint', () => {
       let callback = sinon.spy();
       let mockParams = {
-        params: {
-          first_name: 'Abe',
-          last_name: 'Lincoln',
-          language: 'es',
-          can_write: true
-        }
+        first_name: 'Abe',
+        last_name: 'Lincoln',
+        language: 'es',
+        can_write: true
       };
 
       $httpBackend.expectGET(api + '/volunteers/?can_write=true&first_name=Abe&language=es&last_name=Lincoln').respond(mockResults);
