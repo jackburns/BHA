@@ -1,7 +1,7 @@
 <div class="volunteer-form container">
   <div class="jumbotron holder">
     <div class="header">
-      <img id="viplogo">
+      <img id="viplogo" ng-src="{{ vm.imgSrc }}">
       <h2>Volunteer Interpreter Application Form</h2>
     </div>
     <form name="vaf" novalidate role="form" ng-submit="vm.submit(vaf.$valid)" class="form-horizontal vaf">
