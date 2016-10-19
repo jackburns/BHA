@@ -1,13 +1,9 @@
 import _ from 'lodash';
 
-let imgsrc = require('./viplogo.png');
-
 class VolunteerFormController {
   constructor($http, Enums, $state, Alert, Validate) {
-    document.getElementById('viplogo').src = imgsrc;
-
+    this.imgSrc = require('./viplogo.png');
     this.selectOptions = Enums;
-
     this.name = 'Volunteer Application Form';
     this.allValid = false;
     this.zip_valid = false;
@@ -57,7 +53,7 @@ class VolunteerFormController {
       this.submitted = true;
       this.zip_valid = Validate.zip(this.info.contact.zip);
       this.phone_valid = Validate.phoneNumber(this.info.contact.phone_number);
-      this.validLanguages = this.info.languages[0].language_name.length > 0;
+      this.validLanguages = this.info.languages.length > 0 && this.info.languages[0].language_name.length > 0;
       this.info.availability = Validate.availability(this.info.availability);
       this.validAvailabilities = _.every(this.info.availability, 'isValid');
       this.passwordError = Validate.password(this.info.password);

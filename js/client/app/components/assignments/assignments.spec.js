@@ -7,28 +7,27 @@ describe('Assignments', () => {
   let $rootScope, $componentController, makeController, mockModals, mockRequests;
 
   beforeEach(window.module(AssignmentsModule.name));
-
-  beforeEach(() => {
+  beforeEach(inject((_$rootScope_, _$componentController_) => {
+    $rootScope = _$rootScope_;
+    $componentController = _$componentController_;
+    mockModals = {
+      openNotifications: sinon.stub()
+    };
     mockRequests = {
       getAssignments: sinon.stub(),
       getVolunteers: sinon.stub()
     };
-
-    mockModals = {
-      openNotifications: sinon.stub()
-    };
-  });
-
-  beforeEach(inject((_$rootScope_, _$componentController_) => {
-    $rootScope = _$rootScope_;
-    $componentController = _$componentController_;
-
     makeController = () => {
       return $componentController(AssignmentsModule.name, {
-        '$scope': $rootScope,
-        'Modals': mockModals,
-        'Requests': mockRequests
-      })
+        $scope: $rootScope,
+        $state: {},
+        Modals: mockModals,
+        Requests: mockRequests,
+        User: {
+          isAdmin: sinon.stub().returns(true)
+        },
+        Enums: {}
+      });
     };
   }));
 
@@ -38,11 +37,11 @@ describe('Assignments', () => {
 
   describe('Controller', () => {
     it('initializes with futureAssignments fetched from the API', () => {
-      mockRequests.getAssignments.callsArgWith(0, [0, 1]);
+      mockRequests.getAssignments.callsArgWith(1, [0, 1]);
       let controller = makeController();
 
-      expect(controller).to.have.property('futureAssignments');
-      expect(controller.futureAssignments).to.have.length(2);
+      expect(controller).to.have.property('assignments');
+      expect(controller.assignments).to.have.length(2);
     });
 
     it('opens the notifications modal after fetching all volunteers', () => {
