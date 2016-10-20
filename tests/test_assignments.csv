@@ -1,0 +1,195 @@
+name,posted_by,volunteers,language,start_date,time,type,notes,admin_notes,duration,street,city,state,zip,phone
+John Doe,John Doe,,1,04/14/20 00:00:00,11:00:00 AM,0,,ID: AG123456 - Briefing session - n/a -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,3,04/14/21 00:00:00,11:00:00 AM,0,,ID: AG123456 - Briefing session - Applicatbt Briefing -  - n/a - Wants to apply for the LH program,1.0,,,,,617-988-4000
+John Doe,John Doe,,30,01/19/16 00:00:00,9:30AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,14,01/29/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,23,01/25/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,14,01/08/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/06/16 00:00:00,9:30AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/08/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,Chauncey Pl,Lynn,MA,01902,617-988-4000
+John Doe,John Doe,,27,01/11/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,26,01/11/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,14,01/11/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,Boston,MA,02130,617-988-4000
+John Doe,John Doe,,27,01/04/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncey St,Dedham,MA,02026,617-988-4000
+John Doe,John Doe,,27,01/05/16 00:00:00,9:30AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,01/15/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Mansfield,MA,02048,617-988-4000
+John Doe,John Doe,,14,01/19/16 00:00:00,9:30AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncey St,Dedham,MA,02026,617-988-4000
+John Doe,John Doe,,27,01/19/16 00:00:00,9:30AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/22/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/11/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/15/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,23,01/29/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/28/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,30,01/15/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,30,01/29/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,3,02/01/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,9,02/01/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/21/16 00:00:00,11:45 am,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,Chauncey Pl,Lynn,MA,01902,617-988-4000
+John Doe,John Doe,,14,01/22/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,Randolph,MA,02368,617-988-4000
+John Doe,John Doe,,8,01/28/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,02/01/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,02/05/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,MA,02126,617-988-4000
+John Doe,John Doe,,26,02/01/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,02/04/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,14,02/04/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,02/08/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/21/16 00:00:00,2:00 pm,0,,ID: AG123456 - Other - Resident Meeting -  - Edna Carrasco - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,02/18/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy Way,Bourne,MA,02559,617-988-4000
+John Doe,John Doe,,27,01/22/16 00:00:00,9:30am,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,2,01/05/16 00:00:00,02:00pm,0,,ID: AG123456 - Briefing session -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/09/16 00:00:00,1:00 pm,0,,ID: AG123456 - Other - Work Group -  - BHA Staff - ,4.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/07/16 00:00:00,10:30am,0,,ID: AG123456 - Annual recertification -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,3,01/11/16 00:00:00,11:30,0,,ID: AG123456 - Hearing -  -  -  - This hearing needed to be rescheduled b/c the interpreter failed to show up for the first hearing. Can I request that the interpreter be given a reminder call in the early morning the day of the hearing so we can prevent another reschedule?,1.0,,Winthrop,MA,02152,617-988-4000
+John Doe,John Doe,,27,01/29/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncey St,Dedham,MA,02026,617-988-4000
+John Doe,John Doe,,14,02/11/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,MA,02126,617-988-4000
+John Doe,John Doe,,19,01/06/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/13/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,01/20/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/27/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,02/03/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,02/10/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,02/17/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,02/24/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,03/02/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,03/09/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,03/16/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,03/23/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,04/06/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,04/13/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,04/20/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,04/27/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,05/04/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,05/11/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,05/18/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,05/25/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,06/01/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,06/08/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,06/15/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,06/22/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,07/06/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,07/13/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,07/20/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,07/27/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,08/03/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,08/10/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,08/17/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,08/24/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,09/07/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,09/14/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,09/21/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,09/28/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,10/05/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,10/12/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,10/19/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,10/26/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,11/02/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,11/09/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,11/16/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,11/23/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,12/07/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,12/14/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,12/21/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,12/28/16 00:00:00,11:00 am,0,,ID: AG123456 - Other - Briefing Session -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,26,01/05/16 00:00:00,11:30 AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,26,01/11/16 00:00:00,10:00AM,0,,ID: AG123456 - Annual recertification -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,3,02/12/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,14,01/04/16 00:00:00,9:45 am,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,2,12/23/16 00:00:00,9:00 am,0,,ID: AG123456 - Other - Discuss Notice to Quit -  -  - App was set up between LAD and management office. Client got a NTQ and asked FSS assistance (Maria Chavez),1.0,,,,,617-988-4000
+John Doe,John Doe,,14,02/11/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,MA,02126,617-988-4000
+John Doe,John Doe,,28,02/12/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,30,01/06/16 00:00:00,10:30 am,0,,ID: AG123456 - Annual recertification -  -  -  - Appointment will take place on site at Heritage Apartments at 209 Sumner St  East Boston  MA 02128 in the 2nd floor Community room.,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,30,01/08/16 00:00:00,9:30 am,0,,ID: AG123456 - Annual recertification -  -  -  - Appointment will take place on site at Lower Mills in the management office.,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,01/04/16 00:00:00,11:45 am,0,,ID: AG123456 - Annual recertification -  -  -  - Appointment will be conducted on site at Heritage in the Community Room  2nd Floor at 209 Sumner St  East Boston,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/07/16 00:00:00,11:30 AM,0,,ID: AG123456 - Annual recertification -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/13/16 00:00:00,10:30 am,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,Haverhill,MA,01832,617-988-4000
+John Doe,John Doe,,19,01/13/16 00:00:00,10 am,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,01/13/16 00:00:00,10 am,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/13/16 00:00:00,10 am,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,01/27/16 00:00:00,10 am,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,,,,,617-988-4000
+John Doe,John Doe,,8,01/27/16 00:00:00,10 am,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/27/16 00:00:00,10 am,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,01/08/16 00:00:00,2pm,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,01/08/16 00:00:00,2pm,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,01/22/16 00:00:00,2pm,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,01/22/16 00:00:00,2pm,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,01/15/16 00:00:00,12pm,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,01/15/16 00:00:00,12pm,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,01/06/16 00:00:00,1pm,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,01/06/16 00:00:00,1pm,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,01/20/16 00:00:00,1pm,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,01/20/16 00:00:00,1pm,0,,ID: AG123456 - Wellness Connect -  -  -  - ,2.0,,,,,617-988-4000
+John Doe,John Doe,,14,02/18/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/20/16 00:00:00,12:30 pm,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,52Chauncey St,Dedham,MA,02026,617-988-4000
+John Doe,John Doe,,14,02/19/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,MA,02126,617-988-4000
+John Doe,John Doe,,8,01/09/16 00:00:00,1:00 pm,0,,ID: AG123456 - Other - Work Group -  - BHA Staff - ,4.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/13/16 00:00:00,10:30 am,0,,ID: AG123456 - Hearing -  -  -  - ,0.5,,Haverhill,MA,01832,617-988-4000
+John Doe,John Doe,,2,01/05/16 00:00:00,02:00PM,0,,ID: AG123456 - Briefing session -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/22/16 00:00:00,9:30 am,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,30,02/05/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,01/13/16 00:00:00,12:00PM,0,,ID: AG123456 - Annual recertification -  -  -  - ,1.0,52Chauncy St,Cambridge,MA,02138,617-988-4000
+John Doe,John Doe,,8,01/13/16 00:00:00,12:00PM,0,,ID: AG123456 - Annual recertification -  -  -  - ,0.5,52Chauncy St,Cambridge,MA,02138,617-988-4000
+John Doe,John Doe,,14,02/12/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncey St,Dedham,MA,02026,617-988-4000
+John Doe,John Doe,,14,01/14/16 00:00:00,9:15 am,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,26,02/12/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,02/11/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,9,02/11/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/28/16 00:00:00,3:15 pm,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,01/12/16 00:00:00,5:00 pm,0,,ID: AG123456 - Residents meeting -  -  - BHA Staff - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,3,02/19/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,02/18/16 00:00:00,9:30AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,30,01/26/16 00:00:00,12:00 pm,0,,ID: AG123456 - Briefing session -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,30,02/19/16 00:00:00,9:30AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,02/19/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/04/16 00:00:00,9:30 am,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,14,01/14/16 00:00:00,9:15 AM,0,,ID: AG123456 - Hearing - S8 termination -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,8,02/19/16 00:00:00,10:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/05/16 00:00:00,9:30 AM,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/25/16 00:00:00,12:00 pm,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/07/16 00:00:00,3:30 pm,0,,ID: AG123456 - Lease signing -  -  -  - scheduled via phone with Gerardo - thanks!,1.0,,,MA,02126,617-988-4000
+John Doe,John Doe,,9,01/27/16 00:00:00,10:00 am,0,,ID: AG123456 - Hearing -  -  -  - ,0.5,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/27/16 00:00:00,10:45 am,0,,ID: AG123456 - Hearing -  -  -  - ,0.5,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,01/27/16 00:00:00,11:30 am,0,,ID: AG123456 - Hearing -  -  -  - ,0.5,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/29/16 00:00:00,10:45 am,0,,ID: AG123456 - Hearing -  -  -  - ,0.5,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/29/16 00:00:00,11:30 am,0,,ID: AG123456 - Hearing -  -  -  - ,0.5,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,01/05/16 00:00:00,12 pm,0,,ID: AG123456 - Residents meeting -  -  -  - Residents meeting to discuss the upcoming election process and vote on use of tenant participation funds to pay for the election process.,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,9,01/20/16 00:00:00,10:00AM,0,,ID: AG123456 - Rent adjustment -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,01/05/16 00:00:00,1:15 pm,0,,ID: AG123456 - Residents meeting -  -  -  - Residents meeting to discuss the upcoming election process and vote on use of tenant participation funds to pay for the election process.,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,19,01/05/16 00:00:00,2:30 pm,0,,ID: AG123456 - Residents meeting -  -  -  - Residents meeting to discuss the upcoming election process and vote on use of tenant participation funds to pay for the election process.,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/13/16 00:00:00,11:00am,0,,ID: AG123456 - Annual recertification -  -  -  - ,0.5,,,,,617-988-4000
+John Doe,John Doe,,3,01/26/16 00:00:00,12:00 pm,0,,ID: AG123456 - Briefing session -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/19/16 00:00:00,11:00AM,0,,ID: AG123456 - Annual recertification -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/26/16 00:00:00,10:00 am,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,14,01/07/16 00:00:00,1:30 pm,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/19/16 00:00:00,11:00 AM,0,,ID: AG123456 - Annual recertification -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/07/16 00:00:00,1:00pm,0,,ID: AG123456 - Public safety transfer interview -  -  -  - ,1.0,52Chauncy St,Boston,MA,02111,617-988-4000
+John Doe,John Doe,,27,01/07/16 00:00:00,1:00pm,0,,ID: AG123456 - Public safety transfer interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/07/16 00:00:00,1:00pm,0,,ID: AG123456 - Public safety transfer interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,14,01/13/16 00:00:00,11:30am,0,,ID: AG123456 - Private conference -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/15/16 00:00:00,10:00 AM,0,,ID: AG123456 - Screening interview -  -  -  - Screening for TBV,1.0,,,,,617-988-4000
+John Doe,John Doe,,14,01/13/16 00:00:00,11:00am,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/13/16 00:00:00,6:00pm,0,,ID: AG123456 - Other - Design committee meeting -  -  - Would also like to request for Cantonese interpreter.,1.0,,,,,617-988-4000
+John Doe,John Doe,,19,02/25/16 00:00:00,11:45AM,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/11/16 00:00:00,9:30am,0,,ID: AG123456 - Hearing -  -  - Hearing Officer - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,9,01/26/16 00:00:00,12:00 pm,0,,ID: AG123456 - Briefing session -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,10,01/26/16 00:00:00,12:00 pm,0,,ID: AG123456 - Briefing session -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,8,01/13/16 00:00:00,6:00pm,0,,ID: AG123456 - Other - Design committee meeting -  -  - Would also like to request for Cantonese interpreter.,1.0,,,,,617-988-4000
+John Doe,John Doe,,3,02/26/16 00:00:00,10:45am,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/22/16 00:00:00,10:30AM,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,14,01/27/16 00:00:00,10:00AM,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,9,02/22/16 00:00:00,10:45am,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,9,02/26/16 00:00:00,10:45am,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/19/16 00:00:00,11:00AM,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/20/16 00:00:00,6:00 pm,0,,ID: AG123456 - Residents meeting -  -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/26/16 00:00:00,6:00 pm,0,,ID: AG123456 - Residents meeting -  -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,8,01/26/16 00:00:00,6:00 pm,0,,ID: AG123456 - Residents meeting -  -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,8,01/20/16 00:00:00,6:00 pm,0,,ID: AG123456 - Residents meeting -  -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/30/16 00:00:00,,0,,ID: AG123456 - Residents meeting -  -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,8,01/30/16 00:00:00,,0,,ID: AG123456 - Residents meeting -  -  - BHA Staff - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,26,01/25/16 00:00:00,11:45am,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,24,01/25/16 00:00:00,11AM,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,8,02/26/16 00:00:00,10:45am,0,,ID: AG123456 - Screening interview -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/14/16 00:00:00,2:30PM,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,9,02/03/16 00:00:00,11:00,0,,ID: AG123456 - Hearing -  -  -  - ,1.0,,,,,617-988-4000
+John Doe,John Doe,,23,02/12/16 00:00:00,12:30 pm,0,,ID: AG123456 - Annual recertification -  -  -  - Appointment will take place on site in the Lower Mills management office.,1.0,,,,,617-988-4000
+John Doe,John Doe,,27,01/19/16 00:00:00,3:00 pm,0,,ID: AG123456 - Other - Remove family memeber from lease -  -  - ,1.0,,,,,617-988-4000
+ john doe, john doe,,40,02/10/16 00:00:00,2:00 pm,0,,ID:  - Rent adjustment -  -  -  - ,1.0,,,,,
