@@ -1,7 +1,7 @@
 <div class="volunteer-form container">
   <div class="jumbotron holder">
     <div class="header">
-      <img id="viplogo">
+      <img id="viplogo" ng-src="{{ vm.imgSrc }}">
       <h2>Volunteer Interpreter Application Form</h2>
     </div>
     <form name="vaf" novalidate role="form" ng-submit="vm.submit(vaf.$valid)" class="form-horizontal vaf">
@@ -28,7 +28,7 @@
           <input type="text" class="form-control" ng-model="vm.info.organization" id="organization" placeholder="Current Affiliation/School/Organization">
         </div>
         <div class="col-sm-4">
-          <input type="number" class="form-control" ng-model="vm.info.age" id="age" placeholder="Age">
+          <input required type="number" class="form-control" ng-model="vm.info.age" id="age" placeholder="Age">
         </div>
       </div>
       <div class="form-group">
