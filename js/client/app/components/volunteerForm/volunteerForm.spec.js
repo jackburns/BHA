@@ -56,6 +56,30 @@ describe('VolunteerForm', () => {
       expect(ctrl.allValid).to.be.true;
     });
 
+    it('should test for valid form entries', () => {
+      let ctrl = makeController();
+      ctrl.validateForm(false);
+      expect(ctrl.allValid).to.be.false;
+
+      // zip
+      ctrl.info.zip = 0;
+      ctrl.zip_valid = false;
+      ctrl.validateForm(false)
+      expect(ctrl.allValid).to.be.false;
+
+      // phone
+      ctrl.info.contact.phone_number = 092309233;
+      ctrl.phone_valid = false;
+      ctrl.validateForm(false);
+      expect(ctrl.allValid).to.be.false;
+      
+      // avaliablity
+      ctrl.info.avaliablity = [];
+      ctrl.validAvailabilities = false;
+      ctrl.validateForm(false);
+      expect(ctrl.allValid).to.be.false;
+    });
+
 
     it('contact select is initially set to 0 for email', () => {
       let ctrl = makeController();
