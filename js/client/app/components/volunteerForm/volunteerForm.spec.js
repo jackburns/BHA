@@ -51,6 +51,8 @@ describe('VolunteerForm', () => {
       ctrl.validateForm(false);
       expect(ctrl.allValid).to.be.false;
       ctrl.carrierValid = true;
+      ctrl.ageValid = false;
+      expect(ctrl.allValid).to.be.false;
       ctrl.ageValid = true;
       ctrl.validateForm(true);
       expect(ctrl.allValid).to.be.true;

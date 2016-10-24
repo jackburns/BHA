@@ -6,6 +6,7 @@ class VolunteerFormController {
     this.selectOptions = Enums;
     this.name = 'Volunteer Application Form';
     this.allValid = false;
+    this.ageValid = false;
     this.zip_valid = false;
     this.phone_valid = false;
     this.validLanguages = false;
