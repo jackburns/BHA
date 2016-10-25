@@ -4,9 +4,9 @@ from rest_framework.authtoken.models import Token
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.test.client import Client
-from .models import Volunteer, Contact
+from api.models import Volunteer, Contact
 from django.utils import timezone
-from .serializers import purgeList
+from api.serializers import purgeList
 
 
 volunteer_jean = {
