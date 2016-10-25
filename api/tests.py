@@ -1,5 +1,6 @@
 from django.test import TestCase
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APIClient
+from rest_framework.authtoken.models import Token
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.test.client import Client
@@ -47,32 +48,33 @@ volunteer_jean = {
 }
 
 class ApiEndpointsTests(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_superuser(username='username',
-                                                  password='password',
-                                                  email='example@example.com')
-        self.user.save()
-        self.c = Client()
-        self.c.force_login(self.user)
 
-    def test_basic_api(self):
-        response = self.c.get("")
-        self.assertEqual(response.status_code, 200)
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='username',
+            password='password',
+            email='foo@bar.com',
+            is_active=True
+        )
+        self.user.save()
+        self.c = APIClient()
+        login_response = self.c.post('/api/auth/login/', {'username': 'username', 'password': 'password'})
+        self.c.credentials(HTTP_AUTHORIZATION='Token ' + login_response.data['key'])
 
     def test_get_empty_volunteers(self):
-        response = self.c.get("/api/volunteers/")
+        response = self.c.get('/api/volunteers/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['count'], 0)
         self.assertEqual(response.json()['results'], [])
 
     def test_get_empty_assignments(self):
-        response = self.c.get("/api/assignments/")
+        response = self.c.get('/api/volunteers/me/', fallow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['count'], 0)
         self.assertEqual(response.json()['results'], [])
 
     def test_admin(self):
-        response = self.c.get("/admin/")
+        response = self.c.get('/admin/login/')
         self.assertEqual(response.status_code, 200)
 
     def create_contact(self):
