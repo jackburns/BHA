@@ -12,7 +12,7 @@ from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSeri
 
 class VolunteerFilter(filters.FilterSet):
     language = django_filters.CharFilter(name="languages__language_name")
-    can_write = django_filters.CharFilter(name="languages__can_written_translate")
+    can_write = django_filters.BooleanFilter(name="languages__can_written_translate")
     first_name = django_filters.CharFilter(name="first_name", lookup_type="icontains")
     last_name = django_filters.CharFilter(name="last_name", lookup_type="icontains")
 
@@ -46,8 +46,8 @@ class NotificationView(views.APIView):
 
 class VolunteerViewSet(viewsets.ModelViewSet):
     queryset = Volunteer.objects.all().distinct()
-    #filter_backends = (filters.DjangoFilterBackend,)
-    #filter_class = VolunteerFilter
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = VolunteerFilter
 
     @list_route(permission_classes=[IsAuthenticated])
     def me(self, request, *args, **kwargs):
