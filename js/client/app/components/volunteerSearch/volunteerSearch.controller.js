@@ -53,7 +53,7 @@ class VolunteerSearchController {
       first_name: '',
       last_name: '',
       language: '',
-      can_write: false
+      can_write: ''
     };
     this.getVolunteers();
     this.viewVolunteer = viewVolunteer;

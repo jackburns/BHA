@@ -10,16 +10,19 @@
         <label for="last_name" class="input-label">Last Name:</label>
         <input class="form-control" id="last_name" type="text" ng-model="vm.search.last_name">
       </div>
-    </form>
-    <div class="language-filters">
-      <label class="input-label">Language:</label>
-      <language-select selected-language="vm.search.language"></language-select>
-      <div class="checkbox inline-checkbox">
-        <label>
-          <input type="checkbox" value=""> Willing to translate
-        </label>
+      <div class="form-group">
+        <label class="input-label">Language:</label>
+        <language-select selected-language="vm.search.language"></language-select>
       </div>
-    </div>
+      <div class="form-group">
+        <label class="input-label">Willing to translate:</label>
+        <div class="form-group">
+          <label class="radio-inline"><input type="radio" value="" ng-model="vm.search.can_write">Either</label>
+          <label class="radio-inline"><input type="radio" value="True" ng-model="vm.search.can_write">Yes</label>
+          <label class="radio-inline"><input type="radio" value="False" ng-model="vm.search.can_write">No</label>
+        </div>
+      </div>
+    </form>
     <button class="btn btn-md" ng-click="vm.getVolunteers()">Search</button>
     <div class="checkbox inline-checkbox">
       <label>
