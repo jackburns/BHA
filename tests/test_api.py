@@ -14,8 +14,8 @@ class ApiEndpointsTests(TestCase):
         self.auth_token = self.login(default_username, default_password)
         self.c.credentials(HTTP_AUTHORIZATION='Token ' + self.auth_token)
 
-    def get_user_signup_form_data(self, username, password):
-        return {
+    def get_user_signup_form_data(self, username, password, **kwargs):
+        return dict({
             'password': password,
             'first_name': 'Foo',
             'last_name': 'Barman',
@@ -43,10 +43,10 @@ class ApiEndpointsTests(TestCase):
                 'end_time': '12:30:00'
             }],
             'notes': ""
-        }
+        }, **kwargs)
 
-    def signup(self, username, password):
-        singup_json = self.get_user_signup_form_data(username, password)
+    def signup(self, username, password, **kwargs):
+        singup_json = self.get_user_signup_form_data(username, password, **kwargs)
         signup_response = self.c.post('/api/volunteers/', singup_json, format='json')
         self.assertEqual(signup_response.status_code, 201)
         return User.objects.get(username=username)
@@ -73,6 +73,40 @@ class ApiEndpointsTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['count'], 1)
         self.assertIn('first_name', response.json()['results'][0])
+
+    def test_get_volunteers(self):
+        self.signup('bar@baz.com', 'password', first_name='Bar', last_name='Quxdale')
+        response = self.c.get('/api/volunteers/').json()
+        self.assertEqual(response['count'], 2)
+        self.assertIn('bar@baz.com', str(response['results']))
+        self.assertIn(default_username, str(response['results']))
+
+    def test_filter_volunteers(self):
+        self.signup(
+            'bar@baz.com', 'password',
+            first_name='Bar', last_name='Quxdale',
+            languages=[{
+                'can_written_translate': True,
+                'language_name': 'en'
+            }]
+        )
+        # Filter on first name
+        resp = self.c.get('/api/volunteers/', data={
+            'first_name': 'Bar'
+        }).json()
+        self.assertEqual(resp['count'], 1)
+        self.assertIn('bar@baz.com', str(resp['results'][0]))
+        # Filter on language
+        resp = self.c.get('/api/volunteers/', data={
+            'can_write': True
+        }).json()
+        self.assertEqual(resp['count'], 1)
+        self.assertIn('bar@baz.com', str(resp['results'][0]))
+        resp = self.c.get('/api/volunteers/', data={
+            'can_write': False
+        }).json()
+        self.assertEqual(resp['count'], 1)
+        self.assertIn(default_username, str(resp['results'][0]))
 
     def test_get_empty_assignments(self):
         response = self.c.get('/api/volunteers/me/')
