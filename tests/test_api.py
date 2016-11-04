@@ -3,6 +3,9 @@ from contextlib import contextmanager
 from django.contrib.auth.models import User
 from django.test import TestCase
 from rest_framework.test import APIClient
+from django.utils import timezone
+from api.models import Volunteer
+from django.db.models import Sum, Count
 
 default_username = 'foo@bar.com'
 default_password = 'password'
@@ -59,6 +62,45 @@ class ApiEndpointsTests(TestCase):
         self.assertEqual(login_response.status_code, 200)
         return login_response.data['key']
 
+    def get_assignment_form_data(self, data=None):
+        return dict({
+            "name": "Foo",
+            "language_name": "az",
+            "start_date": "2016-11-04T12:32:46.565Z",
+            "type": "0",
+            "notes": "",
+            "admin_notes": "",
+            "contact": {
+                "street": "",
+                "city": "",
+                "state": "",
+                "zip": "",
+                "phone_number": "",
+                "email": ""
+            },
+            "posted_by_id": self.user.id,
+            "volunteers": [],
+            "status": "0"
+        }, **(data or {}))
+
+    def create_assignment(self, data=None):
+        form = self.get_assignment_form_data(data)
+        response = self.c.post('/api/assignments/', form, format='json')
+        self.assertEqual(response.status_code, 201)
+        return response.json()
+
+    def add_volunteer_to_assignment(self, assignment_id, volunteer_id):
+        response = self.c.post(
+            '/api/assignments/{}/add_volunteer/'.format(assignment_id),
+            data={'volunteer_id': volunteer_id},
+            format='json'
+        )
+        self.assertEqual(response.status_code, 200)
+        return response.json()
+
+    def test_create_assignment(self):
+        self.create_assignment()
+
     def test_update_volunteer(self):
         self.assertEqual(self.user.volunteer.age, 22)
         patch = dict(self.get_user_signup_form_data(self.user.username, self.user.password))
@@ -108,10 +150,75 @@ class ApiEndpointsTests(TestCase):
         self.assertEqual(resp['count'], 1)
         self.assertIn(default_username, str(resp['results'][0]))
 
-    def test_get_empty_assignments(self):
+    def test_get_my_assignments(self):
         response = self.c.get('/api/volunteers/me/')
-        self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['assignments'], [])
+
+        assignment = self.create_assignment()
+        self.add_volunteer_to_assignment(assignment['id'], self.user.id)
+        response = self.c.get('/api/volunteers/me/')
+        self.assertEqual(response.json()['assignments'], [assignment['id']])
+
+    def test_get_assignments(self):
+        three_days_ago = (timezone.now() - timezone.timedelta(days=3)).strftime("%Y-%m-%d %H:%M:%S")
+        three_days_in_the_future = (timezone.now() + timezone.timedelta(days=3)).strftime("%Y-%m-%d %H:%M:%S")
+        four_days_in_the_future = (timezone.now() + timezone.timedelta(days=4)).strftime("%Y-%m-%d %H:%M:%S")
+        now = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        assignment_1 = self.create_assignment({'status': 0, 'type': 2, 'start_date': three_days_ago, 'duration': 7})
+        assignment_2 = self.create_assignment({'status': 2, 'type': 2, 'start_date': three_days_in_the_future, 'duration': 10})
+
+        # Empty assignments
+        response = self.c.get('/api/assignments/').json()
+        self.assertEqual(len(response['results']), 2)
+        self.assertIn("'id': {}".format(assignment_1['id']), str(response['results']))
+        self.assertIn("'id': {}".format(assignment_2['id']), str(response['results']))
+
+        # Date range
+        response = self.c.get('/api/assignments/', data={'start_date_starting_at': now}).json()
+        self.assertEqual(len(response['results']), 1)
+        self.assertEqual(response['results'][0]['id'], assignment_2['id'])
+
+        response = self.c.get('/api/assignments/', data={'start_date_starting_at': three_days_in_the_future}).json()
+        self.assertEqual(len(response['results']), 1)
+        self.assertEqual(response['results'][0]['id'], assignment_2['id'])
+
+        response = self.c.get('/api/assignments/', data={'start_date_starting_at': four_days_in_the_future}).json()
+        self.assertEqual(len(response['results']), 0)
+
+        response = self.c.get('/api/assignments/', data={'start_date_ending_at': now}).json()
+        self.assertEqual(len(response['results']), 1)
+        self.assertEqual(response['results'][0]['id'], assignment_1['id'])
+
+    def test_hours_automatically_updated(self):
+        three_days_ago = (timezone.now() - timezone.timedelta(days=3)).strftime("%Y-%m-%d %H:%M:%S")
+        three_days_in_the_future = (timezone.now() + timezone.timedelta(days=3)).strftime("%Y-%m-%d %H:%M:%S")
+        four_days_in_the_future = (timezone.now() + timezone.timedelta(days=4)).strftime("%Y-%m-%d %H:%M:%S")
+        now = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        assignment = self.create_assignment({'status': 2, 'start_date': three_days_ago, 'duration': 3})
+        self.add_volunteer_to_assignment(assignment['id'], self.user.id)
+
+        assignment = self.create_assignment({'status': 2, 'start_date': three_days_ago, 'duration': 7})
+        self.add_volunteer_to_assignment(assignment['id'], self.user.id)
+
+        assignment = self.create_assignment({'status': 0, 'start_date': three_days_ago, 'duration': 7})
+        self.add_volunteer_to_assignment(assignment['id'], self.user.id)
+
+        assignment = self.create_assignment({'status': 2, 'start_date': three_days_in_the_future, 'duration': 10})
+        self.add_volunteer_to_assignment(assignment['id'], self.user.id)
+
+        response = self.c.get('/api/volunteers/me/')
+        self.assertEqual(response.json()['hours'], 20)
+
+        response = self.c.get('/api/volunteers/')
+        self.assertEqual(response.json()['results'][0]['hours'], 20)
+
+        response = self.c.get('/api/volunteers/', {'hours_starting_at': now})
+        self.assertEqual(response.json()['results'][0]['hours'], 10)
+
+        response = self.c.get('/api/volunteers/', {'hours_starting_at': four_days_in_the_future})
+        self.assertEqual(response.json()['results'][0]['hours'], 0)
 
     def test_admin(self):
         response = self.c.get('/admin/login/')
