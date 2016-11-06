@@ -49,6 +49,10 @@
           Languages
           <span class="sortorder" ng-show="vm.ordering === 'languages'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
         </th>
+        <th class="hours-column" ng-click="vm.updateOrder('hours')">
+          Hours
+          <span class="sortorder" ng-show="vm.ordering === 'hours'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
+        </th>
       </tr>
       </thead>
       <tbody>
@@ -57,6 +61,7 @@
         <td class="clickable first-name-column" ng-bind="volunteer.first_name" ng-click="vm.viewVolunteer(volunteer.id)"></td>
         <td class="clickable last-name-column" ng-bind="volunteer.last_name" ng-click="vm.viewVolunteer(volunteer.id)"></td>
         <td class="clickable languages-column" ng-bind="vm.getLanguagesDisplay(volunteer.languages)" ng-click="vm.viewVolunteer(volunteer.id)"></td>
+        <td class="clickable hours-column" ng-bind="volunteer.hours" ng-click="vm.viewVolunteer(volunteer.id)"></td>
       </tr>
       </tbody>
     </table>
