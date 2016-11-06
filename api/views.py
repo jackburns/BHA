@@ -120,7 +120,8 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         assignment.save()
 
         # Send confirmation email
-        update_to_assignment('added', volunteer.first_name)
+        name = volunteer.first_name + " " + volunteer.last_name
+        update_to_assignment('added', name)
 
         return Response({'success': 'volunteer added to assignment'})
 
@@ -132,6 +133,7 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         assignment.save()
 
         # Send confirmation email
-        update_to_assignment('removed', volunteer.first_name)
+        name = volunteer.first_name + " " + volunteer.last_name
+        update_to_assignment('removed', name)
 
         return Response({'success': 'volunteer removed from assignment'})
