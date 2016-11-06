@@ -60,7 +60,6 @@ class Migration(migrations.Migration):
                 ('deleted_at', models.DateTimeField(blank=True, null=True)),
                 ('notes', models.TextField(blank=True, null=True)),
                 ('inactive', models.BooleanField(default=False)),
-                ('hours', models.IntegerField(default=0)),
                 ('contact', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='api.Contact')),
                 ('user', models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
