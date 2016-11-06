@@ -78,6 +78,8 @@ class VolunteerSerializer(serializers.Serializer):
     notes = serializers.CharField(allow_blank=True, allow_null=True, required=False)
     id = serializers.IntegerField(allow_null=True, required=False)
     password = serializers.CharField(allow_null=True, required=False)
+    hours_starting_at = serializers.DateTimeField(required=False)
+    hours_ending_at = serializers.DateTimeField(required=False)
     full_name = serializers.SerializerMethodField()
 
     def get_full_name(self, obj):
@@ -200,7 +202,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Assignment
-        fields = ('id', 'contact', 'language_name', 'posted_by', 'posted_by_id', 'start_date', 'name', 'volunteers', 'notes', 'type', 'status')
+        fields = ('id', 'contact', 'language_name', 'posted_by', 'posted_by_id', 'start_date', 'name', 'volunteers', 'notes', 'type', 'status', 'duration')
         read_only_fields = ('id', 'posted_by')
         write_only_fields = ('posted_by_id',)
 

@@ -175,7 +175,6 @@ class Volunteer(models.Model):
     admin_notes = models.TextField(null=True, blank=True)
     inactive = models.BooleanField(default=False)
     contact = models.OneToOneField(Contact)
-    hours = models.IntegerField(default=0)
     organization = models.CharField(max_length=120, null=True, blank=True)
 
     def __str__(self):

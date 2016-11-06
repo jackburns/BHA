@@ -1,4 +1,6 @@
 import django_filters
+from django_filters import widgets
+from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework.decorators import detail_route, list_route
@@ -8,7 +10,7 @@ from .email import process_notification
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSerializer, AdminAssignmentSerializer, AssignmentSerializer
-
+from django.db.models import Sum, When, Case, IntegerField
 
 class VolunteerFilter(filters.FilterSet):
     language = django_filters.CharFilter(name="languages__language_name")
@@ -21,12 +23,14 @@ class VolunteerFilter(filters.FilterSet):
         fields = ('first_name', 'last_name', 'language', 'can_write', 'volunteer_level')
 
 class AssignmentFilter(filters.FilterSet):
-    unassigned = django_filters.MethodFilter()
+    unassigned = django_filters.MethodFilter(widget=widgets.BooleanWidget())
     name = django_filters.CharFilter(name='name', lookup_type='icontains')
+    start_date_starting_at = django_filters.DateTimeFilter(name="start_date", lookup_type=('gte'))
+    start_date_ending_at = django_filters.DateTimeFilter(name="start_date", lookup_type=('lte'))
 
     class Meta:
         model = Assignment
-        fields = ('name', 'type', 'status', 'language_name', 'unassigned')
+        fields = ('name', 'type', 'status', 'language_name', 'start_date', 'unassigned')
 
     def filter_unassigned(self, queryset, value):
         if value:
@@ -45,19 +49,35 @@ class NotificationView(views.APIView):
         return Response({"success": True})
 
 class VolunteerViewSet(viewsets.ModelViewSet):
-    queryset = Volunteer.objects.all().distinct()
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = VolunteerFilter
 
+    def _extract_hour_summation_filters(self):
+        sum_conditions = {'assignments__status': 2}
+        if 'hours_starting_at' in self.request.query_params:
+            sum_conditions['assignments__start_date__gte'] = self.request.query_params['hours_starting_at']
+        if 'hours_ending_at' in self.request.query_params:
+            sum_conditions['assignments__start_date__lte'] = self.request.query_params['hours_ending_at']
+        return sum_conditions
+
+    def get_queryset(self):
+        return Volunteer.objects.annotate(
+            hours=Sum(Case(
+                When(then='assignments__duration', **self._extract_hour_summation_filters()),
+                default=0,
+                output_field=IntegerField()
+            ))
+        ).distinct()
+
     @list_route(permission_classes=[IsAuthenticated])
     def me(self, request, *args, **kwargs):
-        volunteer = get_object_or_404(Volunteer, user_id=request.user.id)
+        volunteer = get_object_or_404(self.get_queryset(), user_id=request.user.id)
         serializer = self.get_serializer(volunteer, context={'request': request})
         return Response(serializer.data)
 
     @detail_route(methods=['get'])
     def assignments(self, request, *args, **kwargs):
-        volunteer = get_object_or_404(Volunteer, id=int(kwargs['pk']))
+        volunteer = get_object_or_404(self.get_queryset(), id=int(kwargs['pk']))
         assignments = Assignment.objects.filter(volunteers=volunteer)
         serializer = AssignmentSerializer(assignments, context={'request': request}, many=True)
         return Response(serializer.data)
