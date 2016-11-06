@@ -49,6 +49,39 @@ def send_volunteer_welcome_email(name):
     msg.attach_alternative(html, "text/html")
     msg.send()
 
+################################ ADDED
+def update_to_assignment(update, name):
+    if update == 'added':
+        send_volunteer_added_assignment(name)
+    else:
+        send_volunteer_removed_assignment(name)
+
+
+def send_volunteer_added_assignment(name):
+    text_content = get_template('user_added_email_body.txt')
+    html_content = get_template('user_added_email_body.html')
+    c = get_context_volunteer_welcome(name)
+    text = text_content.render(c)
+    html = html_content.render(c)
+    from_email = testing_emails[0]
+    to_email = testing_emails[1]
+    msg = EmailMultiAlternatives(volunteer_added_to_assignment, text, from_email, [to_email])
+    msg.attach_alternative(html, "text/html")
+    msg.send()
+
+
+def send_volunteer_removed_assignment(name):
+    text_content = get_template('user_removed_email_body.txt')
+    html_content = get_template('user_removed_email_body.html')
+    c = get_context_volunteer_welcome(name)
+    text = text_content.render(c)
+    html = html_content.render(c)
+    from_email = testing_emails[0]
+    to_email = testing_emails[1]
+    msg = EmailMultiAlternatives(volunteer_removed_from_assignment, text, from_email, [to_email])
+    msg.attach_alternative(html, "text/html")
+    msg.send()
+################################ ADDED
 
 def send_staff_new_account_notice_email(name, volunteer_email, volunteer_phone):
     text_content = get_template('new_account_staff_email_body.txt')
@@ -269,6 +302,8 @@ carriers = {
 
 from_email, to = 'cs4500bha@gmail.com', 'bcox5021@gmail.com'
 
+testing_emails = ['hussein.abounassif93@gmail.com', 'hussein.abounassif93@gmail.com']
+
 bha_phone_number = "617-988-4032"
 
 bha_url = "https://www.bostonhousing.org/en/vip"
@@ -276,6 +311,10 @@ bha_url = "https://www.bostonhousing.org/en/vip"
 bha_email_address = "LanguageAccessTeam@bostonhousing.org"
 
 volunteer_welcome_subject = "[BHA] Thanks for Creating An Account With the Boston Housing Authority"
+
+volunteer_added_to_assignment = "[BHA] You Were Added to an Assignment With the Boston Housing Authority"
+
+volunteer_removed_from_assignment = "[BHA] You Were Removed from an Assignment With the Boston Housing Authority"
 
 staff_new_account_subject = "[BHA] A New Volunteer Has Created An Account"
 

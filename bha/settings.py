@@ -97,13 +97,17 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_HOST_USER = r'NORTHEAS10\bha'
 #EMAIL_HOST_PASSWORD = 'BHAmail3r!!'
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'cs4500BHA@gmail.com'
-EMAIL_HOST_PASSWORD = 'mikeymike'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'cs4500BHA@gmail.com'
+# EMAIL_HOST_PASSWORD = 'mikeymike'
+# EMAIL_PORT = 587
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'hussein.abounassif93@gmail.com'
+EMAIL_HOST_PASSWORD = 'Thenotebook!23'
 EMAIL_PORT = 587
-
-
+EMAIL_USE_TLS = True
 
 CORS_ORIGIN_WHITELIST = (
     'local.bha.com',
