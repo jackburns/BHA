@@ -224,9 +224,9 @@ class ApiEndpointsTests(TestCase):
 
         response = self.c.get('/api/volunteers/', {'hours_starting_at': four_days_in_the_future})
         self.assertEqual(response.json()['results'][0]['hours'], 0)
-    
+
     def test_email_on_update(self):
-        mail.send_mail('subject', 'body.', 'bha@gmail.com', ['messi@barca.com'])        
+        mail.send_mail('subject', 'body.', 'bha@gmail.com', ['messi@barca.com'])
         # 3 situations which before tests would have sent emails
         self.assertEqual(len(mail.outbox), 3)
         self.assertEqual(mail.outbox[0].subject, '[BHA] Thanks for Creating An Account With the Boston Housing Authority')
@@ -235,6 +235,11 @@ class ApiEndpointsTests(TestCase):
     def test_admin(self):
         response = self.c.get('/admin/login/')
         self.assertEqual(response.status_code, 200)
+
+    def test_user_with_gmail_address_not_created_as_superuser(self):
+        user = self.signup("jdoe@gmail.com", "password", first_name="John", last_name="Doe")
+        self.assertFalse(user.is_superuser)
+        self.assertFalse(user.is_staff)
 
     def test_should_provide_helpful_error_messages_when_signup_errors_occur(self):
         self.signup('fuzz@buzz.com', 'password')
