@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import detail_route, list_route
 from rest_framework import viewsets, views, filters #, status
 from .models import Volunteer, Assignment
-from .email import process_notification
+from .email import process_notification, update_to_assignment
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSerializer, AdminAssignmentSerializer, AssignmentSerializer
@@ -119,6 +119,10 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         assignment.volunteers.add(volunteer)
         assignment.save()
 
+        # Send confirmation email
+        name = volunteer.first_name + " " + volunteer.last_name
+        update_to_assignment('added', name)
+
         return Response({'success': 'volunteer added to assignment'})
 
     @detail_route(methods=['post'])
@@ -127,5 +131,9 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         volunteer = get_object_or_404(Volunteer, id=request.data['volunteer_id'])
         assignment.volunteers.remove(volunteer)
         assignment.save()
+
+        # Send confirmation email
+        name = volunteer.first_name + " " + volunteer.last_name
+        update_to_assignment('removed', name)
 
         return Response({'success': 'volunteer removed from assignment'})

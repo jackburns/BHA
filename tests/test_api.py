@@ -1,15 +1,20 @@
 from contextlib import contextmanager
 
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from rest_framework.test import APIClient
 from django.utils import timezone
 from api.models import Volunteer
 from django.db.models import Sum, Count
+from django.core import mail
+import pdb # Tracer
+
 
 default_username = 'foo@bar.com'
 default_password = 'password'
 
+# Override backend email server as to not send actual emails during tests
+@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
 class ApiEndpointsTests(TestCase):
     def setUp(self):
         self.c = APIClient()
@@ -219,6 +224,13 @@ class ApiEndpointsTests(TestCase):
 
         response = self.c.get('/api/volunteers/', {'hours_starting_at': four_days_in_the_future})
         self.assertEqual(response.json()['results'][0]['hours'], 0)
+    
+    def test_email_on_update(self):
+        mail.send_mail('subject', 'body.', 'bha@gmail.com', ['messi@barca.com'])        
+        # 3 situations which before tests would have sent emails
+        self.assertEqual(len(mail.outbox), 3)
+        self.assertEqual(mail.outbox[0].subject, '[BHA] Thanks for Creating An Account With the Boston Housing Authority')
+        self.assertEqual(mail.outbox[len(mail.outbox)-1].body, 'body.')
 
     def test_admin(self):
         response = self.c.get('/admin/login/')

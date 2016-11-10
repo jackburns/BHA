@@ -104,7 +104,6 @@ EMAIL_HOST_PASSWORD = 'mikeymike'
 EMAIL_PORT = 587
 
 
-
 CORS_ORIGIN_WHITELIST = (
     'local.bha.com',
 )
