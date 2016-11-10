@@ -5,12 +5,6 @@ from .models import Volunteer, Contact, Availability, Language, Assignment
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 
-adminEmailSuffix = [
-    '@bha.com',
-    '@bostonhousing.org',
-    '@gmail.com'
-]
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -105,7 +99,7 @@ class VolunteerSerializer(serializers.Serializer):
         data['first_name'] = first_name
         data['last_name'] = last_name
 
-        isAdmin = any(suffix.lower() in contact_data['email'].lower() for suffix in adminEmailSuffix)
+        isAdmin = False
 
         user = User.objects.create(username=contact_data['email'], email=contact_data['email'], is_staff=isAdmin, is_superuser=isAdmin)
         user.set_password(password_data)
