@@ -116,3 +116,57 @@ class ApiEndpointsTests(TestCase):
     def test_admin(self):
         response = self.c.get('/admin/login/')
         self.assertEqual(response.status_code, 200)
+
+    # Behaviour Expected:
+    # Ignores invalid input, keeps current valid input
+    def test_state_restriction_states_invalid_state(self):
+        patch1 = dict(self.get_user_signup_form_data(self.user.username, self.user.password))
+        patch1['contact'] = {
+            'street': '12 Washington St.',
+            'city': 'Boston',
+            'state': 'MQ',
+            'zip': '02115',
+            'email': self.user.username,
+            'phone_number': '8824567732',
+            'carrier': '2',
+            'preferred_contact': '0'
+        }
+        response = self.c.patch('/api/volunteers/%d/' % self.user.id, patch1, format='json')
+        response = self.c.get('/api/volunteers/me/')
+        self.assertEqual(self.user.volunteer.contact.state, 'MA')
+
+    # Behaviour Expected:
+    # Ignores invalid length input, keeps current valid input
+    def test_state_restriction_states_invalid_length(self):
+        patch1 = dict(self.get_user_signup_form_data(self.user.username, self.user.password))
+        patch1['contact'] = {
+            'street': '12 Washington St.',
+            'city': 'Boston',
+            'state': 'KYZ',
+            'zip': '02115',
+            'email': self.user.username,
+            'phone_number': '8824567732',
+            'carrier': '2',
+            'preferred_contact': '0'
+        }
+        response = self.c.patch('/api/volunteers/%d/' % self.user.id, patch1, format='json')
+        response = self.c.get('/api/volunteers/me/')
+        self.assertEqual(self.user.volunteer.contact.state, 'MA')
+
+    # Behaviour Expected:
+    # Keeps old zip if length of 5 exceeded
+    def test_zip_invalid_length_too_long(self):
+        patch1 = dict(self.get_user_signup_form_data(self.user.username, self.user.password))
+        patch1['contact'] = {
+            'street': '12 Washington St.',
+            'city': 'Boston',
+            'state': 'MA',
+            'zip': '021135',
+            'email': self.user.username,
+            'phone_number': '8824567732',
+            'carrier': '2',
+            'preferred_contact': '0'
+        }
+        response = self.c.patch('/api/volunteers/%d/' % self.user.id, patch1, format='json')
+        response = self.c.get('/api/volunteers/me/')
+        self.assertEqual(self.user.volunteer.contact.zip, '02115')
