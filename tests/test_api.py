@@ -235,3 +235,9 @@ class ApiEndpointsTests(TestCase):
     def test_admin(self):
         response = self.c.get('/admin/login/')
         self.assertEqual(response.status_code, 200)
+
+    def test_should_provide_helpful_error_messages_when_signup_errors_occur(self):
+        self.signup('fuzz@buzz.com', 'password')
+        singup_json = self.get_user_signup_form_data('fuzz@buzz.com', 'password')
+        signup_response = self.c.post('/api/volunteers/', singup_json, format='json')
+        self.assertEqual(signup_response.json()[0], 'An account is already registered with fuzz@buzz.com')
