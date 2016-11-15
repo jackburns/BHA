@@ -67,7 +67,12 @@ class VolunteerFormController {
           Alert.add('success', 'Account successfully created');
           $state.go('login');
           }, (error) => {
-            Alert.add('danger', 'Could not create your account');
+            try{
+              Alert.add('danger', error.data.join(','));
+            } catch(e) {
+              console.log(error, e);
+              Alert.add('danger', 'Could not create your account');
+            }
           }
         );
       } else {

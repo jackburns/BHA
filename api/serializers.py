@@ -85,7 +85,16 @@ class VolunteerSerializer(serializers.Serializer):
     def get_full_name(self, obj):
         return obj.first_name + ' ' + obj.last_name
 
+    def _validate_unique_email(self, email):
+        if User.objects.filter(username=email).exists():
+            raise serializers.ValidationError(
+                'An account is already registered with {0}'.format(email)
+            )
+
     def create(self, data):
+
+        self._validate_unique_email(data['contact']['email'])
+
         contact_data = data.pop('contact', None)
         availability_data = data.pop('availability', None)
         languages_data = data.pop('languages', None)
@@ -132,6 +141,10 @@ class VolunteerSerializer(serializers.Serializer):
     # TODO: add updating username via email
     # TODO: investigate updating password via here as well
     def update(self, instance, data):
+
+        if data['contact']['email'] != instance.user.username:
+            self._validate_unique_email(data['contact']['email'])
+
         contact_data = data.pop('contact')
         availability_data = data.pop('availability')
         languages_data = data.pop('languages')
