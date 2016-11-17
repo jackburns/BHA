@@ -76,6 +76,17 @@ def send_volunteer_updated(contact, name):
         name=name
     )
 
+def send_referral(email, referrer_name, referrer_email, url):
+    # TODO This stuff should probably get plopped into a template
+    send_mail(
+        "Would you like to work with the Boston Housing Authority?",
+        ("You were referred by {} ( {} ) to work with us. " +
+         "Just click this link to join: {}").format(referrer_name, referrer_email, url),
+        'no-reply@bha.com',
+        [email],
+        fail_silently=False
+    )
+
 
 def notify_contact(contact, template=None, subject=None, payload=None, **kwargs):
     payload = payload or kwargs

@@ -140,3 +140,19 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         mailer.send_volunteer_removed_assignment(volunteer.contact, name)
 
         return Response({'success': 'volunteer removed from assignment'})
+
+class ReferralViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request):
+        friend_email = request.data['friend']
+
+        user = request.user
+        print(user.id)
+        user_as_volunteer = get_object_or_404(Volunteer, id=user.id)
+        full_name = "{} {}".format(user_as_volunteer.first_name, user_as_volunteer.last_name)
+        user_email = user.email
+
+        mailer.send_referral(friend_email, full_name, user_email, request.build_absolute_uri("/login"))
+
+        return Response({'status': 'Referral Sent'})

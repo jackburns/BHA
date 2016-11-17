@@ -346,22 +346,22 @@ class ApiEndpointsTests(TestCase):
         cron.unfilled_assignment()
         self.assertEqual(len(mail.outbox), outbox_start_len + 12)
 
-def test_sends_email_on_refer_if_signed_in(self):
-    mail.outbox = []
-    # TODO Should there be more fields in this post request?
-    response = self.c.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
-    self.assertEqual(response.status_code, 200)
-    self.assertEqual(len(mail.outbox), 1)
-    # TODO What should this be?
-    self.assertEqual(
-        mail.outbox[0].subject,
-        'Would you like to work with the Boston Housing Authority?')
-    self.assertTrue("foo@bar.com" in mail.outbox[0].message)
-    self.assertTrue("Foo" in mail.outbox[0].message)
+    def test_sends_email_on_refer_if_signed_in(self):
+        mail.outbox = []
+        # TODO Should there be more fields in this post request?
+        response = self.c.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(mail.outbox), 1)
+        # TODO What should this be?
+        self.assertEqual(
+            mail.outbox[0].subject,
+            'Would you like to work with the Boston Housing Authority?')
+        self.assertTrue("foo@bar.com" in mail.outbox[0].message)
+        self.assertTrue("Foo" in mail.outbox[0].message)
 
-def test_refuses_email_endpoint_if_not_signed_in(self):
-    mail.outbox = []
-    bad_client = APIClient()
-    response = bad_client.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
-    self.assertEqual(response.status_code, 401)
-    self.assertEqual(len(mail.outbox), 0)
+    def test_refuses_email_endpoint_if_not_signed_in(self):
+        mail.outbox = []
+        bad_client = APIClient()
+        response = bad_client.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(len(mail.outbox), 0)
