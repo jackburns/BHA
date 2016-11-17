@@ -8,6 +8,7 @@ from api.models import Volunteer
 from django.db.models import Sum, Count
 from django.core import mail
 import pdb # Tracer
+import api.email as mailer
 
 
 default_username = 'foo@bar.com'
@@ -57,7 +58,11 @@ class ApiEndpointsTests(TestCase):
         singup_json = self.get_user_signup_form_data(username, password, **kwargs)
         signup_response = self.c.post('/api/volunteers/', singup_json, format='json')
         self.assertEqual(signup_response.status_code, 201)
-        return User.objects.get(username=username)
+        user = User.objects.get(username=username)
+        if 'is_superuser' in kwargs:
+            user.is_superuser = kwargs['is_superuser']
+            user.save()
+        return user
 
     def login(self, username, password):
         login_response = self.c.post('/api/auth/login/', {
@@ -95,25 +100,30 @@ class ApiEndpointsTests(TestCase):
         return response.json()
 
     def add_volunteer_to_assignment(self, assignment_id, volunteer_id):
+        outbox_len = len(mail.outbox)
         response = self.c.post(
             '/api/assignments/{}/add_volunteer/'.format(assignment_id),
             data={'volunteer_id': volunteer_id},
             format='json'
         )
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(mail.outbox), outbox_len + 2)
         return response.json()
 
     def test_create_assignment(self):
         self.create_assignment()
 
     def test_update_volunteer(self):
+        outbox_len = len(mail.outbox)
         self.assertEqual(self.user.volunteer.age, 22)
         patch = dict(self.get_user_signup_form_data(self.user.username, self.user.password))
         patch['age'] = 24
+        patch['contact']['email'] += '.edu'
         response = self.c.patch('/api/volunteers/%d/' % self.user.id, patch, format='json')
         self.assertEqual(response.status_code, 200)
         response = self.c.get('/api/volunteers/me/')
         self.assertEqual(response.data['age'], 24)
+        self.assertEqual(len(mail.outbox), outbox_len + 2)
 
     def test_get_empty_volunteers(self):
         response = self.c.get('/api/volunteers/')
@@ -224,6 +234,72 @@ class ApiEndpointsTests(TestCase):
 
         response = self.c.get('/api/volunteers/', {'hours_starting_at': four_days_in_the_future})
         self.assertEqual(response.json()['results'][0]['hours'], 0)
+
+    def test_emails(self):
+        contact = self.user.volunteer.contact
+
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_added_assignment(contact, 'Foo')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
+        self.assertIn('Foo', mail.outbox[-2].body)
+
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_removed_assignment(contact, 'Foo')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
+        self.assertIn('Foo', mail.outbox[-2].body)
+
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_welcome(contact, 'Foo')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
+        self.assertIn('Foo', mail.outbox[-2].body)
+
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_new_opportunities(contact, 'Foo', 'Bar')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
+        self.assertIn('Foo', mail.outbox[-2].body)
+        self.assertIn('Bar', mail.outbox[-2].body)
+
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_upcoming_appointment(contact, 'Foo', 'Bar', 'Baz', 'Qux')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
+        self.assertIn('Foo', mail.outbox[-2].body)
+        self.assertIn('Bar', mail.outbox[-2].body)
+        self.assertIn('Baz', mail.outbox[-2].body)
+        self.assertIn('Qux', mail.outbox[-2].body)
+
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_upcoming_translation(contact, 'Foo', 'Bar', 'Baz', 'Qux')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
+        self.assertIn('Foo', mail.outbox[-2].body)
+        self.assertIn('Bar', mail.outbox[-2].body)
+        self.assertIn('Baz', mail.outbox[-2].body)
+        self.assertIn('Qux', mail.outbox[-2].body)
+
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_updated(contact, 'Foo')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
+        self.assertIn('Foo', mail.outbox[-2].body)
+
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_welcome_staffcreated(contact, 'Foo', 'p@$$w0rd')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
+        self.assertIn('Foo', mail.outbox[-2].body)
+        self.assertIn('p@$$w0rd', mail.outbox[-2].body)
+
+        # Add and admin to send mail to
+        self.signup('mojo@jojo.com', 'password', is_superuser=True)
+
+        outbox_start_len = len(mail.outbox)
+        mailer.send_staff_assignments_no_volunteers('Foo')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
+        self.assertIn('Foo', mail.outbox[-2].body)
+
+        outbox_start_len = len(mail.outbox)
+        mailer.send_staff_new_account('Foo', 'Bar', 'Baz')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
+        self.assertIn('Foo', mail.outbox[-2].body)
+        self.assertIn('Bar', mail.outbox[-2].body)
+        self.assertIn('Baz', mail.outbox[-2].body)
 
     def test_email_on_update(self):
         mail.send_mail('subject', 'body.', 'bha@gmail.com', ['messi@barca.com'])
