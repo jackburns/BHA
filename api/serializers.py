@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .email import process_notification, send_volunteer_welcome_email, send_staff_new_account_notice
+import api.email as mailer
 from .models import Volunteer, Contact, Availability, Language, Assignment
 from datetime import datetime
 from django.shortcuts import get_object_or_404
@@ -120,14 +120,8 @@ class VolunteerSerializer(serializers.Serializer):
 
         volunteer.save()
 
-        send_volunteer_welcome_email(name)
-        send_staff_new_account_notice(name, contact_data['email'], contact_data['phone_number'])
-
-        #process_notification(volunteer_welcome_subject, sub_volunteer_welcome(name), [{"email":contact.email}, ], [])
-        #process_notification(staff_new_account_subject, sub_staff_new_account(name, contact_data['email'], contact_data['phone_number']), [{"email":"cs4500bha@gmail.com"}, ], [])
-
-        #process_notification("Welcome to VIP!", "Thank you for signing up to volunteer for the Boston Housing Authority Volunteers Interpreters Program! We appreciate your help!", [{"email":contact.email},], [])
-        #process_notification("New Volunteer Signup", "A new volunteer has signed up for the VIP!", [{"email":"cs4500bha@gmail.com"},], [])
+        mailer.send_volunteer_welcome(volunteer.contact, name)
+        mailer.send_staff_new_account(name, contact_data['email'], contact_data['phone_number'])
 
         return volunteer
 
@@ -152,7 +146,7 @@ class VolunteerSerializer(serializers.Serializer):
             user.username = contact_data['email']
             user.email = contact_data['email']
             user.save()
-            process_notification("Email Updated Successfully!", "Your email has been updated successfully! Please use this new email for user login", [{"email":contact.email},], [])
+            mailer.send_volunteer_updated(contact, instance.first_name)
 
         updateAttrs(contact, contact_data)
         contact.save()

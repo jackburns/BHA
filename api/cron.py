@@ -1,8 +1,10 @@
-import kronos
 import datetime
+
+import kronos
 from django.db.models import Q
-from .email import send_emails, send_volunteer_welcome, send_staff_assignments_no_volunteers, send_volunteer_upcoming_translation, send_volunteer_upcoming_appointment, send_staff_new_account_notice, send_volunteer_welcome_staff_created, send_volunteer_new_opportunities
-from .models import Assignment, Volunteer, CARRIERS_ENUM
+import api.email as email
+from .models import Assignment, Volunteer
+
 
 @kronos.register('0 8 * * *')
 def unfilled_assignment():
@@ -23,7 +25,7 @@ def unfilled_assignment():
         #for assignment in assignments:
          #   message += assignment.name + " at " + assignment.contact.street + " on " + assignment.start_date + '\n'
         #send_staff_assignments_no_volunteers(message, [])
-        send_staff_assignments_no_volunteers(assignments, [])
+       email.send_staff_assignments_no_volunteers(assignments)
     # Sending emails to volunteers for upcoming appointments/translations
     # Filter assignments due in 2 days with assigned volunteers
     upcoming_assignments = Assignment.objects.all().filter(volunteers__isnull=False).filter(start_date__lt= today + datetime.timedelta(days=2))
@@ -36,7 +38,7 @@ def unfilled_assignment():
                 # Send notification to every volunteer assigned to the translation
                 for v in vol:
                     Volunteer.get(v)
-                    send_volunteer_upcoming_translation(v.name, a.name, a.language_name, a.start_date, v.contact)
+                    email.send_volunteer_upcoming_translation(v.contact, v.name, a.name, a.language_name, a.start_date)
             if a.type == 0 or a.type == 2:
                 #print(a)
                 print("I'm here!")
@@ -44,4 +46,4 @@ def unfilled_assignment():
                 for v in vol:
                     text = [{"8573139589", "tmomail.net"}]
                     print(v.contact)
-                    send_volunteer_upcoming_appointment(v.first_name, a.name, a.contact.street, a.start_date, text)
+                    email.send_volunteer_upcoming_appointment(v.first_name, a.name, a.contact.street, a.start_date, text)
