@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.contrib.auth.models import User
-
+from django.db.models import Q
 from api.models import CARRIERS_ENUM
 
 
@@ -88,9 +88,12 @@ def notify_contact(contact, template=None, subject=None, payload=None, **kwargs)
 
 def notify_superusers(template=None, subject=None, payload=None, **kwargs):
     payload = payload or kwargs
-    admins = User.objects.filter(is_superuser=True)
+    admins = User.objects.filter(Q(is_superuser=True) | Q(is_staff=True))
     for admin in admins:
-        notify_contact(admin.volunteer.contact, template, subject, payload)
+        try:
+            notify_contact(admin.volunteer.contact, template, subject, payload)
+        except AttributeError:
+            print('UNABLE TO CONTACT {}'.format(admin))
 
 
 def send_notification(email_address, phone_carrier, phone_number, template=None, subject=None, payload=None, **kwargs):
