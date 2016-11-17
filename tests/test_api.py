@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 
 from django.contrib.auth.models import User
-from django.test import TestCase, override_settings
+from django.test import TestCase
 from rest_framework.test import APIClient
 from django.utils import timezone
 from api.models import Assignment
@@ -16,8 +16,6 @@ from django.db.models import Q
 default_username = 'foo@bar.com'
 default_password = 'password'
 
-# Override backend email server as to not send actual emails during tests
-@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
 class ApiEndpointsTests(TestCase):
     def setUp(self):
         self.c = APIClient()
@@ -347,3 +345,23 @@ class ApiEndpointsTests(TestCase):
         outbox_start_len = len(mail.outbox)
         cron.unfilled_assignment()
         self.assertEqual(len(mail.outbox), outbox_start_len + 12)
+
+def test_sends_email_on_refer_if_signed_in(self):
+    mail.outbox = []
+    # TODO Should there be more fields in this post request?
+    response = self.c.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
+    self.assertEqual(response.status_code, 200)
+    self.assertEqual(len(mail.outbox), 1)
+    # TODO What should this be?
+    self.assertEqual(
+        mail.outbox[0].subject,
+        'Would you like to work with the Boston Housing Authority?')
+    self.assertTrue("foo@bar.com" in mail.outbox[0].message)
+    self.assertTrue("Foo" in mail.outbox[0].message)
+
+def test_refuses_email_endpoint_if_not_signed_in(self):
+    mail.outbox = []
+    bad_client = APIClient()
+    response = bad_client.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
+    self.assertEqual(response.status_code, 401)
+    self.assertEqual(len(mail.outbox), 0)
