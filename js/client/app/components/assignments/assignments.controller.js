@@ -29,8 +29,8 @@ class AssignmentsController {
           change_back = true;
           this.search = {
             [status]: [0, 1, 2],
-            language_name: '',
-            unassigned: false
+            language_name: this.search.language_name,
+            unassigned: this.search.unassigned,
           };
       }
       getAssignments();
