@@ -133,7 +133,7 @@ ASSIGNMENT_STATUS_ENUM = (
     (3, 'all'),
 )
 
-CARRIERS_ENUM = (
+CARRIERS_ENUM = dict((
     (0, ''),
     (1, 'txt.att.net'),
     (2, 'messaging.sprintpcs.com'),
@@ -150,7 +150,7 @@ CARRIERS_ENUM = (
     (13, 'msg.telus.com'),
     (14, 'email.uscc.net'),
     (15, 'vmobl.com'),
-)
+))
 
 class Contact(models.Model):
     street = models.CharField(max_length=50, null=True, blank=True)
@@ -160,7 +160,7 @@ class Contact(models.Model):
     phone_number = models.CharField(max_length=50, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     preferred_contact = models.IntegerField(default=0, choices=PREFERRED_CONTACT_ENUM)
-    carrier = models.IntegerField(default=0, choices=CARRIERS_ENUM)
+    carrier = models.IntegerField(default=0, choices=CARRIERS_ENUM.items())
 
 class Volunteer(models.Model):
     user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)

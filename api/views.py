@@ -1,16 +1,16 @@
 import django_filters
-from django_filters import widgets
-from django.utils import timezone
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.models import User
-from rest_framework.decorators import detail_route, list_route
-from rest_framework import viewsets, views, filters #, status
-from .models import Volunteer, Assignment
-from .email import process_notification
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
-from .serializers import VolunteerSerializer, UserSerializer, AdminVolunteerSerializer, AdminAssignmentSerializer, AssignmentSerializer
 from django.db.models import Sum, When, Case, IntegerField
+from django.shortcuts import get_object_or_404
+from django_filters import widgets
+from rest_framework import viewsets, views, filters #, status
+from rest_framework.decorators import detail_route, list_route
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+
+import api.email as mailer
+from .models import Volunteer, Assignment
+from .serializers import VolunteerSerializer, AdminVolunteerSerializer, AdminAssignmentSerializer, AssignmentSerializer
+
 
 class VolunteerFilter(filters.FilterSet):
     language = django_filters.CharFilter(name="languages__language_name")
@@ -45,7 +45,10 @@ class NotificationView(views.APIView):
         message = request.data.get("message", "No message")
         emailList = request.data.get("emails", [{"id":1,"email":"cs4500bha@gmail.com"},])
         textList = request.data.get("texts", [])
-        process_notification(subject, message, emailList, textList)
+        for text in textList:
+            mailer.send_text(text['carrier'], text['phoneNumber'], subject, message)
+        for mail in emailList:
+            mailer.send_email(mail['email'], subject, message)
         return Response({"success": True})
 
 class VolunteerViewSet(viewsets.ModelViewSet):
@@ -119,6 +122,10 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         assignment.volunteers.add(volunteer)
         assignment.save()
 
+        # Send confirmation email
+        name = volunteer.first_name + " " + volunteer.last_name
+        mailer.send_volunteer_added_assignment(volunteer.contact, name)
+
         return Response({'success': 'volunteer added to assignment'})
 
     @detail_route(methods=['post'])
@@ -127,5 +134,9 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         volunteer = get_object_or_404(Volunteer, id=request.data['volunteer_id'])
         assignment.volunteers.remove(volunteer)
         assignment.save()
+
+        # Send confirmation email
+        name = volunteer.first_name + " " + volunteer.last_name
+        mailer.send_volunteer_removed_assignment(volunteer.contact, name)
 
         return Response({'success': 'volunteer removed from assignment'})
