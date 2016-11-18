@@ -130,6 +130,7 @@ ASSIGNMENT_STATUS_ENUM = (
     (0, 'unapproved'),
     (1, 'approved'),
     (2, 'complete'),
+    (3, 'all'),
 )
 
 CARRIERS_ENUM = dict((
