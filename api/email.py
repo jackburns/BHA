@@ -77,15 +77,21 @@ def send_volunteer_updated(contact, name):
     )
 
 def send_referral(email, referrer_name, referrer_email, url):
-    # TODO This stuff should probably get plopped into a template
-    send_mail(
-        "Would you like to work with the Boston Housing Authority?",
-        ("You were referred by {} ( {} ) to work with us. " +
-         "Just click this link to join: {}").format(referrer_name, referrer_email, url),
-        'no-reply@bha.com',
-        [email],
-        fail_silently=False
-    )
+    # This DOES NOT use the notify_contact system because there is not a user here,
+    # just an email address
+    context = {
+        'volunteer_name': referrer_name,
+        'login_url': url
+    }
+    template="referral"
+    subject = _subjects_by_template["referral"]
+    email_text = _try_render_template('{}_email_body.txt'.format(template), context)
+    email_html = _try_render_template('{}_email_body.html'.format(template), context)
+
+    mail = EmailMultiAlternatives(subject, email_text, 'no-reply@bha.com', [email])
+    if email_html:
+        mail.attach_alternative(email_html, "text/html")
+    mail.send()
 
 
 def notify_contact(contact, template=None, subject=None, payload=None, **kwargs):
@@ -155,5 +161,6 @@ _subjects_by_template = {
     'volunteer_upcoming_translation': "[BHA] Reminder: It's Almost Time to Submit Your Translation",
     'volunteer_new_opportunities': "[BHA] New Assignments Available",
     'staff_assignments_no_volunteers': "[BHA] Reminder: These Assignments Need Volunteers",
-    'user_info_updated': "[BHA] Contact information updated"
+    'user_info_updated': "[BHA] Contact information updated",
+    'referral': "[BHA] Would you like to work with the Boston Housing Authority?"
 }

@@ -147,11 +147,9 @@ class ReferralViewSet(viewsets.ViewSet):
     def create(self, request):
         friend_email = request.data['friend']
 
-        user = request.user
-        print(user.id)
-        user_as_volunteer = get_object_or_404(Volunteer, id=user.id)
-        full_name = "{} {}".format(user_as_volunteer.first_name, user_as_volunteer.last_name)
-        user_email = user.email
+        volunteer = get_object_or_404(Volunteer, user_id=request.user.id)
+        full_name = "{} {}".format(volunteer.first_name, volunteer.last_name)
+        user_email = request.user.email
 
         mailer.send_referral(friend_email, full_name, user_email, request.build_absolute_uri("/login"))
 

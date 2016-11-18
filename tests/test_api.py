@@ -352,9 +352,10 @@ class ApiEndpointsTests(TestCase):
         response = self.c.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(mail.outbox), 1)
-        # TODO What should this be?
         self.assertEqual(
             mail.outbox[0].subject,
+            '[BHA] Would you like to work with the Boston Housing Authority?')
+        self.assertTrue('Foo Barman' in mail.outbox[0].body)
             'Would you like to work with the Boston Housing Authority?')
         self.assertTrue("foo@bar.com" in mail.outbox[0].message)
         self.assertTrue("Foo" in mail.outbox[0].message)
