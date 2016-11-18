@@ -50,4 +50,17 @@ describe('Requests service', function() {
       $httpBackend.flush();
     });
   });
+
+  describe('#sendReferral', () => {
+    'use strict';
+    it('should make a POST request to /api/refer/', () => {
+      $httpBackend.expectPOST(api + '/refer/').respond({status: 'Referral Sent'})
+      Requests.sendReferral().then((resp) => {
+        expect(resp.data).to.eql({status: 'Referral Sent'})
+      })
+      $httpBackend.flush()
+
+
+    })
+  })
 });

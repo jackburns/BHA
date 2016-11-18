@@ -46,10 +46,11 @@ describe('Home', () => {
           expect(mockRequests.sendReferral.called).to.be.false
         })
       })
-      xdescribe("when an invalid email address has been entered", () => {
+      describe("when an invalid email address has been entered", () => {
         it("will not send a post request", () => {
           let controller = makeController()
           $scope.friendEmail = "not a real email address"
+          $scope.referral = {$valid: false}
           controller.sendReferral()
 
           expect(mockRequests.sendReferral.called).to.be.false
@@ -59,6 +60,7 @@ describe('Home', () => {
         it("makes a post request to the api endpoint", () => {
           let controller = makeController()
           $scope.friendEmail = "real@example.com"
+          $scope.referral = {$valid: true}
           controller.sendReferral()
 
           expect(mockRequests.sendReferral.calledOnce).to.be.true
