@@ -41,10 +41,11 @@
     </tr>
   </table>
   <div class="list-buttons">
-    <button type="button" ng-show="vm.availability.length > 1" ng-click="vm.removeLastAvailability()" class="btn" aria-label="Remove last availability">
+    Add/Remove Availability
+    <button type="button" ng-show="vm.availability.length > 1" ng-click="vm.removeLastAvailability()" class="btn btn-primary" aria-label="Remove last availability">
       <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
     </button>
-    <button type="button" ng-click="vm.addNewAvailability()" class="btn" aria-label="Add availability">
+    <button type="button" ng-click="vm.addNewAvailability()" class="btn btn-primary" aria-label="Add availability">
       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
   </div>

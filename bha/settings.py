@@ -89,40 +89,48 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bha.wsgi.application'
 
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_USE_TLS = True
-#EMAIL_HOST = 'ssrs.reachmail.net'
-#EMAIL_PORT = 587
-#EMAIL_HOST_USER = r'NORTHEAS10\bha'
-#EMAIL_HOST_PASSWORD = 'BHAmail3r!!'
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'cs4500BHA@gmail.com'
-EMAIL_HOST_PASSWORD = 'mikeymike'
-EMAIL_PORT = 587
-
-
+# Email config
+if os.getenv('RDS_DB_NAME'):
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'ssrs.reachmail.net'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = r'NORTHEAS10\bha'
+    EMAIL_HOST_PASSWORD = 'BHAmail3r!!'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CORS_ORIGIN_WHITELIST = (
     'local.bha.com',
 )
 CORS_ORIGIN_ALLOW_ALL = True
 
-
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bha_db',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': '',
-        'PORT': '',
+if os.getenv('RDS_DB_NAME'):
+    # CI / Prod settings
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
+else:
+    # Local (dev env) settings
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'mysql',
+            'USER': 'root',
+            'PASSWORD': 'password',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
 
 
 # Password validation
