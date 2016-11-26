@@ -348,7 +348,7 @@ class ApiEndpointsTests(TestCase):
 
     def test_sends_email_on_refer_if_signed_in(self):
         mail.outbox = []
-        # TODO Should there be more fields in this post request?
+        # TODO There will eventually be more fields in this post request.
         response = self.c.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(mail.outbox), 1)
@@ -356,9 +356,8 @@ class ApiEndpointsTests(TestCase):
             mail.outbox[0].subject,
             '[BHA] Would you like to work with the Boston Housing Authority?')
         self.assertTrue('Foo Barman' in mail.outbox[0].body)
-            'Would you like to work with the Boston Housing Authority?')
-        self.assertTrue("foo@bar.com" in mail.outbox[0].message)
-        self.assertTrue("Foo" in mail.outbox[0].message)
+        self.assertTrue("foo@bar.com" in mail.outbox[0].body)
+        self.assertTrue("Foo" in mail.outbox[0].body)
 
     def test_refuses_email_endpoint_if_not_signed_in(self):
         mail.outbox = []
