@@ -12,6 +12,12 @@ class HomeController {
 
       if (friendEmail !== '' && $scope.referral.$valid) {
         Requests.sendReferral(friendEmail)
+          .then((result) => {
+            $uibModal.open({template: result.data.status})
+          })
+          .catch((err) => {
+            $uibModal.open({template: "Referral could not be sent; please check the email address."})
+          })
       }
     }
   }

@@ -13,7 +13,9 @@ describe('Home', () => {
     $rootScope = _$rootScope_;
     $componentController = _$componentController_;
     mockRequests = {
-      sendReferral: sinon.stub(),
+      sendReferral: sinon.stub().returns({
+        then: (cb) => ({'catch': (cb) => {}})
+      }),
       getUserAssignments: sinon.stub().returns({then: (cb) => {}})
     };
     mockUser = {

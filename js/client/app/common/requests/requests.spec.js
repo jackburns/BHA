@@ -59,8 +59,6 @@ describe('Requests service', function() {
         expect(resp.data).to.eql({status: 'Referral Sent'})
       })
       $httpBackend.flush()
-
-
     })
   })
 });
