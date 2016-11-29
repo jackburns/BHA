@@ -4,7 +4,7 @@ from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.contrib.auth.models import User
 from django.db.models import Q
-from api.models import CARRIERS_ENUM
+from api.models import CARRIERS_ENUM, LANGUAGE_ENUM
 
 
 def send_volunteer_welcome(contact, name):
@@ -57,19 +57,15 @@ def send_staff_assignments_no_volunteers(assignments):
     )
 
 
-def send_volunteer_upcoming_appointment(contact, name, assignment_name, assignment_location, start_date):
+def send_volunteer_upcoming_assignment(contact, volunteer, assignment):
+    template = 'volunteer_upcoming_translation' if assignment.type == 1 else 'volunteer_upcoming_appointment'
     notify_contact(
-        contact,
-        'volunteer_upcoming_appointment',
-        name=name, assignment_name=assignment_name, assignment_location=assignment_location, start_date=start_date
-    )
-
-
-def send_volunteer_upcoming_translation(contact, name, assignment_name, assignment_language, start_date):
-    notify_contact(
-        contact,
-        'volunteer_upcoming_translation',
-        name=name, assignment_name=assignment_name, assignment_language=assignment_language, start_date=start_date
+        contact, template,
+        name=volunteer.first_name,
+        assignment_name=assignment.name,
+        assignment_location=assignment.contact.full_address,
+        assignment_language=LANGUAGE_ENUM.get(assignment.language_name, ''),
+        start_date=assignment.start_date
     )
 
 
