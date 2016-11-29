@@ -223,17 +223,26 @@ class ApiEndpointsTests(TestCase):
         assignment = self.create_assignment({'status': 2, 'start_date': three_days_in_the_future, 'duration': 10})
         self.add_volunteer_to_assignment(assignment['id'], self.user.id)
 
+        assignment = self.create_assignment({'status': 2, 'start_date': three_days_in_the_future, 'duration': 1, 'language_name': 'da'})
+        self.add_volunteer_to_assignment(assignment['id'], self.user.id)
+
         response = self.c.get('/api/volunteers/me/')
-        self.assertEqual(response.json()['hours'], 20)
+        self.assertEqual(response.json()['hours'], 21)
 
         response = self.c.get('/api/volunteers/')
-        self.assertEqual(response.json()['results'][0]['hours'], 20)
+        self.assertEqual(response.json()['results'][0]['hours'], 21)
 
         response = self.c.get('/api/volunteers/', {'hours_starting_at': now})
-        self.assertEqual(response.json()['results'][0]['hours'], 10)
+        self.assertEqual(response.json()['results'][0]['hours'], 11)
+
+        response = self.c.get('/api/volunteers/', {'hours_starting_at': now})
+        self.assertEqual(response.json()['results'][0]['hours'], 11)
 
         response = self.c.get('/api/volunteers/', {'hours_starting_at': four_days_in_the_future})
         self.assertEqual(response.json()['results'][0]['hours'], 0)
+
+        response = self.c.get('/api/volunteers/?language=da')
+        self.assertEqual(response.json()['results'][0]['hours'], 1)
 
     def test_emails(self):
         contact = self.user.volunteer.contact
