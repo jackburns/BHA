@@ -35,7 +35,8 @@ class VolunteerFormController {
       languages: [],
       bha_app_res: false,
       availability: [],
-      notes: ""
+      notes: "",
+      referrer: location.search.split('referrer=')[1]
     };
 
     this.validateForm = function(ang_valid) {
