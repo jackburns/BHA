@@ -61,6 +61,8 @@ class VolunteerViewSet(viewsets.ModelViewSet):
             sum_conditions['assignments__start_date__gte'] = self.request.query_params['hours_starting_at']
         if 'hours_ending_at' in self.request.query_params:
             sum_conditions['assignments__start_date__lte'] = self.request.query_params['hours_ending_at']
+        if 'language' in self.request.query_params:
+            sum_conditions['assignments__language_name'] = self.request.query_params['language']
         return sum_conditions
 
     def get_queryset(self):
