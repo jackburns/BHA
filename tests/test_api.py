@@ -4,11 +4,13 @@ from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from rest_framework.test import APIClient
 from django.utils import timezone
-from api.models import Volunteer
+from api.models import Assignment
 from django.db.models import Sum, Count
 from django.core import mail
 import pdb # Tracer
 import api.email as mailer
+import api.cron as cron
+from django.db.models import Q
 
 
 default_username = 'foo@bar.com'
@@ -81,12 +83,12 @@ class ApiEndpointsTests(TestCase):
             "notes": "",
             "admin_notes": "",
             "contact": {
-                "street": "",
-                "city": "",
-                "state": "",
-                "zip": "",
-                "phone_number": "",
-                "email": ""
+                "street": "0 No Address Lane",
+                "city": "Boston",
+                "state": "MA",
+                "zip": "02120",
+                "phone_number": "5555555555",
+                "email": "foo@bar.com"
             },
             "posted_by_id": self.user.id,
             "volunteers": [],
@@ -259,21 +261,23 @@ class ApiEndpointsTests(TestCase):
         self.assertIn('Foo', mail.outbox[-2].body)
         self.assertIn('Bar', mail.outbox[-2].body)
 
+        assignment = self.create_assignment()
+        assignment = Assignment.objects.get(id=assignment['id'])
+        self.add_volunteer_to_assignment(assignment.id, self.user.volunteer.id)
         outbox_start_len = len(mail.outbox)
-        mailer.send_volunteer_upcoming_appointment(contact, 'Foo', 'Bar', 'Baz', 'Qux')
+        mailer.send_volunteer_upcoming_assignment(contact, self.user.volunteer, assignment)
         self.assertEqual(len(mail.outbox), outbox_start_len + 2)
-        self.assertIn('Foo', mail.outbox[-2].body)
-        self.assertIn('Bar', mail.outbox[-2].body)
-        self.assertIn('Baz', mail.outbox[-2].body)
-        self.assertIn('Qux', mail.outbox[-2].body)
+        self.assertIn(self.user.first_name, mail.outbox[-2].body)
+        self.assertIn(assignment.contact.full_address, mail.outbox[-2].body)
 
+        assignment = self.create_assignment({'type':'1'})
+        assignment = Assignment.objects.get(id=assignment['id'])
+        self.add_volunteer_to_assignment(assignment.id, self.user.volunteer.id)
         outbox_start_len = len(mail.outbox)
-        mailer.send_volunteer_upcoming_translation(contact, 'Foo', 'Bar', 'Baz', 'Qux')
+        mailer.send_volunteer_upcoming_assignment(contact, self.user.volunteer, assignment)
         self.assertEqual(len(mail.outbox), outbox_start_len + 2)
-        self.assertIn('Foo', mail.outbox[-2].body)
-        self.assertIn('Bar', mail.outbox[-2].body)
-        self.assertIn('Baz', mail.outbox[-2].body)
-        self.assertIn('Qux', mail.outbox[-2].body)
+        self.assertIn(self.user.first_name, mail.outbox[-2].body)
+        self.assertIn('Azerbaijani', mail.outbox[-2].body)
 
         outbox_start_len = len(mail.outbox)
         mailer.send_volunteer_updated(contact, 'Foo')
@@ -322,3 +326,24 @@ class ApiEndpointsTests(TestCase):
         singup_json = self.get_user_signup_form_data('fuzz@buzz.com', 'password')
         signup_response = self.c.post('/api/volunteers/', singup_json, format='json')
         self.assertEqual(signup_response.json()[0], 'An account is already registered with fuzz@buzz.com')
+
+    def test_unfilled_and_upcoming_assignment_reminders(self):
+        self.signup('mojo@jojo.com', 'password', is_superuser=True)
+        level_4_user = self.signup('bar@baz.com', 'password', first_name='Buzz')
+        level_4_user.volunteer.volunteer_level = 4
+        level_4_user.volunteer.save()
+        for i in range(8):
+            self.create_assignment({
+                'start_date': (timezone.now() + timezone.timedelta(days=i)).strftime("%Y-%m-%d %H:%M:%S")
+            })
+            assignment = self.create_assignment({
+                'start_date': (timezone.now() + timezone.timedelta(days=i)).strftime("%Y-%m-%d %H:%M:%S")
+            })
+            self.add_volunteer_to_assignment(assignment['id'], self.user.volunteer.id)
+            assignment = self.create_assignment({
+                'start_date': (timezone.now() + timezone.timedelta(days=i)).strftime("%Y-%m-%d %H:%M:%S")
+            })
+            self.add_volunteer_to_assignment(assignment['id'], level_4_user.id)
+        outbox_start_len = len(mail.outbox)
+        cron.unfilled_assignment()
+        self.assertEqual(len(mail.outbox), outbox_start_len + 12)
