@@ -400,7 +400,7 @@ class ApiEndpointsTests(TestCase):
         mail.outbox = []
         self.c.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
         self.assertTrue('/apply?' in mail.outbox[0].body)
-        self.assertTrue("617-988-4032" in mail.outbox[0].body)
+        self.assertTrue("(617) 988-4032" in mail.outbox[0].body)
 
     def test_cleanly_reject_bad_email_addresses(self):
         mail.outbox = []

@@ -81,7 +81,9 @@ def send_referral(email, referrer_name, referrer_email, url):
     # just an email address
     context = {
         'volunteer_name': referrer_name,
-        'login_url': url
+        'login_url': url,
+        'phone': _default_context['bha_phone_number'],
+        'contact_email': _default_context['bha_email']
     }
     template="referral"
     subject = _subjects_by_template["referral"]

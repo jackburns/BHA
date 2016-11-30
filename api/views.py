@@ -161,7 +161,7 @@ class ReferralViewSet(viewsets.ViewSet):
             mailer.send_referral(friend_email,
                                  full_name,
                                  user_email,
-                                 "{}?referrer={}".format(request.build_absolute_uri("/login"),
+                                 "{}?referrer={}".format(request.build_absolute_uri("/apply"),
                                                          user_email))
 
             return Response({'status': 'Referral Sent'})
