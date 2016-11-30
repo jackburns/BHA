@@ -373,7 +373,6 @@ class ApiEndpointsTests(TestCase):
 
     def test_sends_email_on_refer_if_signed_in(self):
         mail.outbox = []
-        # TODO There will eventually be more fields in this post request.
         response = self.c.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(mail.outbox), 1)
@@ -390,6 +389,18 @@ class ApiEndpointsTests(TestCase):
         response = bad_client.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
         self.assertEqual(response.status_code, 401)
         self.assertEqual(len(mail.outbox), 0)
+
+    def test_referral_email_uses_volunteer_not_work(self):
+        mail.outbox = []
+        self.c.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
+        self.assertTrue('volunteer' in mail.outbox[0].body)
+        self.assertFalse('work' in mail.outbox[0].body)
+
+    def test_referral_email_has_correct_contact_information(self):
+        mail.outbox = []
+        self.c.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
+        self.assertTrue('/apply?' in mail.outbox[0].body)
+        self.assertTrue("617-988-4032" in mail.outbox[0].body)
 
     def test_cleanly_reject_bad_email_addresses(self):
         mail.outbox = []
