@@ -374,3 +374,8 @@ class ApiEndpointsTests(TestCase):
         response = bad_client.post('/api/refer/', {'friend': 'fake@example.com'}, format='json')
         self.assertEqual(response.status_code, 401)
         self.assertEqual(len(mail.outbox), 0)
+
+    def test_cleanly_reject_bad_email_addresses(self):
+        mail.outbox = []
+        response = self.c.post('/api/refer/', {'friend': 'fake@example.com\nCC: meto@email.com'}, format='json')
+        self.assertEqual(response.status_code, 400)
