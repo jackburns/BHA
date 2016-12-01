@@ -1,4 +1,7 @@
 import django_filters
+from django.core.exceptions import ValidationError
+from django.core.mail import BadHeaderError
+from django.core.validators import validate_email
 from django.db.models import Sum, When, Case, IntegerField
 from django.shortcuts import get_object_or_404
 from django_filters import widgets
@@ -153,10 +156,14 @@ class ReferralViewSet(viewsets.ViewSet):
         full_name = "{} {}".format(volunteer.first_name, volunteer.last_name)
         user_email = request.user.email
 
-        mailer.send_referral(friend_email,
-                             full_name,
-                             user_email,
-                             "{}?referrer={}".format(request.build_absolute_uri("/login"),
-                                                     user_email))
+        try:
+            validate_email(friend_email)
+            mailer.send_referral(friend_email,
+                                 full_name,
+                                 user_email,
+                                 "{}?referrer={}".format(request.build_absolute_uri("/login"),
+                                                         user_email))
 
-        return Response({'status': 'Referral Sent'})
+            return Response({'status': 'Referral Sent'})
+        except (BadHeaderError, ValidationError) as exn:
+            return Response({'status': "Referral send failed"}, status=400)
