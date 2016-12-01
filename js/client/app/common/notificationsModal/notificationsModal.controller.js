@@ -6,7 +6,7 @@ class NotificationsModalController {
     $scope.notificationTextMessage = "There is a new appointment for you from the BHA.";
     $scope.notificationSubject = "Alert from BHA";
     $scope.contactMethodAll = "";
-    $scope.contactMethods = ["Email", "Text"];
+    $scope.contactMethods = ["Both", "Email", "Text"];
     $scope.notificationsSent = false;
     $scope.error = false;
 
@@ -15,10 +15,10 @@ class NotificationsModalController {
       var vContact = volunteerObj.contact;
       var noTexting = Enums.carriers[vContact.carrier] === "Other";
       var contact;
-      if (noTexting || Enums.preferred_contact[vContact.preferred_contact] != "Text") {
+      if (noTexting) {
         contact = "Email";
       } else {
-        contact = "Text";
+        contact = Enums.preferred_contact[vContact.preferred_contact];
       }
       var newObj = {
         id: volunteerObj.id,
@@ -52,12 +52,13 @@ class NotificationsModalController {
       var selectedTexts = [];
 
       $scope.selectedVolunteers.forEach(function(volunteerObj) {
-        if (volunteerObj.contactMethod === 'Email') {
+        if (volunteerObj.contactMethod === 'Email' || volunteerObj.contactMethod == 'Both') {
           selectedEmails.push({
             id: volunteerObj.id,
             email: volunteerObj.email
           });
-        } else {
+        }
+        if (volunteerObj.contactMethod === 'Text' || volunteerObj.contactMethod == 'Both') {
           selectedTexts.push({
             id: volunteerObj.id,
             phoneNumber: volunteerObj.phoneNumber,
