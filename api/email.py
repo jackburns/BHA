@@ -4,7 +4,7 @@ from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.contrib.auth.models import User
 from django.db.models import Q
-from api.models import CARRIERS_ENUM, LANGUAGE_ENUM
+from api.models import CARRIERS_ENUM, LANGUAGE_ENUM, PREFERRED_CONTACT_ENUM
 
 
 def send_volunteer_welcome(contact, name):
@@ -96,7 +96,7 @@ def send_referral(email, referrer_name, referrer_email, url):
 
 def notify_contact(contact, template=None, subject=None, payload=None, **kwargs):
     payload = payload or kwargs
-    send_notification(contact.email, contact.carrier, contact.phone_number, template, subject, payload)
+    send_notification(contact.email, contact.carrier, contact.phone_number, contact.preferred_contact, template, subject, payload)
 
 
 def notify_superusers(template=None, subject=None, payload=None, **kwargs):
@@ -106,27 +106,30 @@ def notify_superusers(template=None, subject=None, payload=None, **kwargs):
         try:
             notify_contact(admin.volunteer.contact, template, subject, payload)
         except AttributeError:
-            print('UNABLE TO CONTACT {}'.format(admin))
+            print('UNABLE TO CONTACT ADMIN')
 
 
-def send_notification(email_address, phone_carrier, phone_number, template=None, subject=None, payload=None, **kwargs):
+def send_notification(email_address, phone_carrier, phone_number, preferred_contact=2, template=None, subject=None, payload=None, **kwargs):
     subject = subject or _subjects_by_template.get(template)
     payload = payload or kwargs
     context = _create_context(payload)
 
     email_text = _try_render_template('{}_email_body.txt'.format(template), context) or payload
     email_html = _try_render_template('{}_email_body.html'.format(template), context)
-    mail = EmailMultiAlternatives(subject, email_text, 'no-reply@bha.com', [email_address])
-    if email_html:
-        mail.attach_alternative(email_html, "text/html")
-    mail.send()
 
-    sms_text = _try_render_template('{}_text.txt'.format(template), context) or email_text
-    send_text(phone_carrier, phone_number, subject, sms_text)
+    if preferred_contact == 2 or preferred_contact == 0:
+        mail = EmailMultiAlternatives(subject, email_text, 'no-reply@bha.com', [email_address])
+        if email_html:
+            mail.attach_alternative(email_html, "text/html")
+        mail.send()
+
+    if preferred_contact == 2 or preferred_contact == 1:
+        sms_text = _try_render_template('{}_text.txt'.format(template), context) or email_text
+        send_text(phone_carrier, phone_number, subject, sms_text)
 
 
 def send_email(address, subject, message):
-    send_mail(subject, message, 'no-reply@bha.com', [address], fail_silently=False)
+    send_mail(subject, message, 'no-reply@bha.com', [address], fail_silently=True)
 
 
 def send_text(carrier, phone_number, subject, message):

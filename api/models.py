@@ -138,7 +138,7 @@ CARRIERS_ENUM = dict((
     (1, 'txt.att.net'),
     (2, 'messaging.sprintpcs.com'),
     (3, 'tmomail.net'),
-    (4, 'vtext.com'),
+    (4, 'vzwpix.com'),
     (5, 'sms.alltelwireless.com'),
     (6, 'sms.myboostmobile.com'),
     (7, 'cwemail.com'),
