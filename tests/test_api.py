@@ -31,7 +31,7 @@ class ApiEndpointsTests(TestCase):
             'middle_name': 'Qux',
             'organization': 'Northeastern',
             'age': '22',
-            'contact': {
+            'contact': dict({
                 'street': '12 Washington St.',
                 'city': 'Boston',
                 'state': 'MA',
@@ -39,8 +39,8 @@ class ApiEndpointsTests(TestCase):
                 'email': username,
                 'phone_number': '8824567732',
                 'carrier': '2',
-                'preferred_contact': '0'
-            },
+                'preferred_contact': '2'
+            }, **kwargs.pop('contact', {})),
             'languages': [{
                 'can_written_translate': False,
                 'language_name': 'da'
@@ -311,6 +311,22 @@ class ApiEndpointsTests(TestCase):
         self.assertIn('Foo', mail.outbox[-2].body)
         self.assertIn('Bar', mail.outbox[-2].body)
         self.assertIn('Baz', mail.outbox[-2].body)
+
+    def test_respect_contact_method(self):
+        only_email = self.signup('blam@blam.net', 'password', contact={'preferred_contact': '0'})
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_added_assignment(only_email.volunteer.contact, 'Foo')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 1)
+
+        only_text = self.signup('jambie@plonlub.ru', 'password', contact={'preferred_contact': '1'})
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_added_assignment(only_text.volunteer.contact, 'Foo')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 1)
+
+        both_text = self.signup('montrablog@blimblefancy.de', 'password', contact={'preferred_contact': '2'})
+        outbox_start_len = len(mail.outbox)
+        mailer.send_volunteer_added_assignment(both_text.volunteer.contact, 'Foo')
+        self.assertEqual(len(mail.outbox), outbox_start_len + 2)
 
     def test_email_on_update(self):
         mail.send_mail('subject', 'body.', 'bha@gmail.com', ['messi@barca.com'])
