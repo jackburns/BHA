@@ -35,7 +35,8 @@ class VolunteerFormController {
       languages: [],
       bha_app_res: false,
       availability: [],
-      notes: ""
+      notes: "",
+      referrer: location.search.split('referrer=')[1]
     };
 
     this.validateForm = function(ang_valid) {
@@ -67,7 +68,12 @@ class VolunteerFormController {
           Alert.add('success', 'Account successfully created');
           $state.go('login');
           }, (error) => {
-            Alert.add('danger', 'Could not create your account');
+            try{
+              Alert.add('danger', error.data.join(','));
+            } catch(e) {
+              console.log(error, e);
+              Alert.add('danger', 'Could not create your account');
+            }
           }
         );
       } else {

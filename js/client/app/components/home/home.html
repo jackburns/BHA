@@ -23,6 +23,22 @@
 
     </div>
   </div>
+
+  <div class="referralContainer">
+    <form class="form-inline" name="referral">
+      <label for="friendEmail">Know a friend willing to help out?</label>
+      <br>
+      <input type="email" id="friendEmail"
+             placeholder="Email" class="form-control"
+             ng-model="friendEmail"
+      >
+      <button ng-click="vm.sendReferral()" class="btn btn-default" id="sendReferral">
+        Send Referral
+      </button>
+    </form>
+  </div>
+
+
   <div class="assignmentsContainer">
     <h2>Upcoming Assignments</h2>
     <assignment-list assignments="vm.assignments"></assignment-list>

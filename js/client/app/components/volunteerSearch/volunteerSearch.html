@@ -1,7 +1,7 @@
 <main class="volunteer-search">
   <div class="container">
-    <h1>Find Volunteers</h1>
     <form class="form search-filters">
+      <h1>Find Volunteers</h1>
       <div class="form-group">
         <div class="form-inline">
           <div class="form-group">
@@ -26,13 +26,37 @@
           <label class="radio-inline"><input type="radio" value="False" ng-model="vm.search.can_write">No</label>
         </div>
       </div>
+      <h1 class="input-label">Track Hours</h1>
+      <div class="form-group">
+        <label for="first_name" class="input-label">Consider assignments:</label>
+        <div class="form-group">
+          <button class="btn btn-md" type="button" ng-click="vm.setHoursSearch('last week')">Last week</button>
+          <button class="btn btn-md" type="button" ng-click="vm.setHoursSearch('last month')">Last month</button>
+          <button class="btn btn-md" type="button" ng-click="vm.setHoursSearch('last year')">Last year</button>
+          <button class="btn btn-md" type="button" ng-click="vm.setHoursSearch('week')">This week</button>
+          <button class="btn btn-md" type="button" ng-click="vm.setHoursSearch('month')">This month</button>
+          <button class="btn btn-md" type="button" ng-click="vm.setHoursSearch('year')">This year</button>
+        </div>
+        <div class="form-inline">
+          <div class="form-group">
+            <label for="first_name" class="input-label">From:
+              <input type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" ng-blur="vm.getVolunteers()" is-open="vm.datePicker1Open" show-button-bar="false" ng-model="vm.search.hours_starting_at" ng-click="vm.datePicker1Open = true">
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="last_name" class="input-label">To:
+              <input type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" ng-blur="vm.getVolunteers()" is-open="vm.datePicker2Open" show-button-bar="false" ng-model="vm.search.hours_ending_at" ng-click="vm.datePicker2Open = true">
+            </label>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-md" ng-click="vm.getVolunteers()">Search</button>
+      <div class="checkbox inline-checkbox">
+        <label>
+          <input type="checkbox" ng-model="vm.willSelectAll" ng-change="vm.selectAll()"> Select All
+        </label>
+      </div>
     </form>
-    <button class="btn btn-md" ng-click="vm.getVolunteers()">Search</button>
-    <div class="checkbox inline-checkbox">
-      <label>
-        <input type="checkbox" ng-model="vm.willSelectAll" ng-change="vm.selectAll()"> Select All
-      </label>
-    </div>
     <table class="table table-striped table-hover volunteers-table">
       <thead>
       <tr>
@@ -49,6 +73,10 @@
           Languages
           <span class="sortorder" ng-show="vm.ordering === 'languages'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
         </th>
+        <th class="hours-column" ng-click="vm.updateOrder('hours')">
+          Hours
+          <span class="sortorder" ng-show="vm.ordering === 'hours'" ng-class="{isReverseOrder:vm.isReverseOrder}"></span>
+        </th>
       </tr>
       </thead>
       <tbody>
@@ -57,6 +85,7 @@
         <td class="clickable first-name-column" ng-bind="volunteer.first_name" ng-click="vm.viewVolunteer(volunteer.id)"></td>
         <td class="clickable last-name-column" ng-bind="volunteer.last_name" ng-click="vm.viewVolunteer(volunteer.id)"></td>
         <td class="clickable languages-column" ng-bind="vm.getLanguagesDisplay(volunteer.languages)" ng-click="vm.viewVolunteer(volunteer.id)"></td>
+        <td class="clickable hours-column" ng-bind="volunteer.hours" ng-click="vm.viewVolunteer(volunteer.id)"></td>
       </tr>
       </tbody>
     </table>
