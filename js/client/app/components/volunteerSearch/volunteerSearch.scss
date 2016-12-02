@@ -22,8 +22,8 @@
       width: 10%;
     }
 
-    .first-name-column, .last-name-column, .languages-column {
-      width: 30%;
+    .first-name-column, .last-name-column, .languages-column, .hours-column {
+      width: 22%;
     }
   }
 
@@ -33,7 +33,6 @@
 
   .language-filters {
     width: 400px;
-    margin-bottom: 2em;
   }
 
   .language-select-group {

@@ -15,10 +15,11 @@
         <li ng-show="vm.user.isSignedIn()"><a ui-sref="assignments">Assignments</a></li>
         <li ng-show="vm.user.isAdmin()"><a ui-sref="addAssignment">Add Assignment</a></li>
         <li ng-show="vm.user.isAdmin()"><a ui-sref="volunteerApplication">Register Volunteer</a></li>
-        <li ng-show="!vm.user.isSignedIn()"><a ui-sref="login">Login</a></li>
-        <li ng-show="vm.user.isSignedIn()"><a href="#" ng-click="vm.user.logout()">Logout</a></li>
-        <li ng-show="!vm.user.isSignedIn()"><a ui-sref="volunteerApplication">Apply</a></li>
-        <li ng-show="vm.user.isSignedIn()"><a href="#" ng-click="vm.user.viewProfile()">Profile</a></li>
+        <li ng-show="!vm.user.isSignedIn()"><a ui-sref="volunteerApplication">Apply</a></li> 
+        <li ng-show="!vm.user.isSignedIn()"><a ui-sref="login">Log In</a></li>  
+        <li ng-show="vm.user.isSignedIn()"><a href="#" ng-click="vm.user.viewProfile()">Profile</a>
+        <li ng-show="vm.user.isSignedIn()"><a href="#" ng-click="vm.user.logout()">Log Out</a></li> 
+        </li>
       </ul>
     </div>
   </div>

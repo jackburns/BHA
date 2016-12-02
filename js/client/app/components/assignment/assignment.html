@@ -5,8 +5,8 @@
       <form name="assignmentEdit" novalidate role="form" ng-submit="vm.submit(assignmentEdit.$valid)" class="form-horizontal">
         <div class="col-md-4">
           <div class="form-group">
-              <label for="assignmentName">Name</label>
-              <input required type="text" class="form-control" id="assignmentName" ng-model="vm.assignment.name" placeholder="Name*">
+            <label for="assignmentName">Name</label>
+            <input required type="text" class="form-control" id="assignmentName" ng-model="vm.assignment.name" placeholder="Name*">
           </div>
           <div class="form-group">
             <label for="assignmentLanguage">Language</label>
@@ -25,16 +25,25 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="assignmentType">Type</label>
-            <ui-select required ng-model="vm.assignment.type">
-              <ui-select-match>
-                {{$select.selected.name}}
-              </ui-select-match>
-              <ui-select-choices repeat="assignment.key as assignment in vm.enums.arrays.assignment_type | filter:{name: $select.search}">
-                {{assignment.name}}
-              </ui-select-choices>
-            </ui-select>
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="assignmentType">Type</label>
+                <ui-select required ng-model="vm.assignment.type">
+                  <ui-select-match>
+                    {{$select.selected.name}}
+                  </ui-select-match>
+                  <ui-select-choices repeat="assignment.key as assignment in vm.enums.arrays.assignment_type | filter:{name: $select.search}">
+                    {{assignment.name}}
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <div class="col-sm-6">
+                <label for="assignmentHours">Hours</label>
+                <input required type="number" class="form-control" id="hours" ng-model="vm.info.hours">
+              </div>
+            </div>
           </div>
+
           <div class="form-group">
             <label for="assignmentType">Status</label>
             <ui-select required ng-model="vm.assignment.status">
@@ -69,8 +78,7 @@
           </div>
           <div class="form-group">
             <label for="assignmentPhone">Phone Number</label>
-            <input id="assignmentPhone" name="phone" onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="tel" maxlength="10" class="form-control" ng-model="vm.assignment.contact.phone_number"
-              placeholder="Phone Number*">
+            <input id="assignmentPhone" name="phone" onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="tel" maxlength="10" class="form-control" ng-model="vm.assignment.contact.phone_number" placeholder="Phone Number*">
           </div>
         </div>
         <div class="col-md-8">
@@ -169,7 +177,7 @@
           </p>
           <table ng-show="vm.assignment.volunteers.length > 0" class="table table-striped table-hover">
             <thead>
-              <tr >
+              <tr>
                 <th>Name</th>
                 <th>Volunteer Level</th>
               </tr>

@@ -4,13 +4,26 @@ import AddAssignmentComponent from './addAssignment.component';
 import AddAssignmentTemplate from './addAssignment.html';
 
 describe('AddAssignment', () => {
-  let $rootScope, makeController;
+  let $rootScope, $componentController, mockUser, makeController;
 
   beforeEach(window.module(AddAssignmentModule.name));
-  beforeEach(inject((_$rootScope_) => {
+  beforeEach(inject((_$rootScope_, _$componentController_) => {
     $rootScope = _$rootScope_;
+    $componentController = _$componentController_;
+    mockUser = {
+      getUser: sinon.stub().returns({
+        id: 0
+      })
+    };
     makeController = () => {
-      return new AddAssignmentController();
+      return $componentController(AddAssignmentModule.name, {
+        $http: {},
+        $filter: {},
+        Enums: {},
+        Alert: {},
+        User: mockUser,
+        $state: {}
+      });
     };
   }));
 
@@ -29,8 +42,8 @@ describe('AddAssignment', () => {
   describe('Template', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
-    it('has name in template [REMOVE]', () => {
-      expect(AddAssignmentTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+    it('has language name in template [REMOVE]', () => {
+      expect(AddAssignmentTemplate).to.contain('vm.info.language_name');
     });
   });
 

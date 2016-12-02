@@ -1,7 +1,7 @@
-import LanguageSelectModule from './languageSelect'
-import LanguageSelectController from './languageSelect.controller';
-import LanguageSelectComponent from './languageSelect.component';
-import LanguageSelectTemplate from './languageSelect.html';
+import LanguageSelectModule from '../languageSelect/languageSelect'
+import LanguageSelectController from '../languageSelect/languageSelect.controller';
+import LanguageSelectComponent from '../languageSelect/languageSelect.component';
+import LanguageSelectTemplate from '../languageSelect/languageSelect.html';
 
 describe('LanguageSelect', () => {
   let $rootScope, $componentController, makeController, scope;

@@ -1,290 +1,171 @@
-from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
-from django.template import Context
+from django.core.mail import send_mail
+from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template
+from django.contrib.auth.models import User
+from django.db.models import Q
+from api.models import CARRIERS_ENUM, LANGUAGE_ENUM, PREFERRED_CONTACT_ENUM
+
+
+def send_volunteer_welcome(contact, name):
+    notify_contact(
+        contact, 'welcome',
+        name=name
+    )
+
+
+def send_volunteer_added_assignment(contact, name):
+    notify_contact(
+        contact, 'user_added',
+        name=name
+    )
+
+
+def send_volunteer_removed_assignment(contact, name):
+    notify_contact(
+        contact, 'user_removed',
+        name=name
+    )
+
+
+def send_staff_new_account(name, email, phone):
+    notify_superusers(
+        'new_account_staff',
+        name=name, volunteer_email=email, volunteer_phone=phone
+    )
+
 
+def send_volunteer_welcome_staffcreated(contact, name, password):
+    notify_contact(
+        contact, 'welcome_staffcreated',
+        name=name, password=password
+    )
 
-def send_volunteer_welcome(name):
-    send_volunteer_welcome_email(name)
-    #send_volunteer_welcome_text(sender_list)
 
+def send_volunteer_new_opportunities(contact, name, assignments):
+    notify_contact(
+        contact,
+        'volunteer_new_opportunities',
+        name=name, assignment_list=assignments
+    )
 
-def send_staff_new_account_notice(name, email, phone):
-    send_staff_new_account_notice_email(name, email, phone)
-    #send_staff_new_account_notice_text(sender_list)
 
+def send_staff_assignments_no_volunteers(assignments):
+    notify_superusers(
+        'staff_assignments_no_volunteers',
+        assignments=assignments
+    )
 
-def send_volunteer_welcome_staff_created(name, password, sender_list):
-    send_volunteer_welcome_staffcreated_email(name, password)
-    #send_volunteer_welcome_staffcreated_text(sender_list)
 
+def send_volunteer_upcoming_assignment(contact, volunteer, assignment):
+    template = 'volunteer_upcoming_translation' if assignment.type == 1 else 'volunteer_upcoming_appointment'
+    notify_contact(
+        contact, template,
+        name=volunteer.first_name,
+        assignment_name=assignment.name,
+        assignment_location=assignment.contact.full_address,
+        assignment_language=LANGUAGE_ENUM.get(assignment.language_name, ''),
+        start_date=assignment.start_date
+    )
 
-def send_volunteer_new_opportunities(name, assignments, sender_list):
-    send_volunteer_new_opportunities_email(name, assignments)
-    #send_volunteer_new_opportunities_text(sender_list)
 
+def send_volunteer_updated(contact, name):
+    notify_contact(
+        contact,
+        'user_info_updated',
+        name=name
+    )
 
-def send_staff_assignments_no_volunteers(assignments, sender_list):
-    send_staff_assignments_no_volunteers_email(assignments)
-    #send_staff_assignments_no_volunteers_text(sender_list)
+def send_referral(email, referrer_name, referrer_email, url):
+    # This DOES NOT use the notify_contact system because there is not a user here,
+    # just an email address
+    context = {
+        'volunteer_name': referrer_name,
+        'login_url': url,
+        'phone': _default_context['bha_phone_number'],
+        'contact_email': _default_context['bha_email']
+    }
+    template="referral"
+    subject = _subjects_by_template["referral"]
+    email_text = _try_render_template('{}_email_body.txt'.format(template), context)
+    email_html = _try_render_template('{}_email_body.html'.format(template), context)
 
+    mail = EmailMultiAlternatives(subject, email_text, 'no-reply@bha.com', [email])
+    if email_html:
+        mail.attach_alternative(email_html, "text/html")
+    mail.send()
 
-def send_volunteer_upcoming_appointment(name, assignment_name, assignment_location, start_date, sender_list):
-    send_volunteer_upcoming_appointment_email(name, assignment_name, assignment_location, start_date)
-    #send_volunteer_upcoming_appointment_text(sender_list)
 
+def notify_contact(contact, template=None, subject=None, payload=None, **kwargs):
+    payload = payload or kwargs
+    send_notification(contact.email, contact.carrier, contact.phone_number, contact.preferred_contact, template, subject, payload)
 
-def send_volunteer_upcoming_translation(name, assignment_name, assignment_location, start_date, sender_list):
-    send_volunteer_upcoming_translation_email(name, assignment_name, assignment_location, start_date)
-   # send_volunteer_upcoming_translation_text(sender_list)
 
+def notify_superusers(template=None, subject=None, payload=None, **kwargs):
+    payload = payload or kwargs
+    admins = User.objects.filter(Q(is_superuser=True) | Q(is_staff=True))
+    for admin in admins:
+        try:
+            notify_contact(admin.volunteer.contact, template, subject, payload)
+        except AttributeError:
+            print('UNABLE TO CONTACT ADMIN')
 
-def send_volunteer_welcome_email(name):
-    text_content = get_template('welcome_email_body.txt')
-    html_content = get_template('welcome_email_body.html')
-    c = get_context_volunteer_welcome(name)
-    text = text_content.render(c)
-    html = html_content.render(c)
-    msg = EmailMultiAlternatives(volunteer_welcome_subject, text, from_email, [to])
-    msg.attach_alternative(html, "text/html")
-    msg.send()
 
+def send_notification(email_address, phone_carrier, phone_number, preferred_contact=2, template=None, subject=None, payload=None, **kwargs):
+    subject = subject or _subjects_by_template.get(template)
+    payload = payload or kwargs
+    context = _create_context(payload)
 
-def send_staff_new_account_notice_email(name, volunteer_email, volunteer_phone):
-    text_content = get_template('new_account_staff_email_body.txt')
-    html_content = get_template('new_account_staff_email_body.html')
-    c = get_context_staff_new_account(name, volunteer_email, volunteer_phone)
-    text = text_content.render(c)
-    html = html_content.render(c)
-    msg = EmailMultiAlternatives(staff_new_account_subject, text, from_email, [to])
-    msg.attach_alternative(html, "text/html")
-    msg.send()
+    email_text = _try_render_template('{}_email_body.txt'.format(template), context) or payload
+    email_html = _try_render_template('{}_email_body.html'.format(template), context)
 
+    if preferred_contact == 2 or preferred_contact == 0:
+        mail = EmailMultiAlternatives(subject, email_text, 'no-reply@bha.com', [email_address])
+        if email_html:
+            mail.attach_alternative(email_html, "text/html")
+        mail.send()
 
-def send_volunteer_welcome_staffcreated_email(name, password):
-    text_content = get_template('welcome_staffcreated_email_body.txt')
-    html_content = get_template('welcome_staffcreated_email_body.html')
-    c = get_context_volunteer_staff_created(name, password)
-    text = text_content.render(c)
-    html = html_content.render(c)
-    msg = EmailMultiAlternatives(volunteer_welcome_staff_created, text, from_email, [to])
-    msg.attach_alternative(html, "text/html")
-    msg.send()
+    if preferred_contact == 2 or preferred_contact == 1:
+        sms_text = _try_render_template('{}_text.txt'.format(template), context) or email_text
+        send_text(phone_carrier, phone_number, subject, sms_text)
 
 
-def send_volunteer_new_opportunities_email(name, assignments):
-    text_content = get_template('volunteer_new_opportunities_email_body.txt')
-    html_content = get_template('volunteer_new_opportunities_email_body.html')
-    c = get_volunteer_new_opportunities(name, assignments)
-    text = text_content.render(c)
-    html = html_content.render(c)
-    msg = EmailMultiAlternatives(volunteer_new_opportunities, text, from_email, [to])
-    msg.attach_alternative(html, "text/html")
-    msg.send()
+def send_email(address, subject, message):
+    send_mail(subject, message, 'no-reply@bha.com', [address], fail_silently=True)
 
 
-def send_staff_assignments_no_volunteers_email(assignments):
-    text_content = get_template('staff_assignments_no_volunteers_email_body.txt')
-    html_content = get_template('staff_assignments_no_volunteers_email_body.html')
-    c = get_staff_assignments_no_volunteers_email(assignments)
-    text = text_content.render(c)
-    html = html_content.render(c)
-    msg = EmailMultiAlternatives(staff_assignments_no_volunteers, text, from_email, [to])
-    msg.attach_alternative(html, "text/html")
-    msg.send()
+def send_text(carrier, phone_number, subject, message):
+    carrier_gateway = CARRIERS_ENUM.get(carrier, carrier)
+    address = phone_number + "@" + carrier_gateway
+    send_email(address, subject, message)
 
 
-def send_volunteer_upcoming_appointment_email(name, assignment_name, assignment_location, start_date):
-    text_content = get_template('volunteer_upcoming_appointment_email_body.txt')
-    html_content = get_template('volunteer_upcoming_appointment_email_body.html')
-    c = get_volunteer_upcoming_appointment(name, assignment_name, assignment_location, start_date)
-    text = text_content.render(c)
-    html = html_content.render(c)
-    msg = EmailMultiAlternatives(volunteer_upcoming_appointment, text, from_email, [to])
-    msg.attach_alternative(html, "text/html")
-    msg.send()
+def _create_context(payload):
+    return dict(payload, **_default_context)
 
 
-def send_volunteer_upcoming_translation_email(name, assignment_name, assignment_location, start_date):
-    text_content = get_template('volunteer_upcoming_translation_email_body.txt')
-    html_content = get_template('volunteer_upcoming_translation_email_body.html')
-    c = get_volunteer_upcoming_translation(name, assignment_name, assignment_location, start_date)
-    text = text_content.render(c)
-    html = html_content.render(c)
-    msg = EmailMultiAlternatives(volunteer_upcoming_translation, text, from_email, [to])
-    msg.attach_alternative(html, "text/html")
-    msg.send()
+def _try_render_template(template_string, context):
+    try:
+        return get_template(template_string).render(context)
+    except TemplateDoesNotExist:
+        return None
 
 
-def send_volunteer_welcome_text(sender_list):
-    text_content = get_template('welcome_email_text.txt')
-    c = Context({'bha_url': bha_url})
-    text = text_content.render(c)
-    send_texts(volunteer_welcome_subject, text, sender_list)
-
-
-def send_staff_new_account_notice_text(sender_list):
-    text_content = get_template('new_account_staff_text.txt')
-    c = Context({'bha_url': bha_url})
-    text = text_content.render(c)
-    send_texts(staff_new_account_subject, text, sender_list)
-
-
-def send_volunteer_welcome_staffcreated_text(sender_list):
-    text_content = get_template('welcome_staffcreated_text.txt')
-    c = Context({'bha_url': bha_url})
-    text = text_content.render(c)
-    send_texts(volunteer_welcome_staff_created, text, sender_list)
-
-
-def send_volunteer_new_opportunities_text(sender_list):
-    text_content = get_template('volunteer_new_opportunities_text.txt')
-    c = Context({'bha_url': bha_url})
-    text = text_content.render(c)
-    send_texts(volunteer_new_opportunities, text, sender_list)
-
-
-def send_staff_assignments_no_volunteers_text(sender_list):
-    text_content = get_template('staff_assignments_no_volunteers_text.txt')
-    c = Context({'bha_url': bha_url})
-    text = text_content.render(c)
-    send_texts(staff_assignments_no_volunteers, text, sender_list)
-
-
-def send_volunteer_upcoming_appointment_text(sender_list):
-    text_content = get_template('volunteer_upcoming_appointment_text.txt')
-    c = Context({'bha_url': bha_url})
-    text = text_content.render(c)
-    send_texts(volunteer_upcoming_appointment, text, sender_list)
-
-
-def send_volunteer_upcoming_translation_text(sender_list):
-    text_content = get_template('volunteer_upcoming_translation_text.txt')
-    c = Context({'bha_url': bha_url})
-    text = text_content.render(c)
-    send_texts(volunteer_upcoming_translation, text, sender_list)
-
-
-def get_context_staff_new_account(name, volunteer_email, volunteer_phone):
-    c = Context({'name': name})
-    c.update({'bha_vip_url': bha_url})
-    c.update({'volunteer_email': volunteer_email})
-    c.update({'volunteer_phone': volunteer_phone})
-    return c
-
-
-def get_context_volunteer_welcome(name):
-    c = Context({'name': name})
-    c.update({'bha_vip_url': bha_url})
-    c.update({'bha_email': bha_email_address})
-    c.update({'bha_phone': bha_phone_number})
-    return c
-
-
-def get_context_volunteer_staff_created(name, password):
-    c = Context({'name': name})
-    c.update({'bha_vip_url': bha_url})
-    c.update({'volunteer_password': password})
-    c.update({'bha_email': bha_email_address})
-    c.update({'bha_phone': bha_phone_number})
-    return c
-
-
-def get_volunteer_new_opportunities(name, assignments):
-    c = Context({'name': name})
-    c.update({'assignment_list': assignments})
-    c.update({'bha_url': bha_url})
-    c.update({'bha_email': bha_email_address})
-    c.update({'bha_phone': bha_phone_number})
-    return c
-
-
-def get_staff_assignments_no_volunteers_email(assignments):
-    c = Context({'assignments': assignments})
-    c.update({'bha_url': bha_url})
-    return c
-
-
-def get_volunteer_upcoming_appointment(name, assignment_name, assignment_location, start_date):
-    c = Context({'name': name})
-    c.update({'assignment_name': assignment_name})
-    c.update({'assignment_location': assignment_location})
-    c.update({'start_date': start_date})
-    c.update({'bha_vip_url': bha_url})
-    c.update({'bha_email': bha_email_address})
-    c.update({'bha_phone': bha_phone_number})
-    return c
-
-
-def get_volunteer_upcoming_translation(name, assignment_name, assignment_language, start_date):
-    c = Context({'name': name})
-    c.update({'assignment_name': assignment_name})
-    c.update({'assignment_language': assignment_language})
-    c.update({'start_date': start_date})
-    c.update({'bha_url': bha_url})
-    c.update({'bha_email': bha_email_address})
-    c.update({'bha_phone': bha_phone_number})
-    return c
-
-
-def process_notification(subject, message, emailList, textList):
-    send_emails(subject, message, emailList)
-    send_texts(subject, message, textList)
-
-
-def send_emails(subject, message, email_list):
-    for id_email in email_list:
-        send_mail(subject, message, 'no-reply@bha.com', [id_email["email"]], fail_silently=False)
-
-
-def send_texts(subject, message, text_list):
-    print(text_list)
-    for id_num_carrier in text_list:
-        #carrier_gateway = carriers[id_num_carrier["carrier"]]
-        #address = id_num_carrier["phoneNumber"] + "@" + carrier_gateway
-        send_mail(subject, message, 'no-reply@bha.com', ['8573139589@tmomail.net'], fail_silently=False)
-
-
-carriers = {
-    "AT&T": "txt.att.net",
-    "Sprint": "messaging.sprintpcs.com",
-    "T-Mobile": "tmomail.net",
-    "Verizon": "vtext.com",
-    "Alltel": "sms.alltelwireless.com",
-    "Boost": "sms.myboostmobile.com",
-    "Cellular South": "",
-    "Centennial Wireless": "cwemail.com",
-    "Cincinnati Bell": "gocbw.com",
-    "Cricket Wireless": "sms.mycricket.com",
-    "Metro PCS": "mymetropcs.com",
-    "Powertel": "",
-    "Qwest": "qwestmp.com",
-    "Rogers": "sms.rogers.com",
-    "Suncom": "",
-    "Telus": "msg.telus.com",
-    "U.S. Cellular": "email.uscc.net",
-    "Virgin Mobile USA": "vmobl.com",
-    "Other": "",
+_default_context = {
+    'bha_phone_number': "617-988-4032",
+    'bha_url': "https://www.bostonhousing.org/en/vip",
+    'bha_email': "LanguageAccessTeam@bostonhousing.org"
 }
 
-from_email, to = 'cs4500bha@gmail.com', 'bcox5021@gmail.com'
-
-bha_phone_number = "617-988-4032"
-
-bha_url = "https://www.bostonhousing.org/en/vip"
-
-bha_email_address = "LanguageAccessTeam@bostonhousing.org"
-
-volunteer_welcome_subject = "[BHA] Thanks for Creating An Account With the Boston Housing Authority"
-
-staff_new_account_subject = "[BHA] A New Volunteer Has Created An Account"
-
-volunteer_welcome_staff_created = "[BHA] Thanks for Creating An Account With the Boston Housing Authority"
-
-volunteer_upcoming_appointment = "[BHA] Volunteer Appointment Reminder: It's Almost Time to Volunteer"
-
-volunteer_upcoming_translation = "[BHA] Written Translation Reminder: It's Almost Time to Submit Your Translation"
-
-volunteer_new_opportunities = "[BHA] New Volunteer Assignments Available"
-
-staff_assignments_no_volunteers = "[BHA] Reminder: These Assignments Need Volunteers"
+_subjects_by_template = {
+    'welcome': "[BHA] Thanks for Creating An Account With the Boston Housing Authority",
+    'user_added': "[BHA] You Were Added to an Assignment With the Boston Housing Authority",
+    'user_removed': "[BHA] You Were Removed from an Assignment With the Boston Housing Authority",
+    'new_account': "[BHA] A New Volunteer Has Created An Account",
+    'volunteer_upcoming_appointment': "[BHA] Reminder: It's Almost Time to Volunteer",
+    'volunteer_upcoming_translation': "[BHA] Reminder: It's Almost Time to Submit Your Translation",
+    'volunteer_new_opportunities': "[BHA] New Assignments Available",
+    'staff_assignments_no_volunteers': "[BHA] Reminder: These Assignments Need Volunteers",
+    'user_info_updated': "[BHA] Contact information updated",
+    'referral': "[BHA] Would you like to work with the Boston Housing Authority?"
+}

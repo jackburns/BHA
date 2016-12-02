@@ -21,6 +21,10 @@
         <h5>Start Time</h5>
         <uib-timepicker ng-model="vm.info.start_date" show-spinners="false"></uib-timepicker>
       </div>
+      <div class = "col-sm-3">
+        <h5> Hours </h5>
+          <input type="number" class="form-control" ng-model="vm.info.hours">
+      </div>
       <div class="col-sm-3">
         <h5>Type</h5>
         <select class="form-control" ng-options="key as name for (key, name) in vm.selectOptions.assignment_type" ng-model="vm.info.type"></select>

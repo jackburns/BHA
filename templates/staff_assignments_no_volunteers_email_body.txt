@@ -1,8 +1,7 @@
-Dear ((name}},
 
 The following assignments take place 1 week and currently no one is signed up to help:
 
-{{assignment_list}}
+{{assignments}}
 [ASSIGNMENT NAME 1] on [START DATE 1] for [LANGUAGE 1]
 [ASSIGNMENT NAME 2] on [START DATE 2] for [LANGUAGE 2]
 [ASSIGNMENT NAME 3] on [START DATE 3] for [LANGUAGE 3]
