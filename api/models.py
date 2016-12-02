@@ -152,12 +152,66 @@ CARRIERS_ENUM = dict((
     (15, 'vmobl.com'),
 ))
 
+STATE_ENUM = (
+ ('AL', 'Alabama'),
+ ('AK', 'Alaska'),
+ ('AZ', 'Arizona'),
+ ('AR', 'Arkansas'),
+ ('CA', 'California'),
+ ('CO', 'Colorado'),
+ ('CT', 'Connecticut'),
+ ('DE', 'Delaware'),
+ ('DC', 'District of Columbia'),
+ ('FL', 'Florida'),
+ ('GA', 'Georgia'),
+ ('HI', 'Hawaii'),
+ ('ID', 'Idaho'),
+ ('IL', 'Illinois'),
+ ('IN', 'Indiana'),
+ ('IA', 'Iowa'),
+ ('KS', 'Kansas'),
+ ('KY', 'Kentucky'),
+ ('LA', 'Louisiana'),
+ ('ME', 'Maine'),
+ ('MD', 'Maryland'),
+ ('MA', 'Massachusetts'),
+ ('MI', 'Michigan'),
+ ('MN', 'Minnesota'),
+ ('MS', 'Mississippi'),
+ ('MO', 'Missouri'),
+ ('MT', 'Montana'),
+ ('NE', 'Nebraska'),
+ ('NV', 'Nevada'),
+ ('NH', 'New Hampshire'),
+ ('NJ', 'New Jersey'),
+ ('NM', 'New Mexico'),
+ ('NY', 'New York'),
+ ('NC', 'North Carolina'),
+ ('ND', 'North Dakota'),
+ ('OH', 'Ohio'),
+ ('OK', 'Oklahoma'),
+ ('OR', 'Oregon'),
+ ('PA', 'Pennsylvania'),
+ ('RI', 'Rhode Island'),
+ ('SC', 'South Carolina'),
+ ('SD', 'South Dakota'),
+ ('TN', 'Tennessee'),
+ ('TX', 'Texas'),
+ ('UT', 'Utah'),
+ ('VT', 'Vermont'),
+ ('VA', 'Virginia'),
+ ('WA', 'Washington'),
+ ('WV', 'West Virginia'),
+ ('WI', 'Wisconsin'),
+ ('WY', 'Wyoming'),
+)
+
 class Contact(models.Model):
     street = models.CharField(max_length=50, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)
-    state = models.CharField(max_length=50, null=True, blank=True)
-    zip = models.CharField(max_length=50, null=True, blank=True)
-    phone_number = models.CharField(max_length=50, null=True, blank=True)
+    state = models.CharField(max_length=2, choices=STATE_ENUM, null=True, blank=True)
+    zip = models.CharField(max_length=5, null=True, blank=True)
+    phone_number = models.CharField(max_length=10, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     preferred_contact = models.IntegerField(default=0, choices=PREFERRED_CONTACT_ENUM)
     carrier = models.IntegerField(default=0, choices=tuple(CARRIERS_ENUM.items()))
@@ -211,5 +265,3 @@ class Assignment(models.Model):
 
     def __str__(self):
         return "{} in {} on {}".format(self.name, self.language_name, self.start_date)
-
-
