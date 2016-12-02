@@ -1,6 +1,5 @@
 '''
 Tests for SSL connection. 
-<<<<<<< HEAD
 On success, prints HTTP response information.
 On failure, prints HTTP failure information.
 Results are saved to test.log

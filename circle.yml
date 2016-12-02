@@ -16,5 +16,4 @@ dependencies:
 test:
   override:
     - (cd ./js && npm test)
-    - python manage.py accessmigration ./tests/test_volunteers.csv
     - python manage.py test
