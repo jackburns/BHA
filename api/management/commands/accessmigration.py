@@ -99,9 +99,9 @@ def create_assignment(assignment_fields):
 
     date = timezone.datetime.strptime(assignment_fields["start_date"], "%m/%d/%y %H:%M:%S")
     volunteer = Volunteer.objects.all()[:1].get()
-		langs = LANGUAGE_ENUM.keys()
-		langs.sort()
-		lang = langs[int(assignment_fields["language"])]
+    langs = LANGUAGE_ENUM.keys()
+    langs.sort()
+    lang = langs[int(assignment_fields["language"])]
     assignment = Assignment.objects.create(name=assignment_fields["name"], 
                                             posted_by=volunteer,
                                             language_name=lang,
