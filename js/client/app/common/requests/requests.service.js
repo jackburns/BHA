@@ -64,7 +64,11 @@ let RequestsService = function($http, Alert) {
     return $http.get(api + '/volunteers/' + user_id + '/assignments/');
   };
 
-  return { getAssignments , getVolunteers, updateAssignment, getUserAssignments };
+  let sendReferral = (friendEmailAddress) => {
+    return $http.post(api + '/refer/', {'friend': friendEmailAddress})
+  }
+
+  return { getAssignments , getVolunteers, updateAssignment, getUserAssignments, sendReferral };
 };
 
 RequestsService.$inject = ['$http', 'Alert'];

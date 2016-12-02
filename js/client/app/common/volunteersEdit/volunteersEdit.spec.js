@@ -4,13 +4,23 @@ import VolunteersEditComponent from './volunteersEdit.component';
 import VolunteersEditTemplate from './volunteersEdit.html';
 
 describe('VolunteersEdit', () => {
-  let $rootScope, makeController;
+  let $rootScope, $componentController, mockRequests, makeController;
 
   beforeEach(window.module(VolunteersEditModule.name));
-  beforeEach(inject((_$rootScope_) => {
+  beforeEach(inject((_$rootScope_, _$componentController_) => {
     $rootScope = _$rootScope_;
+    $componentController = _$componentController_;
+    mockRequests = {
+      getAssignments: sinon.stub(),
+      getVolunteers: sinon.stub()
+    };
     makeController = () => {
-      return new VolunteersEditController();
+      return $componentController(VolunteersEditModule.name, {
+        $scope: $rootScope,
+        Requests: mockRequests
+      }, {
+        selectedVolunteers: []
+      });
     };
   }));
 
@@ -20,17 +30,12 @@ describe('VolunteersEdit', () => {
 
   describe('Controller', () => {
     // controller specs
-    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
-      let controller = makeController();
-      expect(controller).to.have.property('name');
-    });
   });
 
   describe('Template', () => {
     // template specs
-    // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has name in template [REMOVE]', () => {
-      expect(VolunteersEditTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+      expect(VolunteersEditTemplate).to.contain('v.full_name');
     });
   });
 

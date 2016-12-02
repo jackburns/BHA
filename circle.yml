@@ -1,0 +1,19 @@
+machine:
+  python:
+    version: 3.4.5
+  node:
+    version: 6
+
+database:
+  override: 
+    - mysql -u ubuntu circle_test < mysqlSetup.sql
+
+dependencies:
+  override:
+    - (cd ./js && npm install)
+    - pip install -r requirements.txt
+
+test:
+  override:
+    - (cd ./js && npm test)
+    - python manage.py test

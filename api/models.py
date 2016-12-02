@@ -31,94 +31,94 @@ PREFERRED_CONTACT_ENUM = (
     (2, 'Both'),
 )
 
-LANGUAGE_ENUM = (
-	('af', 'Afrikaans'),
-	('ar', 'Arabic'),
-	('ast', 'Asturian'),
-	('az', 'Azerbaijani'),
-	('bg', 'Bulgarian'),
-	('be', 'Belarusian'),
-	('bn', 'Bengali'),
-	('br', 'Breton'),
-	('bs', 'Bosnian'),
-	('ca', 'Catalan'),
-	('cs', 'Czech'),
-	('cy', 'Welsh'),
-	('da', 'Danish'),
-	('de', 'German'),
-	('el', 'Greek'),
-	('en', 'English'),
-	('en-au', 'Australian English'),
-	('en-gb', 'British English'),
-	('eo', 'Esperanto'),
-	('es', 'Spanish'),
-	('es-ar', 'Argentinian Spanish'),
-	('es-co', 'Colombian Spanish'),
-	('es-mx', 'Mexican Spanish'),
-	('es-ni', 'Nicaraguan Spanish'),
-	('es-ve', 'Venezuelan Spanish'),
-	('et', 'Estonian'),
-	('eu', 'Basque'),
-	('fa', 'Persian'),
-	('fi', 'Finnish'),
-	('fr', 'French'),
-	('fy', 'Frisian'),
-	('ga', 'Irish'),
-	('gd', 'Scottish Gaelic'),
-	('gl', 'Galician'),
-	('he', 'Hebrew'),
-	('hi', 'Hindi'),
-	('hr', 'Croatian'),
-	('hu', 'Hungarian'),
-	('ia', 'Interlingua'),
-	('id', 'Indonesian'),
-	('io', 'Ido'),
-	('is', 'Icelandic'),
-	('it', 'Italian'),
-	('ja', 'Japanese'),
-	('ka', 'Georgian'),
-	('kk', 'Kazakh'),
-	('km', 'Khmer'),
-	('kn', 'Kannada'),
-	('ko', 'Korean'),
-	('lb', 'Luxembourgish'),
-	('lt', 'Lithuanian'),
-	('lv', 'Latvian'),
-	('mk', 'Macedonian'),
-	('ml', 'Malayalam'),
-	('mn', 'Mongolian'),
-	('mr', 'Marathi'),
-	('my', 'Burmese'),
-	('nb', 'Norwegian Bokmal'),
-	('ne', 'Nepali'),
-	('nl', 'Dutch'),
-	('nn', 'Norwegian Nynorsk'),
-	('os', 'Ossetic'),
-	('pa', 'Punjabi'),
-	('pl', 'Polish'),
-	('pt', 'Portuguese'),
-	('pt-br', 'Brazilian Portuguese'),
-	('ro', 'Romanian'),
-	('ru', 'Russian'),
-	('sk', 'Slovak'),
-	('sl', 'Slovenian'),
-	('sq', 'Albanian'),
-	('sr', 'Serbian'),
-	('sr-latn', 'Serbian Latin'),
-	('sv', 'Swedish'),
-	('sw', 'Swahili'),
-	('ta', 'Tamil'),
-	('te', 'Telugu'),
-	('th', 'Thai'),
-	('tr', 'Turkish'),
-	('tt', 'Tatar'),
-	('udm', 'Udmurt'),
-	('uk', 'Ukrainian'),
-	('ur', 'Urdu'),
-	('vi', 'Vietnamese'),
-	('zh-hans', 'Simplified Chinese'),
-	('zh-hant', 'Traditional Chinese'),
-)
+LANGUAGE_ENUM = dict((
+    ('af', 'Afrikaans'),
+    ('ar', 'Arabic'),
+    ('ast', 'Asturian'),
+    ('az', 'Azerbaijani'),
+    ('bg', 'Bulgarian'),
+    ('be', 'Belarusian'),
+    ('bn', 'Bengali'),
+    ('br', 'Breton'),
+    ('bs', 'Bosnian'),
+    ('ca', 'Catalan'),
+    ('cs', 'Czech'),
+    ('cy', 'Welsh'),
+    ('da', 'Danish'),
+    ('de', 'German'),
+    ('el', 'Greek'),
+    ('en', 'English'),
+    ('en-au', 'Australian English'),
+    ('en-gb', 'British English'),
+    ('eo', 'Esperanto'),
+    ('es', 'Spanish'),
+    ('es-ar', 'Argentinian Spanish'),
+    ('es-co', 'Colombian Spanish'),
+    ('es-mx', 'Mexican Spanish'),
+    ('es-ni', 'Nicaraguan Spanish'),
+    ('es-ve', 'Venezuelan Spanish'),
+    ('et', 'Estonian'),
+    ('eu', 'Basque'),
+    ('fa', 'Persian'),
+    ('fi', 'Finnish'),
+    ('fr', 'French'),
+    ('fy', 'Frisian'),
+    ('ga', 'Irish'),
+    ('gd', 'Scottish Gaelic'),
+    ('gl', 'Galician'),
+    ('he', 'Hebrew'),
+    ('hi', 'Hindi'),
+    ('hr', 'Croatian'),
+    ('hu', 'Hungarian'),
+    ('ia', 'Interlingua'),
+    ('id', 'Indonesian'),
+    ('io', 'Ido'),
+    ('is', 'Icelandic'),
+    ('it', 'Italian'),
+    ('ja', 'Japanese'),
+    ('ka', 'Georgian'),
+    ('kk', 'Kazakh'),
+    ('km', 'Khmer'),
+    ('kn', 'Kannada'),
+    ('ko', 'Korean'),
+    ('lb', 'Luxembourgish'),
+    ('lt', 'Lithuanian'),
+    ('lv', 'Latvian'),
+    ('mk', 'Macedonian'),
+    ('ml', 'Malayalam'),
+    ('mn', 'Mongolian'),
+    ('mr', 'Marathi'),
+    ('my', 'Burmese'),
+    ('nb', 'Norwegian Bokmal'),
+    ('ne', 'Nepali'),
+    ('nl', 'Dutch'),
+    ('nn', 'Norwegian Nynorsk'),
+    ('os', 'Ossetic'),
+    ('pa', 'Punjabi'),
+    ('pl', 'Polish'),
+    ('pt', 'Portuguese'),
+    ('pt-br', 'Brazilian Portuguese'),
+    ('ro', 'Romanian'),
+    ('ru', 'Russian'),
+    ('sk', 'Slovak'),
+    ('sl', 'Slovenian'),
+    ('sq', 'Albanian'),
+    ('sr', 'Serbian'),
+    ('sr-latn', 'Serbian Latin'),
+    ('sv', 'Swedish'),
+    ('sw', 'Swahili'),
+    ('ta', 'Tamil'),
+    ('te', 'Telugu'),
+    ('th', 'Thai'),
+    ('tr', 'Turkish'),
+    ('tt', 'Tatar'),
+    ('udm', 'Udmurt'),
+    ('uk', 'Ukrainian'),
+    ('ur', 'Urdu'),
+    ('vi', 'Vietnamese'),
+    ('zh-hans', 'Simplified Chinese'),
+    ('zh-hant', 'Traditional Chinese'),
+))
 
 ASSIGNMENT_TYPE_ENUM = (
     (0, 'in-person'),
@@ -130,14 +130,15 @@ ASSIGNMENT_STATUS_ENUM = (
     (0, 'unapproved'),
     (1, 'approved'),
     (2, 'complete'),
+    (3, 'all'),
 )
 
-CARRIERS_ENUM = (
+CARRIERS_ENUM = dict((
     (0, ''),
     (1, 'txt.att.net'),
     (2, 'messaging.sprintpcs.com'),
     (3, 'tmomail.net'),
-    (4, 'vtext.com'),
+    (4, 'vzwpix.com'),
     (5, 'sms.alltelwireless.com'),
     (6, 'sms.myboostmobile.com'),
     (7, 'cwemail.com'),
@@ -149,17 +150,75 @@ CARRIERS_ENUM = (
     (13, 'msg.telus.com'),
     (14, 'email.uscc.net'),
     (15, 'vmobl.com'),
+))
+
+STATE_ENUM = (
+ ('AL', 'Alabama'),
+ ('AK', 'Alaska'),
+ ('AZ', 'Arizona'),
+ ('AR', 'Arkansas'),
+ ('CA', 'California'),
+ ('CO', 'Colorado'),
+ ('CT', 'Connecticut'),
+ ('DE', 'Delaware'),
+ ('DC', 'District of Columbia'),
+ ('FL', 'Florida'),
+ ('GA', 'Georgia'),
+ ('HI', 'Hawaii'),
+ ('ID', 'Idaho'),
+ ('IL', 'Illinois'),
+ ('IN', 'Indiana'),
+ ('IA', 'Iowa'),
+ ('KS', 'Kansas'),
+ ('KY', 'Kentucky'),
+ ('LA', 'Louisiana'),
+ ('ME', 'Maine'),
+ ('MD', 'Maryland'),
+ ('MA', 'Massachusetts'),
+ ('MI', 'Michigan'),
+ ('MN', 'Minnesota'),
+ ('MS', 'Mississippi'),
+ ('MO', 'Missouri'),
+ ('MT', 'Montana'),
+ ('NE', 'Nebraska'),
+ ('NV', 'Nevada'),
+ ('NH', 'New Hampshire'),
+ ('NJ', 'New Jersey'),
+ ('NM', 'New Mexico'),
+ ('NY', 'New York'),
+ ('NC', 'North Carolina'),
+ ('ND', 'North Dakota'),
+ ('OH', 'Ohio'),
+ ('OK', 'Oklahoma'),
+ ('OR', 'Oregon'),
+ ('PA', 'Pennsylvania'),
+ ('RI', 'Rhode Island'),
+ ('SC', 'South Carolina'),
+ ('SD', 'South Dakota'),
+ ('TN', 'Tennessee'),
+ ('TX', 'Texas'),
+ ('UT', 'Utah'),
+ ('VT', 'Vermont'),
+ ('VA', 'Virginia'),
+ ('WA', 'Washington'),
+ ('WV', 'West Virginia'),
+ ('WI', 'Wisconsin'),
+ ('WY', 'Wyoming'),
 )
 
 class Contact(models.Model):
     street = models.CharField(max_length=50, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)
-    state = models.CharField(max_length=50, null=True, blank=True)
-    zip = models.CharField(max_length=50, null=True, blank=True)
-    phone_number = models.CharField(max_length=50, null=True, blank=True)
+    state = models.CharField(max_length=2, choices=STATE_ENUM, null=True, blank=True)
+    zip = models.CharField(max_length=5, null=True, blank=True)
+    phone_number = models.CharField(max_length=10, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     preferred_contact = models.IntegerField(default=0, choices=PREFERRED_CONTACT_ENUM)
-    carrier = models.IntegerField(default=0, choices=CARRIERS_ENUM)
+    carrier = models.IntegerField(default=0, choices=tuple(CARRIERS_ENUM.items()))
+
+    @property
+    def full_address(self):
+        return '{}, {}, {} {}'.format(self.street, self.city, self.state, self.zip)
 
 class Volunteer(models.Model):
     user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
@@ -175,7 +234,6 @@ class Volunteer(models.Model):
     admin_notes = models.TextField(null=True, blank=True)
     inactive = models.BooleanField(default=False)
     contact = models.OneToOneField(Contact)
-    hours = models.IntegerField(default=0)
     organization = models.CharField(max_length=120, null=True, blank=True)
 
     def __str__(self):
@@ -183,7 +241,7 @@ class Volunteer(models.Model):
 
 class Language(models.Model):
     can_written_translate = models.BooleanField()
-    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM)
+    language_name = models.CharField(max_length=7, choices=tuple(LANGUAGE_ENUM.items()))
     volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE, related_name='languages')
 
 class Availability(models.Model):
@@ -196,7 +254,7 @@ class Assignment(models.Model):
     name = models.CharField(max_length=120)
     posted_by = models.ForeignKey(Volunteer, on_delete=models.SET_NULL, related_name='posted_assignments', null=True, blank=True)
     volunteers = models.ManyToManyField(Volunteer, related_name='assignments', blank=True)
-    language_name = models.CharField(max_length=7, choices=LANGUAGE_ENUM, blank=True)
+    language_name = models.CharField(max_length=7, choices=tuple(LANGUAGE_ENUM.items()), blank=True)
     start_date = models.DateTimeField()
     contact = models.OneToOneField(Contact, null=True, blank=True)
     type = models.IntegerField(default=0, choices=ASSIGNMENT_TYPE_ENUM)
@@ -207,5 +265,3 @@ class Assignment(models.Model):
 
     def __str__(self):
         return "{} in {} on {}".format(self.name, self.language_name, self.start_date)
-
-

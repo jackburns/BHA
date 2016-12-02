@@ -1,15 +1,12 @@
 import _ from 'lodash';
 
-let imgsrc = require('./viplogo.png');
-
 class VolunteerFormController {
   constructor($http, Enums, $state, Alert, Validate) {
-    document.getElementById('viplogo').src = imgsrc;
-
+    this.imgSrc = require('./viplogo.png');
     this.selectOptions = Enums;
-
     this.name = 'Volunteer Application Form';
     this.allValid = false;
+    this.ageValid = false;
     this.zip_valid = false;
     this.phone_valid = false;
     this.validLanguages = false;
@@ -38,7 +35,8 @@ class VolunteerFormController {
       languages: [],
       bha_app_res: false,
       availability: [],
-      notes: ""
+      notes: "",
+      referrer: location.search.split('referrer=')[1]
     };
 
     this.validateForm = function(ang_valid) {
@@ -57,7 +55,7 @@ class VolunteerFormController {
       this.submitted = true;
       this.zip_valid = Validate.zip(this.info.contact.zip);
       this.phone_valid = Validate.phoneNumber(this.info.contact.phone_number);
-      this.validLanguages = this.info.languages[0].language_name.length > 0;
+      this.validLanguages = this.info.languages.length > 0 && this.info.languages[0].language_name.length > 0;
       this.info.availability = Validate.availability(this.info.availability);
       this.validAvailabilities = _.every(this.info.availability, 'isValid');
       this.passwordError = Validate.password(this.info.password);
@@ -70,7 +68,12 @@ class VolunteerFormController {
           Alert.add('success', 'Account successfully created');
           $state.go('login');
           }, (error) => {
-            Alert.add('danger', 'Could not create your account');
+            try{
+              Alert.add('danger', error.data.join(','));
+            } catch(e) {
+              console.log(error, e);
+              Alert.add('danger', 'Could not create your account');
+            }
           }
         );
       } else {
