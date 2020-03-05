@@ -12,7 +12,7 @@ angularJS starter guide: https://codingislove.com/angularjs-for-complete-beginne
 
 # Getting started:
 
-1. Clone repo to your local machine (protip: `git clone https://github.com/raptiq/BHA.git`)
+1. Clone repo to your local machine (protip: `git clone https://github.com/jackburns/BHA.git`)
 2. Download/install vagrant
 3. mod your host file with the following two lines: (on OSX or Linux run `sudo nano /etc/hosts`)
 192.168.33.10 api.local.bha.com
